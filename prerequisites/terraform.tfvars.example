@@ -1,0 +1,24 @@
+# Copy this file to terraform.tfvars and adjust values as needed
+
+subscription_id              = "00000000-0000-0000-0000-000000000000"
+location                     = "westeurope"
+resource_group_name          = "rg-monitoring-dev"
+log_analytics_workspace_name = "law-monitoring-dev"
+log_retention_days           = 30
+action_group_critical_name   = "ag-dev-critical"
+action_group_warning_name    = "ag-dev-warning"
+
+# Add email receivers for alerts
+critical_email_receivers = [
+  {
+    name  = "Admin"
+    email = "admin@example.com"
+  }
+]
+
+warning_email_receivers = [
+  {
+    name  = "Ops"
+    email = "ops@example.com"
+  }
+]

@@ -1,0 +1,7 @@
+# Copy this file to terraform.tfvars and adjust values as needed
+
+subscription_id        = "00000000-0000-0000-0000-000000000000"
+location               = "westeurope"
+resource_group_name    = "rg-terraform-state"
+storage_account_prefix = "stdevtfstate"
+container_name         = "tfstate"
