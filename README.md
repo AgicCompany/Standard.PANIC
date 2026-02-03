@@ -1,81 +1,50 @@
 # PANIC - Azure Monitoring Framework
 
-A standardized, profile-based Azure monitoring solution using modular Terraform.
+Profile-based Azure monitoring with Terraform. Standardized alerting across 22 Azure resource types.
 
-## Overview
+## Key Features
 
-PANIC provides a consistent approach to metric alerting across Azure resources. It uses:
-- **Profile-based configuration** (Standard/Critical) with predefined thresholds
-- **Modular design** with independent, versioned repositories per resource type
-- **Override mechanism** for metric-specific customization
+- **Profile-based configuration** - Standard and Critical profiles with predefined thresholds
+- **Modular design** - Independent, versioned modules per resource type
+- **Override mechanism** - Customize any metric while keeping profile defaults
+- **Terraform native** - Deploy alerts as code with remote state support
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Getting Started](docs/getting-started.md) | Prerequisites and quick start guide |
+| [Modules](docs/modules.md) | Full list of available resource modules |
+| [Profiles](docs/profiles.md) | Profile system and threshold overview |
+| [Architecture](docs/architecture.md) | Framework design and override mechanism |
+| [Implementation Guide](docs/implementation-v2.md) | Complete technical reference |
+
+## Quick Example
+
+```hcl
+module "vm_alerts" {
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+
+  resource_id    = azurerm_virtual_machine.example.id
+  resource_name  = "myapp-vm01"
+  profile        = "critical"
+
+  action_group_ids = {
+    critical = azurerm_monitor_action_group.critical.id
+    warning  = azurerm_monitor_action_group.warning.id
+  }
+}
+```
 
 ## Repository Structure
 
 ```
-panic-az-mon-framework/
-├── bootstrap/              # Terraform state backend setup
-├── prerequisites/          # Log Analytics + Action Groups
-├── test-resources/         # Test resources for validation
-├── deployments/            # Example alert deployments
-└── docs/                   # Implementation documentation
+Standard.PANIC/
+├── docs/                 # Documentation
+├── bootstrap/            # Terraform state backend setup
+├── prerequisites/        # Log Analytics + Action Groups
+└── deployments/          # Example alert deployments
 ```
-
-## Related Repositories
-
-| Repository | Purpose |
-|------------|---------|
-| terraform-azurerm-monitor-base | Base alert module |
-| terraform-azurerm-monitor-storage | Storage Account alerts |
-| terraform-azurerm-monitor-vm | Virtual Machine alerts (planned) |
-| terraform-azurerm-monitor-postgresql | PostgreSQL alerts (planned) |
-| terraform-azurerm-monitor-appservice | App Service alerts (planned) |
-| terraform-azurerm-monitor-appgateway | Application Gateway alerts (planned) |
-
-## Quick Start
-
-### 1. Deploy Bootstrap (State Backend)
-
-```bash
-cd bootstrap
-terraform init
-terraform apply
-```
-
-### 2. Deploy Prerequisites
-
-```bash
-cd prerequisites
-# Update backend config with values from bootstrap output
-terraform init
-terraform apply -var-file=terraform.tfvars
-```
-
-### 3. Deploy Test Resources
-
-```bash
-cd test-resources
-terraform init
-terraform apply
-```
-
-### 4. Deploy Alerts
-
-```bash
-cd deployments/dev-storage-alerts
-terraform init
-terraform apply
-```
-
-## Profiles
-
-| Profile | Intent |
-|---------|--------|
-| Standard | Default for most resources. Balanced thresholds, moderate severities. |
-| Critical | For high-value resources. Tighter thresholds, higher severities. |
-
-## Documentation
-
-See [docs/azure-monitoring-framework-implementation-v2.md](docs/azure-monitoring-framework-implementation-v2.md) for detailed implementation guidance.
 
 ## License
 

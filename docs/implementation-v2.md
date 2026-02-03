@@ -167,7 +167,7 @@ Modules are versioned using Git tags following semantic versioning.
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/yourorg/terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
   # ...
 }
 ```
@@ -189,7 +189,7 @@ Profile selection is made at deployment time via module input:
 
 ```hcl
 module "vm_alerts" {
-  source  = "git::https://github.com/yourorg/terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source  = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
   
   resource_id    = azurerm_virtual_machine.example.id
   resource_name  = "yourorg-dc01"
@@ -519,7 +519,7 @@ Overrides use a nested object structure. Only specify values that differ from th
 
 ```hcl
 module "vm_alerts" {
-  source  = "git::https://github.com/yourorg/terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source  = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
   
   resource_id    = azurerm_virtual_machine.example.id
   resource_name  = "yourorg-batch01"
