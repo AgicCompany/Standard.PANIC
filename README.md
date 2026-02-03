@@ -14,6 +14,7 @@ Profile-based Azure monitoring with Terraform. Standardized alerting across 22 A
 | Document | Description |
 |----------|-------------|
 | [Getting Started](docs/getting-started.md) | Prerequisites and quick start guide |
+| [Subscription Template](templates/panic-subscription-template/) | Deploy alerts across a subscription |
 | [Modules](docs/modules.md) | Full list of available resource modules |
 | [Profiles](docs/profiles.md) | Profile system and threshold overview |
 | [Architecture](docs/architecture.md) | Framework design and override mechanism |
@@ -41,6 +42,8 @@ module "vm_alerts" {
 ```
 Standard.PANIC/
 ├── docs/                 # Documentation
+├── templates/            # Deployment templates
+│   └── panic-subscription-template/  # Full subscription monitoring
 ├── bootstrap/            # Terraform state backend setup
 ├── prerequisites/        # Log Analytics + Action Groups
 └── deployments/          # Example alert deployments

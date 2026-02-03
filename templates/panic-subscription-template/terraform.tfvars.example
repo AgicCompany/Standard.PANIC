@@ -1,0 +1,340 @@
+# =============================================================================
+# PANIC Subscription Template - Example Configuration
+# =============================================================================
+# Copy this file to terraform.tfvars and customize for your environment.
+# All feature switches default to false. Enable only the resource types you need.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Shared Configuration (Required)
+# -----------------------------------------------------------------------------
+
+# Azure subscription ID where monitored resources reside
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# Resource group where alert rules will be created
+resource_group_name = "rg-monitoring-prod"
+
+# Action group IDs for alert notifications
+action_group_ids = {
+  critical = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-monitoring-prod/providers/Microsoft.Insights/actionGroups/ag-prod-critical"
+  warning  = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-monitoring-prod/providers/Microsoft.Insights/actionGroups/ag-prod-warning"
+}
+
+# Default profile for resources that don't specify one ("standard" or "critical")
+default_profile = "standard"
+
+# Additional tags for all alert rules
+tags = {
+  environment = "production"
+  managed-by  = "terraform"
+}
+
+# -----------------------------------------------------------------------------
+# Feature Switches
+# -----------------------------------------------------------------------------
+# Set to true to enable alerts for each resource type.
+# Only enabled resource types will be processed.
+
+enable_vm_alerts          = true
+enable_storage_alerts     = true
+enable_postgresql_alerts  = false
+enable_appservice_alerts  = false
+enable_appgateway_alerts  = false
+enable_vmss_alerts        = false
+enable_disk_alerts        = false
+enable_lb_alerts          = false
+enable_vpngw_alerts       = false
+enable_expressroute_alerts = false
+enable_firewall_alerts    = false
+enable_sqldb_alerts       = false
+enable_sqlmi_alerts       = false
+enable_mysql_alerts       = false
+enable_cosmosdb_alerts    = false
+enable_function_alerts    = false
+enable_keyvault_alerts    = false
+enable_servicebus_alerts  = false
+enable_eventhub_alerts    = false
+enable_aks_alerts         = false
+enable_containerapp_alerts = false
+enable_redis_alerts       = false
+
+# -----------------------------------------------------------------------------
+# Virtual Machines
+# -----------------------------------------------------------------------------
+# Map key is used as resource_name in alert rule naming.
+# Profile inheritance: uses default_profile if not specified.
+
+vms = {
+  # Critical VM with default profile settings
+  "myorg-dc01" = {
+    resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-servers/providers/Microsoft.Compute/virtualMachines/myorg-dc01"
+    profile     = "critical"
+  }
+
+  # Standard VM - inherits default_profile
+  "myorg-app01" = {
+    resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-servers/providers/Microsoft.Compute/virtualMachines/myorg-app01"
+    # profile not specified - uses default_profile
+  }
+
+  # VM with custom overrides
+  "myorg-batch01" = {
+    resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-servers/providers/Microsoft.Compute/virtualMachines/myorg-batch01"
+    profile     = "standard"
+    overrides = {
+      cpu = {
+        warning_threshold  = 95
+        critical_threshold = 99
+      }
+      memory = {
+        enabled = false  # Disable memory alerts for this VM
+      }
+    }
+  }
+}
+
+# -----------------------------------------------------------------------------
+# Storage Accounts
+# -----------------------------------------------------------------------------
+
+storage_accounts = {
+  "stproddata01" = {
+    resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-storage/providers/Microsoft.Storage/storageAccounts/stproddata01"
+    profile     = "standard"
+  }
+
+  "stprodbackup" = {
+    resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-storage/providers/Microsoft.Storage/storageAccounts/stprodbackup"
+    profile     = "standard"
+    overrides = {
+      availability = {
+        critical_threshold = 99.0  # Lower threshold for backup storage
+      }
+    }
+  }
+}
+
+# -----------------------------------------------------------------------------
+# PostgreSQL Flexible Servers
+# -----------------------------------------------------------------------------
+
+# postgresql_servers = {
+#   "psql-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-databases/providers/Microsoft.DBforPostgreSQL/flexibleServers/psql-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# App Services
+# -----------------------------------------------------------------------------
+
+# app_services = {
+#   "app-api-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-apps/providers/Microsoft.Web/sites/app-api-prod"
+#     profile     = "critical"
+#   }
+#   "app-web-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-apps/providers/Microsoft.Web/sites/app-web-prod"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Application Gateways
+# -----------------------------------------------------------------------------
+
+# app_gateways = {
+#   "agw-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-network/providers/Microsoft.Network/applicationGateways/agw-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Virtual Machine Scale Sets
+# -----------------------------------------------------------------------------
+
+# vmss = {
+#   "vmss-web-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-compute/providers/Microsoft.Compute/virtualMachineScaleSets/vmss-web-prod"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Managed Disks
+# -----------------------------------------------------------------------------
+
+# managed_disks = {
+#   "disk-dc01-os" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-servers/providers/Microsoft.Compute/disks/disk-dc01-os"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Load Balancers
+# -----------------------------------------------------------------------------
+
+# load_balancers = {
+#   "lb-web-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-network/providers/Microsoft.Network/loadBalancers/lb-web-prod"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# VPN Gateways
+# -----------------------------------------------------------------------------
+
+# vpn_gateways = {
+#   "vpngw-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworkGateways/vpngw-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# ExpressRoute Circuits
+# -----------------------------------------------------------------------------
+
+# expressroute_circuits = {
+#   "er-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-network/providers/Microsoft.Network/expressRouteCircuits/er-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Azure Firewalls
+# -----------------------------------------------------------------------------
+
+# firewalls = {
+#   "fw-hub-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-network/providers/Microsoft.Network/azureFirewalls/fw-hub-prod"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Azure SQL Databases
+# -----------------------------------------------------------------------------
+
+# sql_databases = {
+#   "sqldb-app-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-databases/providers/Microsoft.Sql/servers/sql-prod-01/databases/sqldb-app-prod"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# SQL Managed Instances
+# -----------------------------------------------------------------------------
+
+# sql_managed_instances = {
+#   "sqlmi-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-databases/providers/Microsoft.Sql/managedInstances/sqlmi-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# MySQL Flexible Servers
+# -----------------------------------------------------------------------------
+
+# mysql_servers = {
+#   "mysql-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-databases/providers/Microsoft.DBforMySQL/flexibleServers/mysql-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Cosmos DB Accounts
+# -----------------------------------------------------------------------------
+
+# cosmosdb_accounts = {
+#   "cosmos-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-databases/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Function Apps
+# -----------------------------------------------------------------------------
+
+# function_apps = {
+#   "func-processor-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-functions/providers/Microsoft.Web/sites/func-processor-prod"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Key Vaults
+# -----------------------------------------------------------------------------
+
+# key_vaults = {
+#   "kv-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-security/providers/Microsoft.KeyVault/vaults/kv-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Service Bus Namespaces
+# -----------------------------------------------------------------------------
+
+# service_bus_namespaces = {
+#   "sb-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-messaging/providers/Microsoft.ServiceBus/namespaces/sb-prod-01"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Event Hubs
+# -----------------------------------------------------------------------------
+
+# event_hubs = {
+#   "eh-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-messaging/providers/Microsoft.EventHub/namespaces/eh-prod-01"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# AKS Clusters
+# -----------------------------------------------------------------------------
+
+# aks_clusters = {
+#   "aks-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-containers/providers/Microsoft.ContainerService/managedClusters/aks-prod-01"
+#     profile     = "critical"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Container Apps
+# -----------------------------------------------------------------------------
+
+# container_apps = {
+#   "ca-api-prod" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-containers/providers/Microsoft.App/containerApps/ca-api-prod"
+#     profile     = "standard"
+#   }
+# }
+
+# -----------------------------------------------------------------------------
+# Redis Caches
+# -----------------------------------------------------------------------------
+
+# redis_caches = {
+#   "redis-prod-01" = {
+#     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-cache/providers/Microsoft.Cache/Redis/redis-prod-01"
+#     profile     = "standard"
+#   }
+# }

@@ -106,6 +106,16 @@ terraform {
 }
 ```
 
+## Subscription Template
+
+For deploying alerts across an entire subscription, use the [Subscription Template](../templates/panic-subscription-template/). It provides:
+
+- Feature switches to enable/disable resource types
+- Inventory-based configuration in tfvars
+- Single state file per subscription
+
+See the [template README](../templates/panic-subscription-template/README.md) for details.
+
 ## Next Steps
 
 - Review [available modules](modules.md) for your resource types

@@ -1,0 +1,25 @@
+# Terraform state (stored in remote backend)
+*.tfstate
+*.tfstate.*
+
+# Local overrides
+terraform.tfvars
+*.auto.tfvars
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# Backend configuration (contains environment-specific values)
+backend.tf
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Debug logs
+terraform.log
+
+# Sensitive variable files
+*.sensitive.tfvars
+secrets.tfvars
