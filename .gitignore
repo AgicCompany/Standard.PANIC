@@ -16,5 +16,3 @@ terraform.tfvars
 .DS_Store
 Thumbs.db
 
-# AI assistant files
-CLAUDE.md
