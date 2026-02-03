@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="images/PANIC_LOGO.png" alt="PANIC Logo" width="150">
+</p>
+
 # PANIC - Azure Monitoring Framework
 
 Profile-based Azure monitoring with Terraform. Standardized alerting across 22 Azure resource types.
