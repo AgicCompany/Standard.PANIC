@@ -76,7 +76,7 @@ overrides = {
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
   resource_id    = azurerm_virtual_machine.example.id
   resource_name  = "myapp-vm01"
@@ -110,7 +110,7 @@ The `terraform-azurerm-monitor-base` module creates individual metric alerts:
 
 ```hcl
 module "alert" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-base.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/base?ref=base-v1.0.0"
 
   name              = "myapp-vm01-cpu-crit"
   resource_id       = "/subscriptions/.../virtualMachines/myapp-vm01"
@@ -183,8 +183,8 @@ Modules use semantic versioning via Git tags:
 
 ```hcl
 # Pin to specific version
-source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
 # Use latest v1.x
-source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1"
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 ```

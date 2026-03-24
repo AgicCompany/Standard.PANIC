@@ -1,5 +1,5 @@
 module "key_vault_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-keyvault.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault-v1.0.0"
   for_each = var.enable_keyvault_alerts ? var.key_vaults : {}
 
   resource_id         = each.value.resource_id

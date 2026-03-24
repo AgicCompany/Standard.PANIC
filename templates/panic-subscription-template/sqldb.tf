@@ -1,5 +1,5 @@
 module "sql_database_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-sqldb.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb-v1.0.0"
   for_each = var.enable_sqldb_alerts ? var.sql_databases : {}
 
   resource_id         = each.value.resource_id

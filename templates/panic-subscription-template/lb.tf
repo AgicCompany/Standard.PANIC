@@ -1,5 +1,5 @@
 module "load_balancer_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-lb.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/lb?ref=lb-v1.0.0"
   for_each = var.enable_lb_alerts ? var.load_balancers : {}
 
   resource_id         = each.value.resource_id

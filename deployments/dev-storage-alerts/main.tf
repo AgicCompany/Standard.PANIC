@@ -49,7 +49,7 @@ data "terraform_remote_state" "prerequisites" {
 }
 
 module "storage_alerts" {
-  source = "git::ssh://git@github.com/ecstrim/terraform-azurerm-monitor-storage.git?ref=v1.0.2"
+  source = "../../modules/storage"
 
   resource_id         = data.terraform_remote_state.test_resources.outputs.storage_account_id
   resource_name       = data.terraform_remote_state.test_resources.outputs.storage_account_name

@@ -4,30 +4,30 @@ PANIC provides monitoring modules for 22 Azure resource types.
 
 ## Module List
 
-| Resource Type | Module Repository |
-|---------------|-------------------|
-| Base (core) | [Standard.PANIC.terraform-azurerm-monitor-base](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-base) |
-| Virtual Machines | [Standard.PANIC.terraform-azurerm-monitor-vm](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm) |
-| PostgreSQL Flexible Server | [Standard.PANIC.terraform-azurerm-monitor-postgresql](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-postgresql) |
-| Storage Account | [Standard.PANIC.terraform-azurerm-monitor-storage](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-storage) |
-| App Service | [Standard.PANIC.terraform-azurerm-monitor-appservice](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-appservice) |
-| Application Gateway | [Standard.PANIC.terraform-azurerm-monitor-appgateway](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-appgateway) |
-| AKS | [Standard.PANIC.terraform-azurerm-monitor-aks](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-aks) |
-| Container App | [Standard.PANIC.terraform-azurerm-monitor-containerapp](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-containerapp) |
-| Cosmos DB | [Standard.PANIC.terraform-azurerm-monitor-cosmosdb](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-cosmosdb) |
-| Managed Disks | [Standard.PANIC.terraform-azurerm-monitor-disk](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-disk) |
-| Event Hub | [Standard.PANIC.terraform-azurerm-monitor-eventhub](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-eventhub) |
-| ExpressRoute | [Standard.PANIC.terraform-azurerm-monitor-expressroute](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-expressroute) |
-| Azure Firewall | [Standard.PANIC.terraform-azurerm-monitor-firewall](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-firewall) |
-| Function App | [Standard.PANIC.terraform-azurerm-monitor-function](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-function) |
-| Key Vault | [Standard.PANIC.terraform-azurerm-monitor-keyvault](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-keyvault) |
-| Load Balancer | [Standard.PANIC.terraform-azurerm-monitor-lb](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-lb) |
-| MySQL Flexible Server | [Standard.PANIC.terraform-azurerm-monitor-mysql](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-mysql) |
-| Redis Cache | [Standard.PANIC.terraform-azurerm-monitor-redis](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-redis) |
-| Service Bus | [Standard.PANIC.terraform-azurerm-monitor-servicebus](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-servicebus) |
-| Azure SQL Database | [Standard.PANIC.terraform-azurerm-monitor-sqldb](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-sqldb) |
-| SQL Managed Instance | [Standard.PANIC.terraform-azurerm-monitor-sqlmi](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-sqlmi) |
-| VPN Gateway | [Standard.PANIC.terraform-azurerm-monitor-vpngw](https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vpngw) |
+| Resource Type | Module Path |
+|---------------|-------------|
+| Base (core) | [modules/base](../modules/base) |
+| Virtual Machines | [modules/vm](../modules/vm) |
+| PostgreSQL Flexible Server | [modules/postgresql](../modules/postgresql) |
+| Storage Account | [modules/storage](../modules/storage) |
+| App Service | [modules/appservice](../modules/appservice) |
+| Application Gateway | [modules/appgateway](../modules/appgateway) |
+| AKS | [modules/aks](../modules/aks) |
+| Container App | [modules/containerapp](../modules/containerapp) |
+| Cosmos DB | [modules/cosmosdb](../modules/cosmosdb) |
+| Managed Disks | [modules/disk](../modules/disk) |
+| Event Hub | [modules/eventhub](../modules/eventhub) |
+| ExpressRoute | [modules/expressroute](../modules/expressroute) |
+| Azure Firewall | [modules/firewall](../modules/firewall) |
+| Function App | [modules/function](../modules/function) |
+| Key Vault | [modules/keyvault](../modules/keyvault) |
+| Load Balancer | [modules/lb](../modules/lb) |
+| MySQL Flexible Server | [modules/mysql](../modules/mysql) |
+| Redis Cache | [modules/redis](../modules/redis) |
+| Service Bus | [modules/servicebus](../modules/servicebus) |
+| Azure SQL Database | [modules/sqldb](../modules/sqldb) |
+| SQL Managed Instance | [modules/sqlmi](../modules/sqlmi) |
+| VPN Gateway | [modules/vpngw](../modules/vpngw) |
 
 ## Usage
 
@@ -35,7 +35,7 @@ Reference modules using Git source with version tags:
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
   resource_id      = azurerm_virtual_machine.example.id
   resource_name    = "myapp-vm01"
@@ -64,7 +64,7 @@ All modules accept these standard inputs:
 Each module follows a consistent structure:
 
 ```
-terraform-azurerm-monitor-{resource}/
+modules/{resource}/
 ├── main.tf           # Primary configuration
 ├── variables.tf      # Input variables
 ├── outputs.tf        # Module outputs

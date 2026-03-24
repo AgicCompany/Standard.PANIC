@@ -15,7 +15,7 @@ Select a profile at deployment time:
 
 ```hcl
 module "db_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-postgresql.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/postgresql?ref=postgresql-v1.0.0"
 
   resource_id    = azurerm_postgresql_flexible_server.main.id
   resource_name  = "prod-database"
@@ -75,7 +75,7 @@ When a profile doesn't fit, use overrides for specific metrics:
 
 ```hcl
 module "batch_vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
   resource_id    = azurerm_virtual_machine.batch.id
   resource_name  = "batch-processor"

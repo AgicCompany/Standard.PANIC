@@ -1,5 +1,5 @@
 module "vpn_gateway_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vpngw.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vpngw?ref=vpngw-v1.0.0"
   for_each = var.enable_vpngw_alerts ? var.vpn_gateways : {}
 
   resource_id         = each.value.resource_id

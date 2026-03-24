@@ -1,5 +1,5 @@
 module "expressroute_circuit_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-expressroute.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/expressroute?ref=expressroute-v1.0.0"
   for_each = var.enable_expressroute_alerts ? var.expressroute_circuits : {}
 
   resource_id         = each.value.resource_id

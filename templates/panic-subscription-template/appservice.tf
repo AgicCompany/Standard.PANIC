@@ -1,5 +1,5 @@
 module "app_service_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-appservice.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appservice?ref=appservice-v1.0.0"
   for_each = var.enable_appservice_alerts ? var.app_services : {}
 
   resource_id         = each.value.resource_id

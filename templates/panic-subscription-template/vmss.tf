@@ -1,5 +1,5 @@
 module "vmss_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vmss.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vmss?ref=vmss-v1.0.0"
   for_each = var.enable_vmss_alerts ? var.vmss : {}
 
   resource_id         = each.value.resource_id

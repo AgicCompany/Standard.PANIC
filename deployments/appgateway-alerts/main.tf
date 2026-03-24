@@ -42,7 +42,7 @@ data "terraform_remote_state" "test_resources" {
 }
 
 module "appgateway_alerts" {
-  source = "git::git@github.com:ecstrim/terraform-azurerm-monitor-appgateway.git?ref=v1.0.0"
+  source = "../../modules/appgateway"
 
   resource_id         = data.terraform_remote_state.test_resources.outputs.application_gateway_id
   resource_name       = data.terraform_remote_state.test_resources.outputs.application_gateway_name

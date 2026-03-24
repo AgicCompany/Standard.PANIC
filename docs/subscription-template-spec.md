@@ -58,7 +58,7 @@ All PANIC module references must use explicit version tags.
 **Required format:**
 
 ```hcl
-source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 ```
 
 **Version update strategy:**
@@ -478,7 +478,7 @@ Each resource type file uses `for_each` with a conditional expression that evalu
 
 ```hcl
 module "vm_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
   for_each = var.enable_vm_alerts ? var.vms : {}
 
   resource_id         = each.value.resource_id
@@ -493,7 +493,7 @@ module "vm_alerts" {
 
 # Example for storage accounts (in storage.tf)
 module "storage_account_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-storage.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
   for_each = var.enable_storage_alerts ? var.storage_accounts : {}
 
   resource_id         = each.value.resource_id

@@ -49,7 +49,7 @@ terraform apply
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-storage.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
 
   resource_id    = azurerm_storage_account.example.id
   resource_name  = "mystorageaccount"
@@ -68,7 +68,7 @@ Customize specific metrics while keeping profile defaults:
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-vm.git?ref=v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
   resource_id    = azurerm_virtual_machine.batch.id
   resource_name  = "batch-processor"

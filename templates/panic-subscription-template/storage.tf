@@ -1,5 +1,5 @@
 module "storage_account_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.terraform-azurerm-monitor-storage.git?ref=v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
   for_each = var.enable_storage_alerts ? var.storage_accounts : {}
 
   resource_id         = each.value.resource_id
