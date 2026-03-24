@@ -179,12 +179,14 @@ Alert rules include operational metadata:
 
 ## Versioning
 
-Modules use semantic versioning via Git tags:
+Each module is versioned independently using Git tags in the format `{module}-v{semver}`. This allows modules to evolve at different rates — updating the `vm` module does not force an update to `storage`.
 
 ```hcl
-# Pin to specific version
+# Pin vm module to v1.0.0
 source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
 
-# Use latest v1.x
-source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+# Pin storage module to v1.2.0 (independent of vm version)
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.2.0"
 ```
+
+The `//` in the URL separates the Git repository from the subdirectory path. Terraform clones the repo and uses the path after `//` as the module root.

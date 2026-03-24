@@ -45,6 +45,17 @@ terraform init
 terraform apply
 ```
 
+## Module Source URLs
+
+PANIC modules live in subdirectories of a single Git repository. Terraform uses `//` to separate the repository URL from the subdirectory path:
+
+```
+git::https://github.com/AgicCompany/Standard.PANIC.git  //  modules/storage  ?ref=storage-v1.0.0
+└─ repository URL                                        └─ subdirectory     └─ version tag
+```
+
+Each module is versioned independently using tags in the format `{module}-v{semver}`. For example, `storage-v1.0.0` and `vm-v1.2.0` can coexist — updating one module does not require updating others.
+
 ## Basic Usage
 
 ```hcl
