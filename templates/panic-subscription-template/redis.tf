@@ -1,5 +1,5 @@
 module "redis_cache_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis/v1.0.0"
   for_each = var.enable_redis_alerts ? var.redis_caches : {}
 
   resource_id         = each.value.resource_id

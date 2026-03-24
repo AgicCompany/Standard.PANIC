@@ -62,7 +62,7 @@ This module creates a comprehensive set of metric alerts for Azure Virtual Machi
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
 
   resource_id         = azurerm_linux_virtual_machine.example.id
   resource_name       = "dev-vm-01"
@@ -80,7 +80,7 @@ module "vm_alerts" {
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
 
   resource_id         = azurerm_linux_virtual_machine.production.id
   resource_name       = "prod-db-01"

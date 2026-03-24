@@ -1,5 +1,5 @@
 module "vm_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
   for_each = var.enable_vm_alerts ? var.vms : {}
 
   resource_id         = each.value.resource_id

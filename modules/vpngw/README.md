@@ -36,7 +36,7 @@ Terraform module for Azure VPN Gateway monitoring alerts using the PANIC framewo
 
 ```hcl
 module "vpngw_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vpngw?ref=vpngw-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vpngw?ref=vpngw/v1.0.0"
 
   resource_id         = azurerm_virtual_network_gateway.main.id
   resource_name       = "prod-vpn-gateway"
@@ -53,7 +53,7 @@ module "vpngw_alerts" {
 
 ```hcl
 module "vpngw_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vpngw?ref=vpngw-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vpngw?ref=vpngw/v1.0.0"
 
   resource_id         = azurerm_virtual_network_gateway.p2s.id
   resource_name       = "remote-access-vpn"

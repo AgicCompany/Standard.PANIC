@@ -1,5 +1,5 @@
 module "sql_managed_instance_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v1.0.0"
   for_each = var.enable_sqlmi_alerts ? var.sql_managed_instances : {}
 
   resource_id         = each.value.resource_id

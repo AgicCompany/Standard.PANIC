@@ -58,7 +58,7 @@ This module creates a comprehensive set of metric alerts for Azure Storage Accou
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.0"
 
   resource_id         = azurerm_storage_account.example.id
   resource_name       = "dev-storage-01"
@@ -76,7 +76,7 @@ module "storage_alerts" {
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.0"
 
   resource_id         = azurerm_storage_account.critical.id
   resource_name       = "prod-critical-storage"

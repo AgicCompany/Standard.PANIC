@@ -54,7 +54,7 @@ This module creates a single Azure Monitor metric alert rule. It provides a stan
 
 ```hcl
 module "cpu_alert" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/base?ref=base-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/base?ref=base/v1.0.0"
 
   name                = "myvm-cpu-warn"
   resource_group_name = "rg-monitoring-dev"

@@ -33,7 +33,7 @@ Terraform module for Azure Load Balancer monitoring alerts using the PANIC frame
 
 ```hcl
 module "lb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/lb?ref=lb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/lb?ref=lb/v1.0.0"
 
   resource_id         = azurerm_lb.main.id
   resource_name       = "myapp-lb"
@@ -50,7 +50,7 @@ module "lb_alerts" {
 
 ```hcl
 module "lb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/lb?ref=lb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/lb?ref=lb/v1.0.0"
 
   resource_id         = azurerm_lb.production.id
   resource_name       = "production-lb"

@@ -34,7 +34,7 @@ Terraform module for Azure SQL Managed Instance monitoring alerts using the PANI
 
 ```hcl
 module "sqlmi_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v1.0.0"
 
   resource_id         = azurerm_mssql_managed_instance.main.id
   resource_name       = "prod-sqlmi"
@@ -60,7 +60,7 @@ module "sqlmi_alerts" {
 
 ```hcl
 module "sqlmi_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v1.0.0"
 
   resource_id         = azurerm_mssql_managed_instance.main.id
   resource_name       = "critical-sqlmi"

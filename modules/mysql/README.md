@@ -38,7 +38,7 @@ Terraform module for Azure MySQL Flexible Server monitoring alerts using the PAN
 
 ```hcl
 module "mysql_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql/v1.0.0"
 
   resource_id         = azurerm_mysql_flexible_server.main.id
   resource_name       = "app-mysql"
@@ -55,7 +55,7 @@ module "mysql_alerts" {
 
 ```hcl
 module "mysql_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql/v1.0.0"
 
   resource_id         = azurerm_mysql_flexible_server.main.id
   resource_name       = "prod-mysql"
@@ -85,7 +85,7 @@ module "mysql_alerts" {
 
 ```hcl
 module "mysql_replica_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql/v1.0.0"
 
   resource_id         = azurerm_mysql_flexible_server.replica.id
   resource_name       = "mysql-replica"

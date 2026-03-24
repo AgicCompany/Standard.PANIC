@@ -1,5 +1,5 @@
 module "aks_cluster_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks/v1.0.0"
   for_each = var.enable_aks_alerts ? var.aks_clusters : {}
 
   resource_id         = each.value.resource_id

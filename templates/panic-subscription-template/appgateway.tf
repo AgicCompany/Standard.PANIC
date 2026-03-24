@@ -1,5 +1,5 @@
 module "app_gateway_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway/v1.0.0"
   for_each = var.enable_appgateway_alerts ? var.app_gateways : {}
 
   resource_id         = each.value.resource_id

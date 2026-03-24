@@ -36,7 +36,7 @@ Terraform module for Azure Kubernetes Service (AKS) monitoring alerts using the 
 
 ```hcl
 module "aks_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks/v1.0.0"
 
   resource_id         = azurerm_kubernetes_cluster.main.id
   resource_name       = "app-aks"
@@ -53,7 +53,7 @@ module "aks_alerts" {
 
 ```hcl
 module "aks_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks/v1.0.0"
 
   resource_id         = azurerm_kubernetes_cluster.main.id
   resource_name       = "prod-aks"
@@ -83,7 +83,7 @@ module "aks_alerts" {
 
 ```hcl
 module "aks_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/aks?ref=aks/v1.0.0"
 
   resource_id         = azurerm_kubernetes_cluster.main.id
   resource_name       = "highdensity-aks"

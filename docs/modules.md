@@ -35,7 +35,7 @@ Reference modules using Git source with version tags:
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
 
   resource_id      = azurerm_virtual_machine.example.id
   resource_name    = "myapp-vm01"

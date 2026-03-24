@@ -36,7 +36,7 @@ Terraform module for Azure Container Apps monitoring alerts using the PANIC fram
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "app-containerapp"
@@ -53,7 +53,7 @@ module "containerapp_alerts" {
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "prod-containerapp"
@@ -84,7 +84,7 @@ module "containerapp_alerts" {
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "memory-intensive-app"

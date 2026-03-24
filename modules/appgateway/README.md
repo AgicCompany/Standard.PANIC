@@ -34,7 +34,7 @@ Terraform module for Azure Application Gateway monitoring alerts using the PANIC
 
 ```hcl
 module "appgateway_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway/v1.0.0"
 
   resource_id         = azurerm_application_gateway.main.id
   resource_name       = "myapp-appgw"
@@ -51,7 +51,7 @@ module "appgateway_alerts" {
 
 ```hcl
 module "appgateway_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/appgateway?ref=appgateway/v1.0.0"
 
   resource_id         = azurerm_application_gateway.main.id
   resource_name       = "production-appgw"

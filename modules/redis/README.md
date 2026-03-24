@@ -37,7 +37,7 @@ Terraform module for Azure Cache for Redis monitoring alerts using the PANIC fra
 
 ```hcl
 module "redis_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis/v1.0.0"
 
   resource_id         = azurerm_redis_cache.main.id
   resource_name       = "app-redis"
@@ -54,7 +54,7 @@ module "redis_alerts" {
 
 ```hcl
 module "redis_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis/v1.0.0"
 
   resource_id         = azurerm_redis_cache.main.id
   resource_name       = "prod-redis"
@@ -84,7 +84,7 @@ module "redis_alerts" {
 
 ```hcl
 module "redis_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/redis?ref=redis/v1.0.0"
 
   resource_id         = azurerm_redis_cache.main.id
   resource_name       = "session-redis"

@@ -1,5 +1,5 @@
 module "firewall_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall/v1.0.0"
   for_each = var.enable_firewall_alerts ? var.firewalls : {}
 
   resource_id         = each.value.resource_id

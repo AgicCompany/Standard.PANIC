@@ -36,7 +36,7 @@ Terraform module for Azure ExpressRoute Circuit monitoring alerts using the PANI
 
 ```hcl
 module "expressroute_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/expressroute?ref=expressroute-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/expressroute?ref=expressroute/v1.0.0"
 
   resource_id         = azurerm_express_route_circuit.main.id
   resource_name       = "prod-expressroute"
@@ -53,7 +53,7 @@ module "expressroute_alerts" {
 
 ```hcl
 module "expressroute_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/expressroute?ref=expressroute-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/expressroute?ref=expressroute/v1.0.0"
 
   resource_id         = azurerm_express_route_circuit.main.id
   resource_name       = "dc-interconnect"

@@ -36,7 +36,7 @@ Terraform module for Azure Functions monitoring alerts using the PANIC framework
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "app-functions"
@@ -53,7 +53,7 @@ module "function_alerts" {
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "prod-functions"
@@ -83,7 +83,7 @@ module "function_alerts" {
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "api-functions"

@@ -1,5 +1,5 @@
 module "cosmosdb_account_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb/v1.0.0"
   for_each = var.enable_cosmosdb_alerts ? var.cosmosdb_accounts : {}
 
   resource_id         = each.value.resource_id

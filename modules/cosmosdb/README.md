@@ -36,7 +36,7 @@ Terraform module for Azure Cosmos DB monitoring alerts using the PANIC framework
 
 ```hcl
 module "cosmosdb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb/v1.0.0"
 
   resource_id         = azurerm_cosmosdb_account.main.id
   resource_name       = "app-cosmos"
@@ -53,7 +53,7 @@ module "cosmosdb_alerts" {
 
 ```hcl
 module "cosmosdb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb/v1.0.0"
 
   resource_id         = azurerm_cosmosdb_account.main.id
   resource_name       = "prod-cosmos"
@@ -82,7 +82,7 @@ module "cosmosdb_alerts" {
 
 ```hcl
 module "cosmosdb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/cosmosdb?ref=cosmosdb/v1.0.0"
 
   resource_id         = azurerm_cosmosdb_account.main.id
   resource_name       = "monitored-cosmos"

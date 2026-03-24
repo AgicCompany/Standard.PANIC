@@ -63,7 +63,7 @@ This module creates a comprehensive set of metric alerts for Azure PostgreSQL Fl
 
 ```hcl
 module "postgresql_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/postgresql?ref=postgresql-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/postgresql?ref=postgresql/v1.0.0"
 
   resource_id         = azurerm_postgresql_flexible_server.example.id
   resource_name       = "dev-postgres-01"
@@ -81,7 +81,7 @@ module "postgresql_alerts" {
 
 ```hcl
 module "postgresql_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/postgresql?ref=postgresql-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/postgresql?ref=postgresql/v1.0.0"
 
   resource_id         = azurerm_postgresql_flexible_server.production.id
   resource_name       = "prod-postgres-01"

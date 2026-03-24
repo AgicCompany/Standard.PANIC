@@ -50,17 +50,17 @@ terraform apply
 PANIC modules live in subdirectories of a single Git repository. Terraform uses `//` to separate the repository URL from the subdirectory path:
 
 ```
-git::https://github.com/AgicCompany/Standard.PANIC.git  //  modules/storage  ?ref=storage-v1.0.0
+git::https://github.com/AgicCompany/Standard.PANIC.git  //  modules/storage  ?ref=storage/v1.0.0
 └─ repository URL                                        └─ subdirectory     └─ version tag
 ```
 
-Each module is versioned independently using tags in the format `{module}-v{semver}`. For example, `storage-v1.0.0` and `vm-v1.2.0` can coexist — updating one module does not require updating others.
+Each module is versioned independently using tags in the format `{module}/v{semver}`. For example, `storage/v1.0.0` and `vm/v1.2.0` can coexist — updating one module does not require updating others.
 
 ## Basic Usage
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.0"
 
   resource_id    = azurerm_storage_account.example.id
   resource_name  = "mystorageaccount"
@@ -79,7 +79,7 @@ Customize specific metrics while keeping profile defaults:
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
 
   resource_id    = azurerm_virtual_machine.batch.id
   resource_name  = "batch-processor"

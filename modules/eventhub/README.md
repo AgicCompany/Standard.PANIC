@@ -37,7 +37,7 @@ Terraform module for Azure Event Hubs monitoring alerts using the PANIC framewor
 
 ```hcl
 module "eventhub_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub/v1.0.0"
 
   resource_id         = azurerm_eventhub_namespace.main.id
   resource_name       = "app-eventhub"
@@ -54,7 +54,7 @@ module "eventhub_alerts" {
 
 ```hcl
 module "eventhub_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub/v1.0.0"
 
   resource_id         = azurerm_eventhub_namespace.main.id
   resource_name       = "prod-eventhub"
@@ -83,7 +83,7 @@ module "eventhub_alerts" {
 
 ```hcl
 module "eventhub_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub/v1.0.0"
 
   resource_id         = azurerm_eventhub_namespace.main.id
   resource_name       = "capture-eventhub"

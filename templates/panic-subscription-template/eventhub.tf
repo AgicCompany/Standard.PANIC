@@ -1,5 +1,5 @@
 module "event_hub_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/eventhub?ref=eventhub/v1.0.0"
   for_each = var.enable_eventhub_alerts ? var.event_hubs : {}
 
   resource_id         = each.value.resource_id

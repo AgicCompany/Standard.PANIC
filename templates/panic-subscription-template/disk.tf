@@ -1,5 +1,5 @@
 module "managed_disk_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/disk?ref=disk-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/disk?ref=disk/v1.0.0"
   for_each = var.enable_disk_alerts ? var.managed_disks : {}
 
   resource_id         = each.value.resource_id

@@ -1,5 +1,5 @@
 module "mysql_server_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/mysql?ref=mysql/v1.0.0"
   for_each = var.enable_mysql_alerts ? var.mysql_servers : {}
 
   resource_id         = each.value.resource_id

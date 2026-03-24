@@ -39,7 +39,7 @@ Terraform module for Azure SQL Database monitoring alerts using the PANIC framew
 
 ```hcl
 module "sqldb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb/v1.0.0"
 
   resource_id         = azurerm_mssql_database.main.id
   resource_name       = "app-database"
@@ -56,7 +56,7 @@ module "sqldb_alerts" {
 
 ```hcl
 module "sqldb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb/v1.0.0"
 
   resource_id         = azurerm_mssql_database.main.id
   resource_name       = "prod-database"
@@ -89,7 +89,7 @@ module "sqldb_alerts" {
 
 ```hcl
 module "sqldb_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqldb?ref=sqldb/v1.0.0"
 
   resource_id         = azurerm_mssql_database.main.id
   resource_name       = "vcore-database"

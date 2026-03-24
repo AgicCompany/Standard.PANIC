@@ -1,5 +1,5 @@
 module "container_app_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
   for_each = var.enable_containerapp_alerts ? var.container_apps : {}
 
   resource_id         = each.value.resource_id

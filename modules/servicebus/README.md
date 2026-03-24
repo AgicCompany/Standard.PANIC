@@ -37,7 +37,7 @@ Terraform module for Azure Service Bus monitoring alerts using the PANIC framewo
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "app-servicebus"
@@ -54,7 +54,7 @@ module "servicebus_alerts" {
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "prod-servicebus"
@@ -88,7 +88,7 @@ module "servicebus_alerts" {
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "highvol-servicebus"

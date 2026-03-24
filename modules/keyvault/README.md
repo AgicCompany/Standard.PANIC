@@ -35,7 +35,7 @@ Terraform module for Azure Key Vault monitoring alerts using the PANIC framework
 
 ```hcl
 module "keyvault_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault/v1.0.0"
 
   resource_id         = azurerm_key_vault.main.id
   resource_name       = "app-keyvault"
@@ -52,7 +52,7 @@ module "keyvault_alerts" {
 
 ```hcl
 module "keyvault_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault/v1.0.0"
 
   resource_id         = azurerm_key_vault.main.id
   resource_name       = "prod-keyvault"
@@ -81,7 +81,7 @@ module "keyvault_alerts" {
 
 ```hcl
 module "keyvault_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault-v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/keyvault?ref=keyvault/v1.0.0"
 
   resource_id         = azurerm_key_vault.main.id
   resource_name       = "shared-keyvault"

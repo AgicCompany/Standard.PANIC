@@ -1,5 +1,5 @@
 module "service_bus_namespace_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus-v1.0.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
   for_each = var.enable_servicebus_alerts ? var.service_bus_namespaces : {}
 
   resource_id         = each.value.resource_id
