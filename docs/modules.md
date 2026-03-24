@@ -1,6 +1,6 @@
 # Available Modules
 
-PANIC provides monitoring modules for 22 Azure resource types.
+PANIC provides 22 monitoring modules: 21 resource-specific modules plus a shared base module.
 
 ## Module List
 

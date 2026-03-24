@@ -4,7 +4,7 @@
 
 # PANIC - Azure Monitoring Framework
 
-Profile-based Azure monitoring with Terraform. Standardized alerting across 22 Azure resource types.
+Profile-based Azure monitoring with Terraform. Standardized alerting across 21 Azure resource types, plus a shared base module.
 
 ## Key Features
 
@@ -45,6 +45,7 @@ module "vm_alerts" {
 
 ```
 Standard.PANIC/
+├── modules/              # Alert modules (22 resource types)
 ├── docs/                 # Documentation
 ├── templates/            # Deployment templates
 │   └── panic-subscription-template/  # Full subscription monitoring
