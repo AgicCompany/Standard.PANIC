@@ -33,11 +33,11 @@ module "storage_alerts" {
   # Override specific thresholds for this critical storage account
   overrides = {
     latency = {
-      warning_threshold  = 100  # Stricter than default critical profile
+      warning_threshold  = 100 # Stricter than default critical profile
       critical_threshold = 250
     }
     throttling = {
-      warning_threshold  = 1   # Very sensitive to throttling
+      warning_threshold  = 1 # Very sensitive to throttling
       critical_threshold = 10
     }
   }

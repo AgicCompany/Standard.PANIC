@@ -6,15 +6,15 @@ locals {
   profiles = {
     standard = {
       cpu = {
-        enabled            = false  # Requires plan-level monitoring
-        warning_threshold  = 300    # CpuTime in seconds
+        enabled            = false # Requires plan-level monitoring
+        warning_threshold  = 300   # CpuTime in seconds
         critical_threshold = 600
         window_minutes     = 5
       }
       memory = {
-        enabled            = false  # Requires plan-level monitoring
-        warning_threshold  = 1073741824   # 1GB in bytes
-        critical_threshold = 1610612736   # 1.5GB in bytes
+        enabled            = false      # Requires plan-level monitoring
+        warning_threshold  = 1073741824 # 1GB in bytes
+        critical_threshold = 1610612736 # 1.5GB in bytes
         window_minutes     = 5
       }
       http_5xx = {
@@ -29,20 +29,20 @@ locals {
       }
       health_check = {
         critical_threshold = 1
-        window_minutes     = 5  # Minimum required by Azure
+        window_minutes     = 5 # Minimum required by Azure
       }
     }
     critical = {
       cpu = {
-        enabled            = false  # Requires plan-level monitoring
+        enabled            = false # Requires plan-level monitoring
         warning_threshold  = 200
         critical_threshold = 400
         window_minutes     = 5
       }
       memory = {
-        enabled            = false  # Requires plan-level monitoring
-        warning_threshold  = 536870912    # 512MB in bytes
-        critical_threshold = 1073741824   # 1GB in bytes
+        enabled            = false      # Requires plan-level monitoring
+        warning_threshold  = 536870912  # 512MB in bytes
+        critical_threshold = 1073741824 # 1GB in bytes
         window_minutes     = 5
       }
       http_5xx = {
@@ -57,7 +57,7 @@ locals {
       }
       health_check = {
         critical_threshold = 1
-        window_minutes     = 5  # Minimum required by Azure
+        window_minutes     = 5 # Minimum required by Azure
       }
     }
   }

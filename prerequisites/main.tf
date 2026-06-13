@@ -9,12 +9,12 @@ terraform {
   }
 
   # Uncomment after bootstrap is applied and update with your values
- backend "azurerm" {
-   resource_group_name  = "rg-panic-terraform-state"
-   storage_account_name = "stpanicdevtfstateezdbi9"
-   container_name       = "tfstate"
-   key                  = "monitoring/prerequisites.tfstate"
- }
+  backend "azurerm" {
+    resource_group_name  = "rg-panic-terraform-state"
+    storage_account_name = "stpanicdevtfstateezdbi9"
+    container_name       = "tfstate"
+    key                  = "monitoring/prerequisites.tfstate"
+  }
 }
 
 provider "azurerm" {

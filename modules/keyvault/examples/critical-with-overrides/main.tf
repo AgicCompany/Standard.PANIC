@@ -33,11 +33,11 @@ module "keyvault_alerts" {
   # Override specific thresholds for this critical key vault
   overrides = {
     availability = {
-      warning_threshold  = 99.9  # Near-zero tolerance for secret store unavailability
+      warning_threshold  = 99.9 # Near-zero tolerance for secret store unavailability
       critical_threshold = 99
     }
     latency = {
-      warning_threshold  = 500   # Stricter latency for auth-critical workloads
+      warning_threshold  = 500 # Stricter latency for auth-critical workloads
       critical_threshold = 1000
     }
   }
