@@ -33,11 +33,11 @@ module "redis_alerts" {
   # Override specific thresholds for this session-store cache
   overrides = {
     server_load = {
-      warning_threshold  = 70  # Prevent eviction storms before they cascade
+      warning_threshold  = 70 # Prevent eviction storms before they cascade
       critical_threshold = 85
     }
     cache_miss_rate = {
-      enabled = true  # Explicitly enable; high miss rates tank app performance
+      enabled = true # Explicitly enable; high miss rates tank app performance
     }
   }
 

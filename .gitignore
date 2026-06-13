@@ -16,3 +16,7 @@ terraform.tfvars
 .DS_Store
 Thumbs.db
 
+# Generated/working docs (local-only)
+docs/notes/
+docs/superpowers/
+

@@ -39,7 +39,7 @@ locals {
         window_minutes     = 1
       }
       replication_lag = {
-        enabled            = false  # Only for read replicas
+        enabled            = false # Only for read replicas
         warning_threshold  = 30
         critical_threshold = 60
         window_minutes     = 5
@@ -82,7 +82,7 @@ locals {
         window_minutes     = 1
       }
       replication_lag = {
-        enabled            = false  # Only for read replicas
+        enabled            = false # Only for read replicas
         warning_threshold  = 10
         critical_threshold = 30
         window_minutes     = 5

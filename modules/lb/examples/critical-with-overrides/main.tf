@@ -33,7 +33,7 @@ module "lb_alerts" {
   # Override specific thresholds for this production-facing load balancer
   overrides = {
     health_probe_status = {
-      warning_threshold  = 95  # Alert earlier when backends start dropping
+      warning_threshold  = 95 # Alert earlier when backends start dropping
       critical_threshold = 90
     }
   }

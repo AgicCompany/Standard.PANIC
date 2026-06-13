@@ -1,0 +1,70 @@
+name: build-check
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-check:
+    name: build-check
+    runs-on: ubuntu-latest
+    env:
+      TF_IN_AUTOMATION: "1"
+      TF_INPUT: "0"
+      TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.tf-plugin-cache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.15.2
+          terraform_wrapper: false
+
+      - name: Cache provider plugins
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TF_PLUGIN_CACHE_DIR }}
+          key: tf-plugins-${{ runner.os }}-${{ hashFiles('**/versions.tf', '**/main.tf') }}
+          restore-keys: |
+            tf-plugins-${{ runner.os }}-
+
+      - name: Terraform format check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform validate (roots + modules)
+        run: |
+          set -euo pipefail
+          mkdir -p "$TF_PLUGIN_CACHE_DIR"
+          mapfile -t dirs < <(find . -type f -name '*.tf' \
+            -not -path '*/.terraform/*' \
+            -not -path '*/examples/*' \
+            -not -path '*/templates/*' \
+            -exec dirname {} \; | sort -u)
+          echo "Discovered ${#dirs[@]} directories to validate."
+          failed=()
+          for d in "${dirs[@]}"; do
+            echo "::group::validate ${d}"
+            if terraform -chdir="${d}" init -backend=false -input=false -no-color \
+               && terraform -chdir="${d}" validate -no-color; then
+              echo "PASS: ${d}"
+            else
+              echo "FAIL: ${d}"
+              failed+=("${d}")
+            fi
+            echo "::endgroup::"
+          done
+          echo "----------------------------------------"
+          if [ "${#failed[@]}" -gt 0 ]; then
+            echo "Validation FAILED for ${#failed[@]} dir(s): ${failed[*]}"
+            exit 1
+          fi
+          echo "All ${#dirs[@]} directories passed validate."

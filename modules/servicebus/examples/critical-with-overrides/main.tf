@@ -33,11 +33,11 @@ module "servicebus_alerts" {
   # Override specific thresholds for this order-processing namespace
   overrides = {
     active_messages = {
-      warning_threshold  = 500   # Queue depth indicating consumer lag
+      warning_threshold  = 500 # Queue depth indicating consumer lag
       critical_threshold = 1000
     }
     dead_letter_messages = {
-      warning_threshold  = 10   # Any DLQ growth on orders is a business problem
+      warning_threshold  = 10 # Any DLQ growth on orders is a business problem
       critical_threshold = 50
     }
   }

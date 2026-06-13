@@ -243,7 +243,7 @@ resource "azurerm_monitor_metric_alert" "health_check_crit" {
   enabled             = var.enabled
   auto_mitigate       = local.defaults.auto_mitigate
   frequency           = "PT${local.defaults.frequency_minutes}M"
-  window_size         = "PT5M"  # Minimum required by Azure for HealthCheckStatus
+  window_size         = "PT5M" # Minimum required by Azure for HealthCheckStatus
 
   criteria {
     metric_namespace = local.metrics.health_check.namespace
