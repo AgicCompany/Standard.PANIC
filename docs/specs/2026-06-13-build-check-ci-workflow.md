@@ -36,7 +36,7 @@ or being flaky.
 - `.terraform.lock.hcl` is gitignored — CI resolves providers fresh.
 - `terraform validate` does not read backends or remote state; `init -backend=false`
   + `validate` runs without Azure credentials.
-- Local Terraform is `v1.15.x`. The repo currently has **formatting drift in 13
+- Local Terraform is `v1.15.2`. The repo currently has **formatting drift in 13
   files** (`terraform fmt -check -recursive` fails today). A `fmt` gate therefore
   cannot pass until those files are formatted.
 - `main` is PR-protected; direct pushes are rejected. The `gh` token in this
@@ -56,31 +56,43 @@ or being flaky.
 - **Permissions:** `contents: read` (least privilege).
 - **Concurrency:** group per ref with `cancel-in-progress: true` to cancel
   superseded runs.
-- **Single job named `build-check`**, `runs-on: ubuntu-latest`.
+- **Single job whose id and name are literally `build-check`** (a normal job, not a
+  reusable-workflow `uses:` call, so the reported status context is exactly
+  `build-check`), `runs-on: ubuntu-latest`.
 
 ### Job steps
 
 1. `actions/checkout@v4`.
-2. `hashicorp/setup-terraform@v3` pinned to `1.15.6` with `terraform_wrapper: false`.
-   Pinning to the 1.15.x line keeps CI `fmt` results identical to local output.
+2. `hashicorp/setup-terraform@v3` pinned to `1.15.2` (the exact locally-installed
+   version used to run the commit-2 reformat) with `terraform_wrapper: false`.
+   Pinning CI to the format-time version guarantees identical `fmt` output.
 3. `actions/cache@v4` over `TF_PLUGIN_CACHE_DIR` so the azurerm provider downloads
-   once and is reused across all validated directories.
+   once and is reused across all validated directories. The validate step must
+   `mkdir -p` and export `TF_PLUGIN_CACHE_DIR` before the first `init`.
 4. **Format gate:** `terraform fmt -check -recursive` from the repo root (covers
-   all `.tf`, including `examples/`).
+   all `.tf`, including `examples/` and `templates/`).
 5. **Validate gate:** discover every directory containing `*.tf`, excluding
-   `*/.terraform/*` and `*/examples/*` (→ the 5 roots + 22 modules + 1 template).
-   For each: `terraform -chdir=$d init -backend=false -input=false` then
-   `terraform -chdir=$d validate`. Collect failures across all dirs (do not abort
-   on first failure); exit non-zero if any failed, printing a per-directory summary.
+   `*/.terraform/*`, `*/examples/*`, and `*/templates/*` (→ the 5 roots + 22
+   modules = **27 dirs**). For each: `terraform -chdir=$d init -backend=false
+   -input=false` then `terraform -chdir=$d validate`. Collect failures across all
+   dirs (do not abort on first failure); exit non-zero if any failed, printing a
+   per-directory summary.
 
-Validate scope intentionally **excludes** `examples/` (formatting is still enforced
-on them via the repo-wide `fmt` step).
+Validate scope intentionally **excludes** `examples/` and `templates/`:
+
+- `examples/` — formatting is still enforced via the repo-wide `fmt` step.
+- `templates/panic-subscription-template` — its module sources pin **released git
+  tags** (`<module>/vX.Y.Z`) fetched over the network, not the local PR code.
+  Validating it would test published tags (requires network, plus `GITHUB_TOKEN`
+  propagation into Terraform's git getter if the repo is private), not the code
+  under review. It also currently fails `init` outright (see "Side finding"), which
+  would break the gate. The `fmt` step still covers the template's formatting.
 
 ### Directory discovery
 
-Dynamic discovery (find `*.tf`, strip to unique dirs, filter out `.terraform` and
-`examples`) rather than a hardcoded list, so the gate automatically covers new
-modules and deployments without workflow edits.
+Dynamic discovery (find `*.tf`, strip to unique dirs, filter out `.terraform`,
+`examples`, and `templates`) rather than a hardcoded list, so the gate automatically
+covers new modules and deployments without workflow edits.
 
 ## Landing strategy
 
@@ -106,8 +118,9 @@ landing CI, the formatting fixes, and the gitignore change together.
 Before pushing, run locally (mirrors what CI will do):
 
 - `terraform fmt -check -recursive` → must be clean after commit 2.
-- For each root/module/template: `terraform init -backend=false` + `terraform
-  validate` → must pass, so PR #1 is not blocked by a hidden validate error.
+- For each of the 5 roots and 22 modules (not the template): `terraform init
+  -backend=false` + `terraform validate` → must pass, so PR #1 is not blocked by a
+  hidden validate error. (Verified during spec review: 27/27 pass today.)
 
 ## Risks
 
@@ -120,7 +133,10 @@ Before pushing, run locally (mirrors what CI will do):
   restriction, so this should succeed; confirm on push.
 - **Strict mode up-to-date:** if `main` advances before PR #1 merges, the branch
   must merge `main` in before it can merge.
-- **Provider download time:** ~28 `init` runs. Mitigated by the plugin cache;
+- **Merge conflicts:** GitHub does not run `pull_request` workflows while a PR has a
+  merge conflict, so a conflicted PR #1 would leave `build-check` unreported and
+  permanently blocked. Keep PR #1 conflict-free / up to date with `main`.
+- **Provider download time:** ~27 `init` runs. Mitigated by the plugin cache;
   expected runtime ~2-4 min warm.
 
 ## Out of scope
@@ -131,10 +147,20 @@ Before pushing, run locally (mirrors what CI will do):
 - Post-merge / `push`-to-`main` workflow triggers.
 - Tagging or release automation.
 
+## Side finding (out of scope)
+
+`templates/panic-subscription-template/vmss.tf` declares a module with
+`source = "...//modules/vmss?ref=vmss/v1.0.0"`, but no `vmss` module directory and no
+`vmss/*` git tag exist in the repo (22 modules, none named `vmss`). `terraform init`
+on the template fails outright with `invalid ref: "vmss/v1.0.0"`. This is a
+pre-existing bug unrelated to this work — flagged for a separate fix. It is one
+reason the template is excluded from the validate gate.
+
 ## Success criteria
 
 - `.github/workflows/build-check.yml` exists with a single job named `build-check`.
 - On PR #1, the `build-check` status reports **success**.
 - `terraform fmt -check -recursive` is clean repo-wide.
-- All 5 roots, 22 modules, and the template pass `init -backend=false` + `validate`.
+- All 5 roots and 22 modules (27 dirs) pass `init -backend=false` + `validate`. The
+  template is excluded from validate (it pins released module tags, not PR code).
 - PR #1 becomes mergeable and merges to `main`.
