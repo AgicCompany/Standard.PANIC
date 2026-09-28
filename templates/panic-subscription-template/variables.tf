@@ -179,7 +179,43 @@ variable "vms" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      os_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      data_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      disk_free = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      availability = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
