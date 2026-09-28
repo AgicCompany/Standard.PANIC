@@ -63,7 +63,7 @@ The metric keys (`cpu`, `data_disk_iops`, ...) differ per module. Look them up i
 
 A few metrics only have a critical alert, for example VM `availability` and App Service `health_check`. For those, only `critical_threshold` matters.
 
-> **On `v1.0.0` of `vm`, `storage`, `appservice` or `postgresql`:** a partial override silently disables that metric. For example, `cpu = { warning_threshold = 90 }` removes the CPU alerts. Upgrade to `v1.0.1`, or set all four fields when you override a metric. The other 17 modules were never affected.
+> **On `v1.0.0` of `vm`, `storage`, `appservice` or `postgresql`:** a partial override silently disables that metric. For example, `cpu = { warning_threshold = 90 }` removes the CPU alerts. Upgrade to `v1.0.1`, or set all four fields when you override a metric. The other modules were never affected.
 
 To turn off every alert from a module without removing it, set `enabled = false` on the module.
 

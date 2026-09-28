@@ -7,7 +7,7 @@ version: 0.1
 
 # Modules
 
-PANIC has 21 resource modules and one generic `base` module. All resource modules share the same inputs and outputs, described in [Concepts](concepts.md#common-inputs-and-outputs).
+PANIC has 22 resource modules and one generic `base` module. All resource modules share the same inputs and outputs, described in [Concepts](concepts.md#common-inputs-and-outputs).
 
 Source URL pattern:
 
@@ -43,6 +43,7 @@ See [Versioning](versioning.md) for how to pick the version.
 | SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 4 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
 | Storage Account | [`storage`](../modules/storage/) | `Microsoft.Storage/storageAccounts` | 4 of 4 | [thresholds](thresholds.md#storage-account-storage) |
 | Virtual Machine | [`vm`](../modules/vm/) | `Microsoft.Compute/virtualMachines` | 4 of 6 | [thresholds](thresholds.md#virtual-machine-vm) |
+| Virtual Machine Scale Set | [`vmss`](../modules/vmss/) | `Microsoft.Compute/virtualMachineScaleSets` | 5 of 5 | [thresholds](thresholds.md#virtual-machine-scale-set-vmss) |
 | VPN Gateway | [`vpngw`](../modules/vpngw/) | `Microsoft.Network/virtualNetworkGateways` | 3 of 5 | [thresholds](thresholds.md#vpn-gateway-vpngw) |
 
 ## Base module
@@ -72,5 +73,3 @@ Each resource module folder has a README with its inputs, and two runnable examp
 
 - `examples/standard/`: the module with default settings.
 - `examples/critical-with-overrides/`: the `critical` profile with some overrides.
-
-Not covered yet: Virtual Machine Scale Sets. The subscription template has a `vmss.tf` file, but `modules/vmss` doesn't exist yet.

@@ -28,7 +28,7 @@ TITLES = {
     "postgresql": "PostgreSQL Flexible Server", "redis": "Redis Cache",
     "servicebus": "Service Bus Namespace", "sqldb": "Azure SQL Database",
     "sqlmi": "SQL Managed Instance", "storage": "Storage Account",
-    "vm": "Virtual Machine", "vpngw": "VPN Gateway",
+    "vm": "Virtual Machine", "vmss": "Virtual Machine Scale Set", "vpngw": "VPN Gateway",
 }
 OPS = {"GreaterThan": ">", "LessThan": "<", "GreaterThanOrEqual": ">=", "LessThanOrEqual": "<="}
 
