@@ -1,8 +1,8 @@
 ---
 title: vmss alert module
-date: 2026-09-28
+date: 2026-09-29
 status: active
-version: 1.1
+version: 1.2
 ---
 
 # vmss alert module
@@ -173,6 +173,10 @@ same state as today, so there's no regression.
 
 ## Known limitation (found in final review)
 
+> **Resolved** in `docs/specs/2026-09-28-template-typed-overrides-plan.md`:
+> every inventory variable now uses its module's typed `overrides` object.
+> The text below describes the template as it was.
+
 The template declares `overrides = optional(map(any))` for every resource type.
 `map(any)` requires one common element type, so these fail at plan with
 "all map elements must have the same type" or "attribute types must all match":
@@ -192,3 +196,4 @@ here (no template changes) and is fixed in a separate change.
 - v1.1: final code review found that the template's `map(any)` rejects mixed
   override shapes (not introduced here). Test 7 wording corrected; limitation
   recorded; template fix split into its own change.
+- v1.2: Known limitation marked resolved by the typed template overrides fix.

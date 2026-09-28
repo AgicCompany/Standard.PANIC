@@ -179,7 +179,43 @@ variable "vms" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      os_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      data_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      disk_free = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      availability = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -189,7 +225,32 @@ variable "storage_accounts" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      latency = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      throttling = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      used_capacity = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -199,7 +260,49 @@ variable "postgresql_servers" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      storage = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      connections = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      failed_connections = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      availability = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      replication_lag = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -209,7 +312,37 @@ variable "app_services" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      http_5xx = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      response_time = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      health_check = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -219,7 +352,44 @@ variable "app_gateways" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      unhealthy_hosts = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      backend_5xx = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      capacity_units = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      failed_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      response_5xx = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -229,7 +399,38 @@ variable "vmss" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      os_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      data_disk_iops = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -239,7 +440,38 @@ variable "managed_disks" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      iops_consumed = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      bandwidth_consumed = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      queue_depth = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      burst_bps_credits = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      burst_io_credits = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -249,7 +481,31 @@ variable "load_balancers" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      health_probe_status = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      data_path_availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      snat_connection_count = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      used_snat_ports = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -259,7 +515,37 @@ variable "vpn_gateways" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      tunnel_status = optional(object({
+        enabled            = optional(bool)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      tunnel_bandwidth = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      p2s_bandwidth = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      p2s_connection_count = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      tunnel_drop_count = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -269,7 +555,44 @@ variable "expressroute_circuits" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      bgp_availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      arp_availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      bits_in = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      bits_out = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      dropped_packets_in = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      dropped_packets_out = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -279,7 +602,32 @@ variable "firewalls" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      health_state = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      throughput = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      snat_port_utilization = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      latency = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -289,7 +637,50 @@ variable "sql_databases" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      dtu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      storage = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      deadlocks = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      connection_failed = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      sessions = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      workers = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -299,7 +690,32 @@ variable "sql_managed_instances" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      storage = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      io_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      io_bytes = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -309,7 +725,50 @@ variable "mysql_servers" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      storage = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      io = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      connections = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      aborted_connections = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      replication_lag = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -319,7 +778,38 @@ variable "cosmosdb_accounts" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      ru_consumption = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      server_latency = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      throttled_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      total_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -329,7 +819,38 @@ variable "function_apps" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      http_5xx = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      http_4xx = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      response_time = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      execution_count = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -339,7 +860,32 @@ variable "key_vaults" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      availability = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      latency = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      saturation = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      api_hits = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -349,7 +895,38 @@ variable "service_bus_namespaces" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      active_messages = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      deadlettered_messages = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      throttled_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      server_errors = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      size = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -359,7 +936,38 @@ variable "event_hubs" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      throttled_requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      quota_exceeded = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      server_errors = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      incoming_messages = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      capture_backlog = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -369,7 +977,38 @@ variable "aks_clusters" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      node_cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      node_memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      node_disk = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      pod_ready = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      node_count = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -379,7 +1018,38 @@ variable "container_apps" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      cpu = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      restarts = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      replicas = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      requests = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
@@ -389,7 +1059,38 @@ variable "redis_caches" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
-    overrides   = optional(map(any))
+    overrides = optional(object({
+      server_load = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      memory = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      connected_clients = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      cache_miss_rate = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+      evicted_keys = optional(object({
+        enabled            = optional(bool)
+        warning_threshold  = optional(number)
+        critical_threshold = optional(number)
+        window_minutes     = optional(number)
+      }))
+    }))
   }))
   default = {}
 }
