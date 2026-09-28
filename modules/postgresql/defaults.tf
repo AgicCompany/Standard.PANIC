@@ -63,51 +63,51 @@ locals {
   # Resolve final values: override -> profile -> defaults
   resolved = {
     cpu = {
-      enabled            = try(var.overrides.cpu.enabled, local.active_profile.cpu.enabled)
-      warning_threshold  = try(var.overrides.cpu.warning_threshold, local.active_profile.cpu.warning_threshold)
-      critical_threshold = try(var.overrides.cpu.critical_threshold, local.active_profile.cpu.critical_threshold)
-      window_minutes     = try(var.overrides.cpu.window_minutes, local.active_profile.cpu.window_minutes)
+      enabled            = coalesce(try(var.overrides.cpu.enabled, null), local.active_profile.cpu.enabled)
+      warning_threshold  = coalesce(try(var.overrides.cpu.warning_threshold, null), local.active_profile.cpu.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.cpu.critical_threshold, null), local.active_profile.cpu.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.cpu.window_minutes, null), local.active_profile.cpu.window_minutes)
     }
     memory = {
-      enabled            = try(var.overrides.memory.enabled, local.active_profile.memory.enabled)
-      warning_threshold  = try(var.overrides.memory.warning_threshold, local.active_profile.memory.warning_threshold)
-      critical_threshold = try(var.overrides.memory.critical_threshold, local.active_profile.memory.critical_threshold)
-      window_minutes     = try(var.overrides.memory.window_minutes, local.active_profile.memory.window_minutes)
+      enabled            = coalesce(try(var.overrides.memory.enabled, null), local.active_profile.memory.enabled)
+      warning_threshold  = coalesce(try(var.overrides.memory.warning_threshold, null), local.active_profile.memory.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.memory.critical_threshold, null), local.active_profile.memory.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.memory.window_minutes, null), local.active_profile.memory.window_minutes)
     }
     storage = {
-      enabled            = try(var.overrides.storage.enabled, local.active_profile.storage.enabled)
-      warning_threshold  = try(var.overrides.storage.warning_threshold, local.active_profile.storage.warning_threshold)
-      critical_threshold = try(var.overrides.storage.critical_threshold, local.active_profile.storage.critical_threshold)
-      window_minutes     = try(var.overrides.storage.window_minutes, local.active_profile.storage.window_minutes)
+      enabled            = coalesce(try(var.overrides.storage.enabled, null), local.active_profile.storage.enabled)
+      warning_threshold  = coalesce(try(var.overrides.storage.warning_threshold, null), local.active_profile.storage.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.storage.critical_threshold, null), local.active_profile.storage.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.storage.window_minutes, null), local.active_profile.storage.window_minutes)
     }
     connections = {
-      enabled            = try(var.overrides.connections.enabled, local.active_profile.connections.enabled)
-      warning_threshold  = try(var.overrides.connections.warning_threshold, local.active_profile.connections.warning_threshold)
-      critical_threshold = try(var.overrides.connections.critical_threshold, local.active_profile.connections.critical_threshold)
-      window_minutes     = try(var.overrides.connections.window_minutes, local.active_profile.connections.window_minutes)
+      enabled            = coalesce(try(var.overrides.connections.enabled, null), local.active_profile.connections.enabled)
+      warning_threshold  = coalesce(try(var.overrides.connections.warning_threshold, null), local.active_profile.connections.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.connections.critical_threshold, null), local.active_profile.connections.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.connections.window_minutes, null), local.active_profile.connections.window_minutes)
     }
     failed_connections = {
-      enabled            = try(var.overrides.failed_connections.enabled, local.active_profile.failed_connections.enabled)
-      warning_threshold  = try(var.overrides.failed_connections.warning_threshold, local.active_profile.failed_connections.warning_threshold)
-      critical_threshold = try(var.overrides.failed_connections.critical_threshold, local.active_profile.failed_connections.critical_threshold)
-      window_minutes     = try(var.overrides.failed_connections.window_minutes, local.active_profile.failed_connections.window_minutes)
+      enabled            = coalesce(try(var.overrides.failed_connections.enabled, null), local.active_profile.failed_connections.enabled)
+      warning_threshold  = coalesce(try(var.overrides.failed_connections.warning_threshold, null), local.active_profile.failed_connections.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.failed_connections.critical_threshold, null), local.active_profile.failed_connections.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.failed_connections.window_minutes, null), local.active_profile.failed_connections.window_minutes)
     }
     availability = {
-      enabled            = try(var.overrides.availability.enabled, local.active_profile.availability.enabled)
-      critical_threshold = try(var.overrides.availability.critical_threshold, local.active_profile.availability.critical_threshold)
-      window_minutes     = try(var.overrides.availability.window_minutes, local.active_profile.availability.window_minutes)
+      enabled            = coalesce(try(var.overrides.availability.enabled, null), local.active_profile.availability.enabled)
+      critical_threshold = coalesce(try(var.overrides.availability.critical_threshold, null), local.active_profile.availability.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.availability.window_minutes, null), local.active_profile.availability.window_minutes)
     }
     replication_lag = {
-      enabled            = try(var.overrides.replication_lag.enabled, local.active_profile.replication_lag.enabled)
-      warning_threshold  = try(var.overrides.replication_lag.warning_threshold, local.active_profile.replication_lag.warning_threshold)
-      critical_threshold = try(var.overrides.replication_lag.critical_threshold, local.active_profile.replication_lag.critical_threshold)
-      window_minutes     = try(var.overrides.replication_lag.window_minutes, local.active_profile.replication_lag.window_minutes)
+      enabled            = coalesce(try(var.overrides.replication_lag.enabled, null), local.active_profile.replication_lag.enabled)
+      warning_threshold  = coalesce(try(var.overrides.replication_lag.warning_threshold, null), local.active_profile.replication_lag.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.replication_lag.critical_threshold, null), local.active_profile.replication_lag.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.replication_lag.window_minutes, null), local.active_profile.replication_lag.window_minutes)
     }
   }
 
   # Common tags
   common_tags = merge(var.tags, {
     managed-by     = "terraform"
-    module-version = "1.0.0"
+    module-version = "1.0.1"
   })
 }

@@ -61,45 +61,45 @@ locals {
   # Resolve final values: override -> profile -> defaults
   resolved = {
     cpu = {
-      enabled            = try(var.overrides.cpu.enabled, local.active_profile.cpu.enabled)
-      warning_threshold  = try(var.overrides.cpu.warning_threshold, local.active_profile.cpu.warning_threshold)
-      critical_threshold = try(var.overrides.cpu.critical_threshold, local.active_profile.cpu.critical_threshold)
-      window_minutes     = try(var.overrides.cpu.window_minutes, local.active_profile.cpu.window_minutes)
+      enabled            = coalesce(try(var.overrides.cpu.enabled, null), local.active_profile.cpu.enabled)
+      warning_threshold  = coalesce(try(var.overrides.cpu.warning_threshold, null), local.active_profile.cpu.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.cpu.critical_threshold, null), local.active_profile.cpu.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.cpu.window_minutes, null), local.active_profile.cpu.window_minutes)
     }
     memory = {
-      enabled            = try(var.overrides.memory.enabled, local.active_profile.memory.enabled)
-      warning_threshold  = try(var.overrides.memory.warning_threshold, local.active_profile.memory.warning_threshold)
-      critical_threshold = try(var.overrides.memory.critical_threshold, local.active_profile.memory.critical_threshold)
-      window_minutes     = try(var.overrides.memory.window_minutes, local.active_profile.memory.window_minutes)
+      enabled            = coalesce(try(var.overrides.memory.enabled, null), local.active_profile.memory.enabled)
+      warning_threshold  = coalesce(try(var.overrides.memory.warning_threshold, null), local.active_profile.memory.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.memory.critical_threshold, null), local.active_profile.memory.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.memory.window_minutes, null), local.active_profile.memory.window_minutes)
     }
     os_disk_iops = {
-      enabled            = try(var.overrides.os_disk_iops.enabled, local.active_profile.os_disk_iops.enabled)
-      warning_threshold  = try(var.overrides.os_disk_iops.warning_threshold, local.active_profile.os_disk_iops.warning_threshold)
-      critical_threshold = try(var.overrides.os_disk_iops.critical_threshold, local.active_profile.os_disk_iops.critical_threshold)
-      window_minutes     = try(var.overrides.os_disk_iops.window_minutes, local.active_profile.os_disk_iops.window_minutes)
+      enabled            = coalesce(try(var.overrides.os_disk_iops.enabled, null), local.active_profile.os_disk_iops.enabled)
+      warning_threshold  = coalesce(try(var.overrides.os_disk_iops.warning_threshold, null), local.active_profile.os_disk_iops.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.os_disk_iops.critical_threshold, null), local.active_profile.os_disk_iops.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.os_disk_iops.window_minutes, null), local.active_profile.os_disk_iops.window_minutes)
     }
     data_disk_iops = {
-      enabled            = try(var.overrides.data_disk_iops.enabled, local.active_profile.data_disk_iops.enabled)
-      warning_threshold  = try(var.overrides.data_disk_iops.warning_threshold, local.active_profile.data_disk_iops.warning_threshold)
-      critical_threshold = try(var.overrides.data_disk_iops.critical_threshold, local.active_profile.data_disk_iops.critical_threshold)
-      window_minutes     = try(var.overrides.data_disk_iops.window_minutes, local.active_profile.data_disk_iops.window_minutes)
+      enabled            = coalesce(try(var.overrides.data_disk_iops.enabled, null), local.active_profile.data_disk_iops.enabled)
+      warning_threshold  = coalesce(try(var.overrides.data_disk_iops.warning_threshold, null), local.active_profile.data_disk_iops.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.data_disk_iops.critical_threshold, null), local.active_profile.data_disk_iops.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.data_disk_iops.window_minutes, null), local.active_profile.data_disk_iops.window_minutes)
     }
     disk_free = {
-      enabled            = try(var.overrides.disk_free.enabled, local.active_profile.disk_free.enabled)
-      warning_threshold  = try(var.overrides.disk_free.warning_threshold, local.active_profile.disk_free.warning_threshold)
-      critical_threshold = try(var.overrides.disk_free.critical_threshold, local.active_profile.disk_free.critical_threshold)
-      window_minutes     = try(var.overrides.disk_free.window_minutes, local.active_profile.disk_free.window_minutes)
+      enabled            = coalesce(try(var.overrides.disk_free.enabled, null), local.active_profile.disk_free.enabled)
+      warning_threshold  = coalesce(try(var.overrides.disk_free.warning_threshold, null), local.active_profile.disk_free.warning_threshold)
+      critical_threshold = coalesce(try(var.overrides.disk_free.critical_threshold, null), local.active_profile.disk_free.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.disk_free.window_minutes, null), local.active_profile.disk_free.window_minutes)
     }
     availability = {
-      enabled            = try(var.overrides.availability.enabled, local.active_profile.availability.enabled)
-      critical_threshold = try(var.overrides.availability.critical_threshold, local.active_profile.availability.critical_threshold)
-      window_minutes     = try(var.overrides.availability.window_minutes, local.active_profile.availability.window_minutes)
+      enabled            = coalesce(try(var.overrides.availability.enabled, null), local.active_profile.availability.enabled)
+      critical_threshold = coalesce(try(var.overrides.availability.critical_threshold, null), local.active_profile.availability.critical_threshold)
+      window_minutes     = coalesce(try(var.overrides.availability.window_minutes, null), local.active_profile.availability.window_minutes)
     }
   }
 
   # Common tags
   common_tags = merge(var.tags, {
     managed-by     = "terraform"
-    module-version = "1.0.0"
+    module-version = "1.0.1"
   })
 }
