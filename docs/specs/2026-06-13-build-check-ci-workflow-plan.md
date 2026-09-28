@@ -1,7 +1,8 @@
 ---
 title: build-check CI workflow implementation plan
 date: 2026-06-13
-status: draft
+status: active
+version: 1.0
 ---
 
 # build-check CI Workflow Implementation Plan

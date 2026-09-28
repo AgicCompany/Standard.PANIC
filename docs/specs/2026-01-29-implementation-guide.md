@@ -1,3 +1,12 @@
+---
+title: Azure Monitoring Framework implementation guide (v2)
+date: 2026-09-28
+status: superseded
+version: 1.1
+---
+
+> **Superseded.** This is the original design document, kept for history. It describes a plan (one repository per module, VMSS support, evaluation periods, extra override fields) that differs from what was built. For current behavior see [Concepts](../concepts.md), [Thresholds](../thresholds.md) and [Modules](../modules.md).
+
 # Azure Monitoring Framework - Implementation Guide
 
 ## Document Information
