@@ -1,8 +1,8 @@
 ---
 title: vmss alert module
 date: 2026-09-28
-status: draft
-version: 0.2
+status: active
+version: 1.0
 ---
 
 # vmss alert module
