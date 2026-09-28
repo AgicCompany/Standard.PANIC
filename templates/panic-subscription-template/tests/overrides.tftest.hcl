@@ -42,3 +42,34 @@ run "mixed_override_shapes" {
     error_message = "vm-cpu must keep its cpu warning override"
   }
 }
+
+run "mixed_override_shapes_storage" {
+  command = plan
+
+  variables {
+    enable_storage_alerts = true
+    storage_accounts = {
+      st-latency = {
+        resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Storage/storageAccounts/stlatency"
+        overrides   = { latency = { warning_threshold = 500 } }
+      }
+      st-avail = {
+        resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Storage/storageAccounts/stavail"
+        overrides   = { availability = { enabled = false } }
+      }
+      st-plain = {
+        resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Storage/storageAccounts/stplain"
+      }
+    }
+  }
+
+  assert {
+    condition     = length(module.storage_account_alerts) == 3
+    error_message = "all three storage accounts must get an alert module instance"
+  }
+
+  assert {
+    condition     = module.storage_account_alerts["st-latency"].resolved_thresholds.latency.warning_threshold == 500
+    error_message = "st-latency must keep its latency warning override"
+  }
+}
