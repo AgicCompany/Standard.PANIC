@@ -4,35 +4,24 @@
 
 # PANIC - Azure Monitoring Framework
 
-Profile-based Azure monitoring with Terraform. Standardized alerting across 21 Azure resource types, plus a shared base module.
+Terraform modules that create Azure Monitor metric alerts from predefined profiles.
 
-## Key Features
+You point a module at an Azure resource and choose a profile: `standard` or `critical`. The module creates a warning alert and a critical alert for each metric that matters for that resource type. You can override any threshold without giving up the rest of the profile.
 
-- **Profile-based configuration** - Standard and Critical profiles with predefined thresholds
-- **Modular design** - Independent, versioned modules per resource type
-- **Override mechanism** - Customize any metric while keeping profile defaults
-- **Terraform native** - Deploy alerts as code with remote state support
+- 21 resource modules, from VMs and SQL to AKS and Service Bus, plus a generic `base` module for single alerts.
+- Alerts live in their own Terraform layer, separate from the resources they watch.
+- Each module is versioned on its own, so upgrading one never forces another.
 
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Getting Started](docs/getting-started.md) | Prerequisites and quick start guide |
-| [Subscription Template](templates/panic-subscription-template/) | Deploy alerts across a subscription |
-| [Modules](docs/modules.md) | Full list of available resource modules |
-| [Profiles](docs/profiles.md) | Profile system and threshold overview |
-| [Architecture](docs/architecture.md) | Framework design and override mechanism |
-| [Implementation Guide](docs/implementation-v2.md) | Complete technical reference |
-
-## Quick Example
+## Quick example
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.1"
 
-  resource_id    = azurerm_virtual_machine.example.id
-  resource_name  = "myapp-vm01"
-  profile        = "critical"
+  resource_id         = azurerm_linux_virtual_machine.app.id
+  resource_name       = "myapp-vm01"
+  resource_group_name = "rg-monitoring-prod"
+  profile             = "critical"
 
   action_group_ids = {
     critical = azurerm_monitor_action_group.critical.id
@@ -41,17 +30,32 @@ module "vm_alerts" {
 }
 ```
 
-## Repository Structure
+This creates alert rules such as `myapp-vm01-cpu-warn` and `myapp-vm01-cpu-crit` in `rg-monitoring-prod`.
+
+## Documentation
+
+| I want to... | Read |
+|--------------|------|
+| Deploy my first alerts | [Getting started](docs/getting-started.md) |
+| Understand profiles, overrides and naming | [Concepts](docs/concepts.md) |
+| Find the module for a resource type | [Modules](docs/modules.md) |
+| See every metric and threshold | [Thresholds](docs/thresholds.md) |
+| Monitor a whole subscription | [Subscription template](docs/subscription-template.md) |
+| Pin or upgrade module versions | [Versioning](docs/versioning.md) |
+| Change or add a module | [Contributing](docs/contributing.md) |
+
+Each module also has its own README under `modules/<name>/`, with runnable examples in `modules/<name>/examples/`.
+
+## Repository layout
 
 ```
-Standard.PANIC/
-├── modules/              # Alert modules (22 resource types)
-├── docs/                 # Documentation
-├── templates/            # Deployment templates
-│   └── panic-subscription-template/  # Full subscription monitoring
-├── bootstrap/            # Terraform state backend setup
-├── prerequisites/        # Log Analytics + Action Groups
-└── deployments/          # Example alert deployments
+modules/        one alert module per resource type, plus base/
+templates/      panic-subscription-template: all modules behind feature switches
+bootstrap/      storage account for Terraform remote state
+prerequisites/  monitoring resource group, Log Analytics, action groups
+deployments/    worked examples that use the modules from this repo
+test-resources/ throwaway Azure resources to aim alerts at while testing
+docs/           guides and reference; docs/specs/ holds design records
 ```
 
 ## License

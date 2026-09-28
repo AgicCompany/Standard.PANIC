@@ -306,6 +306,6 @@ Alert rule IDs are grouped by resource type:
 ## Related Documentation
 
 - [PANIC Framework](https://github.com/AgicCompany/Standard.PANIC)
-- [Profile System](../../docs/profiles.md)
-- [Architecture](../../docs/architecture.md)
-- [Implementation Guide](../../docs/implementation-v2.md)
+- [Subscription template design](../../docs/subscription-template.md)
+- [Concepts: profiles and overrides](../../docs/concepts.md)
+- [Thresholds](../../docs/thresholds.md)

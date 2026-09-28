@@ -1,134 +1,95 @@
-# Getting Started
+---
+title: Getting started
+date: 2026-09-28
+status: draft
+version: 0.1
+---
 
-This guide walks you through deploying PANIC alerts for your Azure resources.
+# Getting started
 
-## Prerequisites
+This guide takes you from an empty subscription to your first working alerts.
 
-Before deploying alert modules, ensure you have:
+If you already have remote state storage and action groups, skip to [step 3](#3-deploy-alerts).
 
-| Component | Purpose | Notes |
-|-----------|---------|-------|
-| Log Analytics Workspace | Destination for metrics | Required for guest metrics |
-| Azure Monitor Agent | Guest metrics collection | Required for VM memory/disk |
-| Data Collection Rules | Metric routing | Must target Log Analytics |
-| Action Groups | Alert notifications | Created separately |
+## What you need
 
-## Quick Start
+- Terraform 1.3 or later.
+- The `azurerm` provider. Modules accept `>= 3.0`; the subscription template needs `~> 4.0`.
+- Azure permissions:
 
-### 1. Deploy Bootstrap (State Backend)
+  | Scope | Role |
+  |-------|------|
+  | Resource group that holds the alerts | Monitoring Contributor |
+  | Resources you monitor | Monitoring Reader |
+  | Action groups | Reader |
+  | State storage account | Storage Blob Data Contributor |
 
-Set up remote state storage for Terraform:
+- For VM guest metrics (memory, disk free space): Azure Monitor Agent and a data collection rule on each VM. These alerts are off by default.
+
+## 1. Create remote state storage
+
+`bootstrap/` creates a resource group, a storage account and a container for Terraform state. It keeps its own state locally.
 
 ```bash
 cd bootstrap
+cp terraform.tfvars.example terraform.tfvars   # set subscription_id, names, location
 terraform init
 terraform apply
+terraform output backend_config                # backend block to reuse below
 ```
 
-### 2. Deploy Prerequisites
+## 2. Create action groups
 
-Create Log Analytics Workspace and Action Groups:
+`prerequisites/` creates the monitoring resource group, a Log Analytics workspace, and two email action groups: one for critical alerts, one for warnings.
+
+The `backend "azurerm"` block in `prerequisites/main.tf` points at the maintainers' dev storage account. Replace it with the values from step 1 before you run `init`.
 
 ```bash
 cd prerequisites
-terraform init
-terraform apply -var-file=terraform.tfvars
-```
-
-### 3. Deploy Alerts
-
-Deploy monitoring for your resources:
-
-```bash
-cd deployments/dev-storage-alerts
+cp terraform.tfvars.example terraform.tfvars   # set names and email receivers
 terraform init
 terraform apply
+terraform output action_group_ids
 ```
 
-## Module Source URLs
+You can skip this step if your organization already has action groups. The modules only need their resource IDs.
 
-PANIC modules live in subdirectories of a single Git repository. Terraform uses `//` to separate the repository URL from the subdirectory path:
+## 3. Deploy alerts
 
-```
-git::https://github.com/AgicCompany/Standard.PANIC.git  //  modules/storage  ?ref=storage/v1.0.0
-└─ repository URL                                        └─ subdirectory     └─ version tag
-```
-
-Each module is versioned independently using tags in the format `{module}/v{semver}`. For example, `storage/v1.0.0` and `vm/v1.2.0` can coexist — updating one module does not require updating others.
-
-## Basic Usage
+Create a Terraform root for your alerts and call one module per monitored resource:
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.1"
 
-  resource_id    = azurerm_storage_account.example.id
-  resource_name  = "mystorageaccount"
-  profile        = "standard"
-
-  action_group_ids = {
-    critical = azurerm_monitor_action_group.critical.id
-    warning  = azurerm_monitor_action_group.warning.id
-  }
-}
-```
-
-## Using Overrides
-
-Customize specific metrics while keeping profile defaults:
-
-```hcl
-module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.0"
-
-  resource_id    = azurerm_virtual_machine.batch.id
-  resource_name  = "batch-processor"
-  profile        = "standard"
+  resource_id         = azurerm_storage_account.data.id
+  resource_name       = "stproddata01"
+  resource_group_name = "rg-monitoring-prod"
+  profile             = "standard"
 
   action_group_ids = {
-    critical = azurerm_monitor_action_group.critical.id
-    warning  = azurerm_monitor_action_group.warning.id
-  }
-
-  overrides = {
-    cpu = {
-      warning_threshold  = 95  # Higher threshold for batch workloads
-      critical_threshold = 99
-    }
-    memory = {
-      enabled = false  # Disable memory alerts
-    }
+    critical = "/subscriptions/.../actionGroups/ag-prod-critical"
+    warning  = "/subscriptions/.../actionGroups/ag-prod-warning"
   }
 }
 ```
 
-## State Management
-
-Use remote state for team collaboration:
-
-```hcl
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "rg-terraform-state"
-    storage_account_name = "stterraformstate"
-    container_name       = "tfstate"
-    key                  = "monitoring/prod.tfstate"
-  }
-}
+```bash
+terraform init
+terraform plan
+terraform apply
 ```
 
-## Subscription Template
+Check the result in the Azure portal under **Monitor > Alerts > Alert rules**, filtered by your monitoring resource group.
 
-For deploying alerts across an entire subscription, use the [Subscription Template](../templates/panic-subscription-template/). It provides:
+For working roots that read action groups from remote state, see `deployments/dev-storage-alerts/` and `deployments/appgateway-alerts/`. They use local module paths and hardcoded dev backends, so copy the pattern, not the files.
 
-- Feature switches to enable/disable resource types
-- Inventory-based configuration in tfvars
-- Single state file per subscription
+## Many resources at once
 
-See the [template README](../templates/panic-subscription-template/README.md) for details.
+To cover a whole subscription from one `tfvars` file, use the [subscription template](subscription-template.md) instead of writing module blocks by hand.
 
-## Next Steps
+## Next steps
 
-- Review [available modules](modules.md) for your resource types
-- Understand the [profile system](profiles.md)
-- See the [architecture guide](architecture.md) for advanced usage
+- [Concepts](concepts.md): how profiles, overrides and naming work.
+- [Thresholds](thresholds.md): what each module alerts on.
+- [Versioning](versioning.md): how to pin and upgrade modules.

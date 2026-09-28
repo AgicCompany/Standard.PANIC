@@ -1,3 +1,12 @@
+---
+title: Subscription template specification
+date: 2026-09-28
+status: superseded
+version: 1.0
+---
+
+> **Superseded.** This is the design spec for the subscription template, kept for history. Its list of override fields and its VMSS support don't match the code. For current usage see [Subscription template](../subscription-template.md) and the [template README](../../templates/panic-subscription-template/README.md).
+
 # Subscription Template Specification
 
 ## Document Information
