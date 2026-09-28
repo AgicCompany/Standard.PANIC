@@ -2,7 +2,7 @@
 title: vmss alert module
 date: 2026-09-28
 status: active
-version: 1.0
+version: 1.1
 ---
 
 # vmss alert module
@@ -121,10 +121,12 @@ tag.
 6. `overrides = null` creates all 10 alerts. This is what the template passes
    for an entry without overrides, because its `overrides` is
    `optional(map(any))`.
-7. String-typed overrides, the way the template's `map(any)` hands mixed
-   overrides to the module:
+7. String-typed overrides:
    `{ cpu = { warning_threshold = "90" }, memory = { enabled = "false" } }`
-   gives `cpu.warning_threshold == 90` and no memory alerts.
+   gives `cpu.warning_threshold == 90` and no memory alerts. This guards type
+   conversion only. The template's `map(any)` does **not** turn mixed override
+   objects into strings, as v1.0 of this spec assumed: it rejects them before
+   they reach the module (see Known limitation).
 
 CI runs `fmt` and `validate` on the module only. It doesn't run
 `terraform test`, and skips `examples/` and `templates/`. The checks below are
@@ -169,8 +171,24 @@ itself declares `>= 1.3`.
 Between merge and tag, `main` still has a template that fails `init`. That's the
 same state as today, so there's no regression.
 
+## Known limitation (found in final review)
+
+The template declares `overrides = optional(map(any))` for every resource type.
+`map(any)` requires one common element type, so these fail at plan with
+"all map elements must have the same type" or "attribute types must all match":
+
+- one entry whose override objects have different shapes, such as
+  `cpu = { warning_threshold = 95 }` and `memory = { enabled = false }`
+- an entry with overrides next to an entry without them
+
+This affects all resource types and predates this module. It is out of scope
+here (no template changes) and is fixed in a separate change.
+
 ## Review log
 
 - v0.2: independent spec review (plan-verifier) returned READY with
   non-blocking findings only. They are applied here, with no further review
   round.
+- v1.1: final code review found that the template's `map(any)` rejects mixed
+  override shapes (not introduced here). Test 7 wording corrected; limitation
+  recorded; template fix split into its own change.

@@ -36,7 +36,7 @@ version: 0.1
 ## Review Focus
 
 - `overrides = null` (the template's default for an entry without overrides) must create all 10 alerts. Covered by Task 1 test `null_overrides_from_template`.
-- String-typed override values (the template's `map(any)` turns mixed override objects into strings) must convert: `"90"` -> 90, `"false"` -> disabled. Covered by `string_overrides_from_template_map_any`.
+- String-typed override values must convert: `"90"` -> 90, `"false"` -> disabled. (The template's `map(any)` rejects mixed override shapes before they reach the module; that's a separate template bug, see the spec's Known limitation.) Covered by `string_overrides_from_template_map_any`.
 - An override of `0` must be kept, not replaced by the profile value (`coalesce` only skips null). Covered by `zero_threshold_override_is_kept`.
 - An unknown profile (`"gold"`) must fail at plan with the validation message. Covered by `invalid_profile_rejected`.
 - The availability description must not claim a percent. Covered by the description assert in `defaults_create_all_alerts`.
