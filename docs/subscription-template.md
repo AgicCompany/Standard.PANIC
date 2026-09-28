@@ -44,7 +44,3 @@ vms = {
 The template calls modules by git tag, not by local path. To upgrade a module, change the `?ref=` in that resource type's file. See [Versioning](versioning.md).
 
 The template needs Terraform 1.3 or later and `azurerm ~> 4.0`.
-
-## Known issue
-
-`vmss.tf` references `modules/vmss?ref=vmss/v1.0.0`, which doesn't exist. `terraform init` downloads every module source, including those behind switches that are off, so init fails. Until this is fixed, delete `vmss.tf` and the `vmss_alert_ids` output in `outputs.tf` from your copy.

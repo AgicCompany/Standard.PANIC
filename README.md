@@ -8,7 +8,7 @@ Terraform modules that create Azure Monitor metric alerts from predefined profil
 
 You point a module at an Azure resource and choose a profile: `standard` or `critical`. The module creates a warning alert and a critical alert for each metric that matters for that resource type. You can override any threshold without giving up the rest of the profile.
 
-- 21 resource modules, from VMs and SQL to AKS and Service Bus, plus a generic `base` module for single alerts.
+- 22 resource modules, from VMs and SQL to AKS and Service Bus, plus a generic `base` module for single alerts.
 - Alerts live in their own Terraform layer, separate from the resources they watch.
 - Each module is versioned on its own, so upgrading one never forces another.
 

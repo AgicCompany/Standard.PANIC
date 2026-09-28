@@ -50,7 +50,7 @@ Every resource module has the same files:
 
 There are two styles in the codebase:
 
-| | Original modules (`vm`, `storage`, `appservice`, `postgresql`) | The other 17 |
+| | Original modules (`vm`, `storage`, `appservice`, `postgresql`) | The other 18 |
 |---|---|---|
 | Namespace | per metric, in `local.metrics` | one `local.metric_namespace` |
 | Severity and frequency | `local.defaults` | written in `main.tf` |
@@ -108,8 +108,7 @@ Worth fixing when you touch these modules:
 
 - `vm` `memory` alerts on "Available Memory Bytes" with percent thresholds (15/10). Enabling it as-is gives wrong alerts. `disk_free` needs checking too: guest metrics may not be published under `Microsoft.Compute/virtualMachines`.
 - Tags differ: all modules set `managed-by = terraform`; 4 add `module-version`; `appgateway`, `disk`, `expressroute`, `firewall`, `lb`, `vpngw` add `profile` and `severity`.
-- Modules declare `terraform >= 1.0`, but `optional()` in `overrides` needs 1.3.
-- `templates/panic-subscription-template/vmss.tf` references a module that doesn't exist.
+- Most modules declare `terraform >= 1.0`, but `optional()` in `overrides` needs 1.3.
 - The `vm` examples use a data source (`azurerm_linux_virtual_machine`) that the azurerm provider doesn't have, so they fail `validate`.
 
 ## Docs

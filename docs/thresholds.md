@@ -266,6 +266,18 @@ Namespace: `Microsoft.Compute/virtualMachines`
 | `disk_free` (off) | `diskfree` | Logical Disk Free Space Percentage | Average | < | 15 | 15 / 10 | 20 / 15 |
 | `availability` | `availability` | VmAvailabilityMetric | Average | < | 1 | - / 1 | - / 1 |
 
+### Virtual Machine Scale Set (`vmss`)
+
+Namespace: `Microsoft.Compute/virtualMachineScaleSets`
+
+| Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
+|---|---|---|---|---|---|---|---|
+| `cpu` | `cpu` | Percentage CPU | Average | > | 5 | 85 / 95 | 75 / 90 |
+| `memory` | `memory` | Available Memory Percentage | Average | < | 5 | 15 / 10 | 20 / 15 |
+| `os_disk_iops` | `osdiskiops` | OS Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
+| `data_disk_iops` | `datadiskiops` | Data Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
+| `availability` | `availability` | VmAvailabilityMetric | Average | < | 5 | 1 / 0.5 | 1 / 0.75 |
+
 ### VPN Gateway (`vpngw`)
 
 Namespace: `Microsoft.Network/virtualNetworkGateways`
