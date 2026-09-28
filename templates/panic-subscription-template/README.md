@@ -140,7 +140,8 @@ All inventory variables default to `{}`.
 "resource-name" = {
   resource_id = string           # Required: Full Azure resource ID
   profile     = optional(string) # Optional: "standard" or "critical"
-  overrides   = optional(map)    # Optional: Metric-specific overrides
+  overrides   = optional(object) # Optional: per-metric overrides, same type as the
+                                 # module's `overrides` (modules/<type>/variables.tf)
 }
 ```
 
