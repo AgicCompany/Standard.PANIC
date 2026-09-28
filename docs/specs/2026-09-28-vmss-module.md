@@ -2,7 +2,7 @@
 title: vmss alert module
 date: 2026-09-28
 status: draft
-version: 0.1
+version: 0.2
 ---
 
 # vmss alert module
@@ -51,6 +51,12 @@ section 8.1.1) are not used, because no such platform metric exists:
 - "Logical Disk Free %" (guest metric).
 - "Unhealthy Instance Count". `availability` below covers it instead.
 
+Orchestration mode: the metrics reference lists these metrics at scale-set
+scope. Microsoft documents that Flexible orchestration supports metrics-based
+autoscale, which reads scale-set-level `Percentage CPU`. It doesn't confirm
+the other four metrics for Flexible. Treat Flexible as expected to work, and
+check it after release (see Release).
+
 ## Metrics and profiles
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
@@ -66,6 +72,8 @@ section 8.1.1) are not used, because no such platform metric exists:
   every instance is available. The warning fires when any instance is
   unavailable. The critical alert fires when more than half of the instances
   (`standard`) or more than a quarter (`critical`) are unavailable.
+- Alert descriptions follow the operator: "exceeded X" for `>` and "below X"
+  for `<`. Percent metrics show `%`; `availability` is a fraction, so no `%`.
 - CPU uses Average across instances because that's the signal autoscale acts
   on. To alert on a single hot instance, use `modules/base` with Maximum.
 - Scale sets without data disks publish no `data_disk_iops` data. The alert
@@ -110,8 +118,19 @@ tag.
    and keeps `critical_threshold = 95` and `window_minutes = 5`.
 4. `cpu = { enabled = false }` removes both CPU alerts.
 5. Module `enabled = false` creates no alerts.
+6. `overrides = null` creates all 10 alerts. This is what the template passes
+   for an entry without overrides, because its `overrides` is
+   `optional(map(any))`.
+7. String-typed overrides, the way the template's `map(any)` hands mixed
+   overrides to the module:
+   `{ cpu = { warning_threshold = "90" }, memory = { enabled = "false" } }`
+   gives `cpu.warning_threshold == 90` and no memory alerts.
 
-Also:
+CI runs `fmt` and `validate` on the module only. It doesn't run
+`terraform test`, and skips `examples/` and `templates/`. The checks below are
+manual; paste their output into the PR description. `mock_provider` needs
+Terraform 1.7 or later to run the tests (CI uses 1.15.2), though the module
+itself declares `>= 1.3`.
 
 - `terraform fmt -check -recursive` and `validate` pass for the module and
   both examples.
@@ -127,15 +146,31 @@ Also:
 - `docs/subscription-template.md`: remove the "Known issue" section.
 - `docs/contributing.md`: remove the `vmss.tf` known-inconsistency line.
 - `README.md`: "21 resource modules" becomes 22.
+- `docs/contributing.md`: "The other 17" becomes "The other 18" (module-style
+  table), and the known-inconsistency line "Modules declare `terraform >= 1.0`"
+  becomes "Most modules declare `terraform >= 1.0`".
+- `docs/concepts.md`: "The other 17 modules were never affected" becomes
+  "The other modules were never affected".
 - `docs/versioning.md`: no change. "Every module is at `v1.0.0` except the
   four at `v1.0.1`" already covers vmss.
 
 ## Release
 
 1. Merge the PR.
-2. Tag `vmss/v1.0.0` on the merge commit and push it.
+2. Tag `vmss/v1.0.0` on the merge commit and push it right after the merge.
+   Until the tag exists, the docs no longer mention the known issue, but the
+   template still fails `init`.
 3. No template change is needed: `vmss.tf` already references `vmss/v1.0.0`.
 4. Verify: `terraform init` + `validate` on an unmodified copy of the template.
+5. When a Flexible-orchestration scale set is available, check in the portal
+   that all five metrics have data at scale-set scope. If some don't, record it
+   in the module README as a limitation.
 
 Between merge and tag, `main` still has a template that fails `init`. That's the
 same state as today, so there's no regression.
+
+## Review log
+
+- v0.2: independent spec review (plan-verifier) returned READY with
+  non-blocking findings only. They are applied here, with no further review
+  round.
