@@ -1,0 +1,981 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    exclude-paths:
+      - ".github/workflows/managed-*"
+      - ".github/workflows/agentics-maintenance.yml"
+      - ".github/workflows/conventional-pr-title.yml"
+      - ".github/workflows/case-rename-policy.yml"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+      github-actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/bootstrap"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/deployments/appgateway-alerts"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/deployments/dev-storage-alerts"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/aks"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/aks/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/aks/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appgateway"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appgateway/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appgateway/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appservice"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appservice/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/appservice/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/base"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/base/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/containerapp"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/containerapp/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/containerapp/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/cosmosdb"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/cosmosdb/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/cosmosdb/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/disk"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/disk/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/disk/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/eventhub"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/eventhub/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/eventhub/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/expressroute"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/expressroute/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/expressroute/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/firewall"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/firewall/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/firewall/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/function"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/function/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/function/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/keyvault"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/keyvault/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/keyvault/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/lb"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/lb/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/lb/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/mysql"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/mysql/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/mysql/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/postgresql"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/postgresql/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/postgresql/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/redis"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/redis/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/redis/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/servicebus"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/servicebus/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/servicebus/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqldb"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqldb/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqldb/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqlmi"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqlmi/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/sqlmi/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/storage"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/storage/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/storage/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vm"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vm/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vm/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vmss"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vmss/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vmss/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vpngw"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vpngw/examples/critical-with-overrides"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/vpngw/examples/standard"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/prerequisites"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/templates/panic-subscription-template"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  - package-ecosystem: "terraform"
+    directory: "/test-resources"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+      terraform-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
