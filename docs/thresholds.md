@@ -260,7 +260,7 @@ Namespace: `Microsoft.Compute/virtualMachines`
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
 | `cpu` | `cpu` | Percentage CPU | Average | > | 5 | 85 / 95 | 75 / 90 |
-| `memory` (off) | `memory` | Available Memory Bytes | Average | < | 5 | 15 / 10 | 20 / 15 |
+| `memory` (off) | `memory` | Available Memory Percentage | Average | < | 5 | 15 / 10 | 20 / 15 |
 | `os_disk_iops` | `osdiskiops` | OS Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
 | `data_disk_iops` | `datadiskiops` | Data Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
 | `disk_free` (off) | `diskfree` | Logical Disk Free Space Percentage | Average | < | 15 | 15 / 10 | 20 / 15 |
