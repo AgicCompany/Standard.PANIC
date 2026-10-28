@@ -32,9 +32,11 @@ module "disk_alerts" {
 
   # Stricter IOPS thresholds for production data disk
   overrides = {
+    # P30 disk: 5,000 IOPS limit, thresholds in read ops/sec
     iops_consumed = {
-      warning_threshold  = 80
-      critical_threshold = 95
+      enabled            = true
+      warning_threshold  = 4000
+      critical_threshold = 4750
     }
   }
 

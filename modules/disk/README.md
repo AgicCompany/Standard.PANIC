@@ -14,20 +14,23 @@ Terraform module for Azure Managed Disk monitoring alerts using the PANIC framew
 
 - Profile-based alerting (standard/critical)
 - Override mechanism for metric-specific customization
-- Burst credit monitoring for Premium SSD disks
 - Automatic severity-based action group routing
 
 ## Monitored Metrics
 
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
-| IOPS Consumed | Disk IOPS utilization % | > 85% | > 95% | > 75% | > 90% |
-| Bandwidth Consumed | Disk throughput utilization % | > 85% | > 95% | > 75% | > 90% |
-| Queue Depth | I/O queue depth (saturation) | > 32 | > 64 | > 16 | > 32 |
-| Burst BPS Credits | Remaining burst bandwidth credits | < 20% | < 10% | < 30% | < 20% |
-| Burst IO Credits | Remaining burst IOPS credits | < 20% | < 10% | < 30% | < 20% |
+| IOPS Consumed | Disk read operations/sec (disabled) | Override required | Override required | Override required | Override required |
+| Bandwidth Consumed | Disk read bytes/sec (disabled) | Override required | Override required | Override required | Override required |
+| Queue Depth | Not available (disabled) | - | - | - | - |
+| Burst BPS Credits | Not available (disabled) | - | - | - | - |
+| Burst IO Credits | Not available (disabled) | - | - | - | - |
 
-**Note:** Burst credit metrics are disabled by default and should only be enabled for disks with bursting capabilities (Premium SSD with on-demand bursting).
+**All alerts are disabled by default.** `Microsoft.Compute/disks` only exposes raw rate metrics (read/write operations per second, read/write bytes per second) and `DiskPaidBurstIOPS`. It has no percentage, queue depth, or burst credit metrics ([supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-compute-disks-metrics)).
+
+- `iops_consumed` and `bandwidth_consumed` work if you enable them with raw thresholds sized to the disk's limits (operations/sec and bytes/sec).
+- `queue_depth`, `burst_bps_credits` and `burst_io_credits` do not work: queue depth would alert on read operations/sec, and the burst metrics do not exist on disks. Do not enable them.
+- For percentage-based disk monitoring (IOPS, bandwidth, queue depth, burst credits), use the VM-level `OS Disk ...` / `Data Disk ...` metrics. The [`vm`](../vm/) module covers `OS Disk IOPS Consumed Percentage` and `Data Disk IOPS Consumed Percentage`.
 
 ## Usage
 
@@ -48,7 +51,7 @@ module "disk_alerts" {
 }
 ```
 
-### Critical Profile with Burst Monitoring
+### Critical Profile with Raw Thresholds
 
 ```hcl
 module "disk_alerts" {
@@ -64,15 +67,17 @@ module "disk_alerts" {
     warning  = azurerm_monitor_action_group.warning.id
   }
 
+  # P30 disk: 5,000 IOPS and 200 MB/s limits
   overrides = {
-    burst_bps_credits = {
-      enabled = true  # Enable for Premium SSD with bursting
+    iops_consumed = {
+      enabled            = true
+      warning_threshold  = 3750 # read ops/sec, 75% of 5,000
+      critical_threshold = 4500 # 90%
     }
-    burst_io_credits = {
-      enabled = true
-    }
-    queue_depth = {
-      enabled = false  # Disable if not needed
+    bandwidth_consumed = {
+      enabled            = true
+      warning_threshold  = 157286400 # read bytes/sec, 75% of 200 MiB/s
+      critical_threshold = 188743680 # 90%
     }
   }
 }
@@ -109,9 +114,8 @@ module "disk_alerts" {
 
 ## Notes
 
-- **Burst credit metrics** are only available on Premium SSD disks with bursting enabled. Keep these disabled for other disk types.
-- **Queue depth** monitoring may not be available on all disk SKUs.
-- For percentage-based IOPS/bandwidth monitoring relative to disk limits, consider using VM-level metrics (`Data Disk IOPS Consumed Percentage`, `Data Disk Bandwidth Consumed Percentage`).
+- The IOPS and bandwidth alerts only watch **read** operations and bytes (`Composite Disk Read ...`), not writes.
+- See the note under Monitored Metrics for which alerts are usable.
 
 ## License
 

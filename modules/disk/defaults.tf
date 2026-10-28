@@ -5,32 +5,35 @@ locals {
     iops_consumed = {
       name        = "Composite Disk Read Operations/sec"
       aggregation = "Average"
-      description = "Disk IOPS consumed percentage"
-      # Note: Uses combined read+write operations. For percentage-based monitoring,
-      # consider using VM-level metrics (Data Disk IOPS Consumed Percentage)
+      description = "Disk read operations per second"
+      # Raw rate, not a percentage. For percentage-based monitoring use the VM-level
+      # metrics (Data Disk IOPS Consumed Percentage) via the vm module
     }
     bandwidth_consumed = {
       name        = "Composite Disk Read Bytes/sec"
       aggregation = "Average"
-      description = "Disk bandwidth consumed percentage"
-      # Note: Uses combined read+write bytes. For percentage-based monitoring,
-      # consider using VM-level metrics (Data Disk Bandwidth Consumed Percentage)
+      description = "Disk read bytes per second"
+      # Raw rate, not a percentage. For percentage-based monitoring use the VM-level
+      # metrics (Data Disk Bandwidth Consumed Percentage)
     }
     queue_depth = {
       name        = "Composite Disk Read Operations/sec"
       aggregation = "Average"
       description = "Disk I/O queue depth (saturation indicator)"
-      # Note: Queue depth metric may not be directly available on all disk types
+      # Microsoft.Compute/disks has no queue depth metric; this duplicates
+      # iops_consumed and is disabled. Queue depth exists only at VM level.
     }
     burst_bps_credits = {
       name        = "BurstBPSCreditsPercent"
       aggregation = "Average"
       description = "Remaining burst bandwidth credits percentage"
+      # Not a Microsoft.Compute/disks metric: enabling fails. VM level only.
     }
     burst_io_credits = {
       name        = "BurstIOCreditsPercent"
       aggregation = "Average"
       description = "Remaining burst IOPS credits percentage"
+      # Not a Microsoft.Compute/disks metric: enabling fails. VM level only.
     }
   }
 
