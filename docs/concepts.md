@@ -48,7 +48,7 @@ overrides = {
 }
 ```
 
-Each metric accepts these fields:
+Most metrics accept these four fields (critical-only metrics have no `warning_threshold`, see below):
 
 | Field | Type | Meaning |
 |-------|------|---------|
