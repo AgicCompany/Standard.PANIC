@@ -7,7 +7,7 @@ version: 0.1
 
 # Versioning
 
-Each module has its own version. Tags use the form `<module>/v<semver>`, for example `vm/v1.0.0` or `storage/v1.2.0`. Upgrading `vm` never forces a change to `storage`.
+Each module has its own version. Tags use the form `<module>/v<semver>`, for example `vm/v1.0.1` or a hypothetical future `storage/v1.2.0`. Upgrading `vm` never forces a change to `storage`.
 
 ## Pinning a module
 

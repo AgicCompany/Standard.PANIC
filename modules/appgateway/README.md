@@ -23,7 +23,7 @@ Terraform module for Azure Application Gateway monitoring alerts using the PANIC
 |--------|-------------|---------------|---------------|---------------|---------------|
 | Unhealthy Hosts | Number of unhealthy backend hosts | >= 1 | >= 2 | >= 1 | >= 1 |
 | Backend 5xx | Backend HTTP 5xx response count | > 10 | > 50 | > 5 | > 25 |
-| CPU | CPU utilization percentage | > 80% | > 95% | > 70% | > 90% |
+| CPU | CPU utilization percentage (disabled) | > 80% | > 95% | > 70% | > 90% |
 | Capacity Units | Capacity units consumed | > 70 | > 90 | > 60 | > 80 |
 | Failed Requests | Count of failed requests | > 50 | > 200 | > 25 | > 100 |
 | Response 5xx | HTTP 5xx response from gateway | > 10 | > 50 | > 5 | > 25 |
