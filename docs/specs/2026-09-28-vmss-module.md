@@ -1,11 +1,13 @@
 ---
 title: vmss alert module
-date: 2026-09-29
-status: active
-version: 1.2
+date: 2026-10-28
+status: implemented
+version: 1.3
 ---
 
 # vmss alert module
+
+> **Implemented.** Shipped in [`modules/vmss/`](../../modules/vmss/). This document describes the state before the change; statements that something does not exist yet are historical.
 
 ## Problem
 

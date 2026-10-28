@@ -1,11 +1,13 @@
 ---
 title: vmss alert module implementation plan
-date: 2026-09-28
-status: draft
-version: 0.1
+date: 2026-10-28
+status: implemented
+version: 0.2
 ---
 
 # vmss Alert Module Implementation Plan
+
+> **Implemented.** Shipped in [`modules/vmss/`](../../modules/vmss/). This document describes the state before the change; statements that something does not exist yet are historical.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
