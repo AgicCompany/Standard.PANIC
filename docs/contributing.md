@@ -1,7 +1,7 @@
 ---
 title: Contributing
 date: 2026-09-28
-status: draft
+status: active
 version: 0.1
 ---
 
@@ -28,6 +28,14 @@ Some modules have tests in `tests/*.tftest.hcl`. They plan against a mock provid
 ```bash
 terraform -chdir=modules/vm init -backend=false
 terraform -chdir=modules/vm test
+```
+
+These folders have tests: `modules/appservice`, `modules/disk`, `modules/postgresql`, `modules/sqlmi`, `modules/storage`, `modules/vm`, `modules/vmss` and `templates/panic-subscription-template`. To run all of them:
+
+```bash
+for d in $(dirname $(ls modules/*/tests/*.tftest.hcl templates/*/tests/*.tftest.hcl) | sed 's#/tests$##' | sort -u); do
+  terraform -chdir=$d init -backend=false -input=false >/dev/null && terraform -chdir=$d test || echo "FAILED: $d"
+done
 ```
 
 CI doesn't run them yet, so run them when you touch a module that has them. When you change how a module resolves overrides, add or extend its test.
