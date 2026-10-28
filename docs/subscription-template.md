@@ -43,4 +43,35 @@ vms = {
 
 The template calls modules by git tag, not by local path. To upgrade a module, change the `?ref=` in that resource type's file. See [Versioning](versioning.md).
 
+## Upgrading a copied template
+
+Your copy has two kinds of files:
+
+- **Upstream files**: every `*.tf` file, `*.example` file and `tests/`. They come from this repo and you shouldn't need to edit them.
+- **Your files**: `backend.tf` and `terraform.tfvars`. They hold your settings and inventory and only exist in your copy.
+
+To bring your copy up to date with this repo:
+
+1. Find the commit you copied from. If you didn't record it, compare your `*.tf` files with the template's history to find it. Record the new commit this time, for example in your commit message.
+2. See what changed since then:
+
+   ```bash
+   git -C <path-to-Standard.PANIC> diff <old-commit> origin/main -- templates/panic-subscription-template/
+   ```
+
+3. Check every module whose `?ref=` changed. A new major version (`v1.x` to `v2.0.0`) can change defaults. Read that module's README and its tags in [Versioning](versioning.md#upgrading). For example, `sqlmi/v2.0.0` and `disk/v2.0.0` turned some alerts off by default, so overrides that only set thresholds now also need `enabled = true`.
+4. Copy the upstream files over your copy. Don't overwrite `backend.tf` or `terraform.tfvars`.
+5. Compare `terraform.tfvars.example` with your `terraform.tfvars`, and add any new or renamed variables and override fields.
+6. Download the new module versions and check the result:
+
+   ```bash
+   terraform init -upgrade
+   terraform validate
+   terraform plan
+   ```
+
+   `-upgrade` can also move providers to a newer version allowed by `versions.tf`. The template's `.gitignore` excludes `.terraform.lock.hcl`, so provider versions are not pinned by a lock file unless you remove that entry.
+
+7. Read the plan before applying. Updates in place are normal. A destroy or a replace means an alert was removed or renamed, so check it against the module's changes before you `terraform apply`.
+
 The template needs Terraform 1.3 or later and `azurerm ~> 4.0`.
