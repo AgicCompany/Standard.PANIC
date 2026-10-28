@@ -1,7 +1,7 @@
 ---
 title: Concepts
 date: 2026-09-28
-status: draft
+status: active
 version: 0.1
 ---
 
@@ -48,7 +48,7 @@ overrides = {
 }
 ```
 
-Each metric accepts exactly these fields:
+Most metrics accept these four fields (critical-only metrics have no `warning_threshold`, see below):
 
 | Field | Type | Meaning |
 |-------|------|---------|
@@ -61,7 +61,7 @@ Severity, aggregation, operator and frequency are fixed per module and can't be 
 
 The metric keys (`cpu`, `data_disk_iops`, ...) differ per module. Look them up in the "Override key" column of [Thresholds](thresholds.md). A key that isn't in the module's list is silently ignored, so check the spelling.
 
-A few metrics only have a critical alert, for example VM `availability` and App Service `health_check`. For those, only `critical_threshold` matters.
+Five metrics only have a critical alert: `vm` `availability`, `appservice` `health_check`, `lb` `health_probe_status`, `vpngw` `tunnel_status` and `postgresql` `availability`. Their override object has no `warning_threshold` field, only `enabled`, `critical_threshold` and `window_minutes`.
 
 > **On `v1.0.0` of `vm`, `storage`, `appservice` or `postgresql`:** a partial override silently disables that metric. For example, `cpu = { warning_threshold = 90 }` removes the CPU alerts. Upgrade to `v1.0.1`, or set all four fields when you override a metric. The other modules were never affected.
 
@@ -69,7 +69,7 @@ To turn off every alert from a module without removing it, set `enabled = false`
 
 ## What each alert looks like
 
-For each enabled metric, a module creates two `azurerm_monitor_metric_alert` resources:
+For each enabled metric, a module creates two `azurerm_monitor_metric_alert` resources, a warning and a critical one. The five critical-only metrics listed under [Overrides](#overrides) create just the critical one.
 
 | | Warning | Critical |
 |---|---------|----------|
