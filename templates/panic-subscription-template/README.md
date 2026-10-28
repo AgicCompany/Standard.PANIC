@@ -267,6 +267,10 @@ When deploying to a new subscription:
 1. Set feature switch to `false`
 2. Run `terraform apply` (removes all alerts for that type)
 
+### Upgrading From Upstream
+
+To pull template changes from Standard.PANIC into your copy, follow [Upgrading a copied template](../../docs/subscription-template.md#upgrading-a-copied-template).
+
 ## Outputs
 
 Alert rule IDs are grouped by resource type:
