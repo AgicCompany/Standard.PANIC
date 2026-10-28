@@ -61,7 +61,7 @@ If you cannot verify a claim against the codebase or official Terraform/Azure Mo
 Single source of truth: every rule, threshold table, or input specification lives in one canonical place. Link to it instead of restating it:
 
 - `docs/thresholds.md` owns the full metric and threshold tables; `docs/modules.md` and `docs/concepts.md` link to its anchors.
-- `docs/concepts.md` owns common module inputs/outputs and override semantics; `docs/modules.md` links to `concepts.md#common-inputs-and-outputs`.
+- `docs/modules.md` owns the common module input/output reference tables (`#common-inputs-and-outputs`); `docs/concepts.md` explains override semantics and links to `modules.md#common-inputs-and-outputs` for the interface details.
 - `templates/panic-subscription-template/README.md` owns the full template variable and inventory reference; `docs/subscription-template.md` explains the design and links to the template README.
 - End pages in `docs/` with a short reference or link to related pages across quadrants.
 
