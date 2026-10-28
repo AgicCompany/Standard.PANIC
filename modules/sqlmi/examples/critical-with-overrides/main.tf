@@ -37,8 +37,10 @@ module "sqlmi_alerts" {
       critical_threshold = 85
     }
     storage = {
-      warning_threshold  = 75
-      critical_threshold = 90
+      # 512 GB reserved storage, thresholds in MB (75% / 90%)
+      enabled            = true
+      warning_threshold  = 393216
+      critical_threshold = 471859
     }
   }
 

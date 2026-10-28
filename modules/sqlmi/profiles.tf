@@ -8,7 +8,7 @@ locals {
         window_minutes     = 5
       }
       storage = {
-        enabled            = true
+        enabled            = false # Raw MB metric: enable and set thresholds from reserved storage
         warning_threshold  = 80
         critical_threshold = 90
         window_minutes     = 15
@@ -35,7 +35,7 @@ locals {
         window_minutes     = 5
       }
       storage = {
-        enabled            = true
+        enabled            = false # Raw MB metric: enable and set thresholds from reserved storage
         warning_threshold  = 70
         critical_threshold = 85
         window_minutes     = 15

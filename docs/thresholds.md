@@ -238,7 +238,7 @@ Namespace: `Microsoft.Sql/managedInstances`
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
 | `cpu` | `cpu` | avg_cpu_percent | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `storage` | `storage` | storage_space_used_mb | Average | > | 15 | 80 / 90 | 70 / 85 |
+| `storage` (off) | `storage` | storage_space_used_mb | Average | > | 15 | 80 / 90 | 70 / 85 |
 | `io_requests` | `iops` | io_requests | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `io_bytes` | `iothroughput` | io_bytes_read | Average | > | 5 | 80 / 95 | 70 / 90 |
 
