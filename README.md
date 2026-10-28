@@ -43,6 +43,7 @@ This creates alert rules such as `myapp-vm01-cpu-warn` and `myapp-vm01-cpu-crit`
 | Monitor a whole subscription | [Subscription template](docs/subscription-template.md) |
 | Pin or upgrade module versions | [Versioning](docs/versioning.md) |
 | Change or add a module | [Contributing](docs/contributing.md) |
+| See all pages and design records | [Documentation index](docs/README.md) |
 
 Each module also has its own README under `modules/<name>/`, with runnable examples in `modules/<name>/examples/`.
 

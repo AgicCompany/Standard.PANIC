@@ -44,3 +44,9 @@ vms = {
 The template calls modules by git tag, not by local path. To upgrade a module, change the `?ref=` in that resource type's file. See [Versioning](versioning.md).
 
 The template needs Terraform 1.3 or later and `azurerm ~> 4.0`.
+
+## See also
+
+- [Template README](../templates/panic-subscription-template/README.md): full variable and inventory reference.
+- [Versioning](versioning.md): how module tags and upgrades work.
+- [Concepts](concepts.md): profiles and overrides used in the inventory.

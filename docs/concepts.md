@@ -116,3 +116,9 @@ These aren't enforced by the modules, but the examples and templates follow them
 - One monitoring resource group per environment, such as `rg-monitoring-prod` and `rg-monitoring-dev`.
 - Action groups named `ag-{environment}-{critical|warning}`.
 - `resource_name` equal to the monitored resource's own name, so alert names read naturally.
+
+## See also
+
+- [Modules](modules.md): which module to use and its common inputs and outputs.
+- [Thresholds](thresholds.md): the override keys and default values per module.
+- [Getting started](getting-started.md): these concepts applied to one VM.

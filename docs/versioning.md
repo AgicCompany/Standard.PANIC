@@ -51,3 +51,8 @@ git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
 After changing a `?ref=`, run `terraform init -upgrade` to fetch the new version, then `plan` and check the diff.
 
 Releasing a new version is covered in [Contributing](contributing.md#releasing-a-module).
+
+## See also
+
+- [Subscription template](subscription-template.md#upgrading-a-copied-template): upgrade a copied template.
+- [Contributing](contributing.md#releasing-a-module): release a new version.
