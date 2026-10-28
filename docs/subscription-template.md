@@ -70,7 +70,7 @@ To bring your copy up to date with this repo:
    terraform plan
    ```
 
-   `-upgrade` can also update providers within the `versions.tf` constraints and change `.terraform.lock.hcl`. Commit the lock file if it changed.
+   `-upgrade` can also move providers to a newer version allowed by `versions.tf`. The template's `.gitignore` excludes `.terraform.lock.hcl`, so provider versions are not pinned by a lock file unless you remove that entry.
 
 7. Read the plan before applying. Updates in place are normal. A destroy or a replace means an alert was removed or renamed, so check it against the module's changes before you `terraform apply`.
 

@@ -269,7 +269,7 @@ When deploying to a new subscription:
 
 ### Upgrading From Upstream
 
-To pull template changes from Standard.PANIC into your copy, follow [Upgrading a copied template](../../docs/subscription-template.md#upgrading-a-copied-template).
+To pull template changes from Standard.PANIC into your copy, follow [Upgrading a copied template](https://github.com/AgicCompany/Standard.PANIC/blob/main/docs/subscription-template.md#upgrading-a-copied-template). The link is absolute because your copy does not include `docs/`.
 
 ## Outputs
 
