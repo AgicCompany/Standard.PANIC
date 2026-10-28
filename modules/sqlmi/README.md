@@ -24,7 +24,7 @@ Terraform module for Azure SQL Managed Instance monitoring alerts using the PANI
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
 | CPU % | Average CPU utilization | > 80% | > 95% | > 70% | > 90% |
-| Storage | Storage space used (MB, raw value - see note) | > 80 | > 90 | > 70 | > 85 |
+| Storage | Storage space used in MB (disabled) | Override required | Override required | Override required | Override required |
 | IO Requests | IO operations count | > 80% | > 95% | > 70% | > 90% |
 | IO Bytes | IO throughput (bytes read) | > 80% | > 95% | > 70% | > 90% |
 
@@ -49,6 +49,7 @@ module "sqlmi_alerts" {
   # Example: 256 GB reserved = 262144 MB
   overrides = {
     storage = {
+      enabled            = true
       warning_threshold  = 209715  # 80% of 256 GB
       critical_threshold = 235929  # 90% of 256 GB
     }
@@ -79,6 +80,7 @@ module "sqlmi_alerts" {
     }
     storage = {
       # 512 GB reserved storage
+      enabled            = true
       warning_threshold  = 366001  # 70% of 512 GB
       critical_threshold = 445645  # 85% of 512 GB
     }
@@ -120,7 +122,7 @@ module "sqlmi_alerts" {
 
 ## Notes
 
-- **Storage thresholds**: SQL MI reports storage in MB, not percentage. Calculate thresholds based on your reserved storage size. The default thresholds (80/90 standard, 70/85 critical) are compared to raw MB, so always override them.
+- **Storage thresholds**: SQL MI reports storage in MB, not percentage. Azure Monitor has no percentage storage metric for SQL MI, so the storage alert is disabled by default. Enable it with `enabled = true` and thresholds in MB calculated from your reserved storage.
 - **IO metrics**: Thresholds depend on your SQL MI tier and vCore count. Adjust based on documented limits.
 - **CPU**: vCore-based, monitor closely for Business Critical tier workloads.
 
