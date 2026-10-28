@@ -1,7 +1,7 @@
 ---
 title: Contributing
 date: 2026-09-28
-status: draft
+status: active
 version: 0.1
 ---
 
@@ -30,6 +30,16 @@ terraform -chdir=modules/vm init -backend=false
 terraform -chdir=modules/vm test
 ```
 
+These folders have tests: `modules/appservice`, `modules/disk`, `modules/postgresql`, `modules/sqlmi`, `modules/storage`, `modules/vm`, `modules/vmss` and `templates/panic-subscription-template`. To run all of them:
+
+```bash
+failed=0
+for d in $(dirname $(ls modules/*/tests/*.tftest.hcl templates/*/tests/*.tftest.hcl) | sed 's#/tests$##' | sort -u); do
+  terraform -chdir=$d init -backend=false -input=false >/dev/null && terraform -chdir=$d test || { echo "FAILED: $d"; failed=1; }
+done
+test "$failed" -eq 0
+```
+
 CI doesn't run them yet, so run them when you touch a module that has them. When you change how a module resolves overrides, add or extend its test.
 
 PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/), for example `feat(vm): add network alerts` or `docs: fix override example`. The `conventional-pr-title` workflow enforces this. It's synced from the org's `org-github-management` repo, so don't edit it here.
@@ -43,7 +53,7 @@ Every resource module has the same files:
 | `profiles.tf` | `local.profiles.standard` and `local.profiles.critical`: per metric, `enabled`, `warning_threshold`, `critical_threshold`, `window_minutes` |
 | `defaults.tf` | `local.metrics` (Azure metric name, aggregation, operator per metric), `local.resolved` (profile + overrides merged), `local.common_tags` |
 | `variables.tf` | Common inputs; `overrides` is a typed object with one optional block per metric |
-| `main.tf` | Two `azurerm_monitor_metric_alert` resources per metric, `<metric>_warn` and `<metric>_crit`, each with `count` on `var.enabled && local.resolved.<metric>.enabled` |
+| `main.tf` | Two `azurerm_monitor_metric_alert` resources per metric, `<metric>_warn` and `<metric>_crit` (critical-only metrics have just `<metric>_crit`), each with `count` on `var.enabled && local.resolved.<metric>.enabled` |
 | `outputs.tf` | `alert_ids`, `alert_names`, `profile`, `resolved_thresholds` |
 | `versions.tf` | `required_providers` |
 | `examples/` | `standard/` and `critical-with-overrides/` |
