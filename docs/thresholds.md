@@ -173,9 +173,9 @@ Namespace: `Microsoft.Compute/disks`
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
-| `iops_consumed` | `iops-consumed` | Composite Disk Read Operations/sec | Average | > | 5 | 85 / 95 | 75 / 90 |
-| `bandwidth_consumed` | `bandwidth-consumed` | Composite Disk Read Bytes/sec | Average | > | 5 | 85 / 95 | 75 / 90 |
-| `queue_depth` | `queue-depth` | Composite Disk Read Operations/sec | Average | > | 5 | 32 / 64 | 16 / 32 |
+| `iops_consumed` (off) | `iops-consumed` | Composite Disk Read Operations/sec | Average | > | 5 | 85 / 95 | 75 / 90 |
+| `bandwidth_consumed` (off) | `bandwidth-consumed` | Composite Disk Read Bytes/sec | Average | > | 5 | 85 / 95 | 75 / 90 |
+| `queue_depth` (off) | `queue-depth` | Composite Disk Read Operations/sec | Average | > | 5 | 32 / 64 | 16 / 32 |
 | `burst_bps_credits` (off) | `burst-bps-credits` | BurstBPSCreditsPercent | Average | < | 5 | 20 / 10 | 30 / 20 |
 | `burst_io_credits` (off) | `burst-io-credits` | BurstIOCreditsPercent | Average | < | 5 | 20 / 10 | 30 / 20 |
 

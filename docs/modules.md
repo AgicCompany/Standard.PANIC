@@ -35,12 +35,12 @@ See [Versioning](versioning.md) for how to pick the version.
 | Function App | [`function`](../modules/function/) | `Microsoft.Web/sites` | 3 of 5 | [thresholds](thresholds.md#function-app-function) |
 | Key Vault | [`keyvault`](../modules/keyvault/) | `Microsoft.KeyVault/vaults` | 3 of 4 | [thresholds](thresholds.md#key-vault-keyvault) |
 | Load Balancer | [`lb`](../modules/lb/) | `Microsoft.Network/loadBalancers` | 4 of 4 | [thresholds](thresholds.md#load-balancer-lb) |
-| Managed Disk | [`disk`](../modules/disk/) | `Microsoft.Compute/disks` | 3 of 5 | [thresholds](thresholds.md#managed-disk-disk) |
+| Managed Disk | [`disk`](../modules/disk/) | `Microsoft.Compute/disks` | 0 of 5 | [thresholds](thresholds.md#managed-disk-disk) |
 | MySQL Flexible Server | [`mysql`](../modules/mysql/) | `Microsoft.DBforMySQL/flexibleServers` | 6 of 7 | [thresholds](thresholds.md#mysql-flexible-server-mysql) |
 | PostgreSQL Flexible Server | [`postgresql`](../modules/postgresql/) | `Microsoft.DBforPostgreSQL/flexibleServers` | 6 of 7 | [thresholds](thresholds.md#postgresql-flexible-server-postgresql) |
 | Redis Cache | [`redis`](../modules/redis/) | `Microsoft.Cache/redis` | 4 of 5 | [thresholds](thresholds.md#redis-cache-redis) |
 | Service Bus Namespace | [`servicebus`](../modules/servicebus/) | `Microsoft.ServiceBus/namespaces` | 5 of 5 | [thresholds](thresholds.md#service-bus-namespace-servicebus) |
-| SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 4 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
+| SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 3 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
 | Storage Account | [`storage`](../modules/storage/) | `Microsoft.Storage/storageAccounts` | 4 of 4 | [thresholds](thresholds.md#storage-account-storage) |
 | Virtual Machine | [`vm`](../modules/vm/) | `Microsoft.Compute/virtualMachines` | 4 of 6 | [thresholds](thresholds.md#virtual-machine-vm) |
 | Virtual Machine Scale Set | [`vmss`](../modules/vmss/) | `Microsoft.Compute/virtualMachineScaleSets` | 5 of 5 | [thresholds](thresholds.md#virtual-machine-scale-set-vmss) |
