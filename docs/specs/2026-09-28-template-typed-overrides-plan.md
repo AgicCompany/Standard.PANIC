@@ -1,11 +1,13 @@
 ---
 title: Template typed overrides - implementation plan
-date: 2026-09-28
-status: active
-version: 1.0
+date: 2026-10-28
+status: implemented
+version: 1.1
 ---
 
 # Template Typed Overrides Implementation Plan
+
+> **Implemented.** Shipped in [`templates/panic-subscription-template/`](../../templates/panic-subscription-template/). This document describes the state before the change; statements that something does not exist yet are historical.
 
 **Goal:** The subscription template accepts different override shapes on
 different resources of one type, and resources with and without overrides in

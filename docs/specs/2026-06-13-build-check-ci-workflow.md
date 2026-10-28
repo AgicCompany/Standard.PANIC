@@ -1,11 +1,13 @@
 ---
 title: build-check CI workflow for branch-protection compliance
-date: 2026-06-13
-status: active
-version: 1.0
+date: 2026-10-28
+status: implemented
+version: 1.1
 ---
 
 # build-check CI Workflow
+
+> **Implemented.** Shipped in [`.github/workflows/build-check.yml`](../../.github/workflows/build-check.yml). This document describes the state before the change; statements that something does not exist yet are historical.
 
 ## Problem
 
