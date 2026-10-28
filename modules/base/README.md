@@ -8,11 +8,11 @@ This module is part of the [PANIC Azure Monitoring Framework](https://github.com
 - Implementation guides
 - Full list of available modules
 
-Base Terraform module for creating Azure Monitor metric alerts. This module is used by resource-specific monitoring modules.
+Base Terraform module for creating Azure Monitor metric alerts. Use it for a metric that no resource-specific module covers; the resource modules do not use it internally.
 
 ## Overview
 
-This module creates a single Azure Monitor metric alert rule. It provides a standardized interface for alert creation that resource-specific modules can consume.
+This module creates a single Azure Monitor metric alert rule. It provides a standardized interface for alert creation, with no profiles.
 
 ## Requirements
 
