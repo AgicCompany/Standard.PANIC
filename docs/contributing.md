@@ -53,7 +53,7 @@ Every resource module has the same files:
 | `profiles.tf` | `local.profiles.standard` and `local.profiles.critical`: per metric, `enabled`, `warning_threshold`, `critical_threshold`, `window_minutes` |
 | `defaults.tf` | `local.metrics` (Azure metric name, aggregation, operator per metric), `local.resolved` (profile + overrides merged), `local.common_tags` |
 | `variables.tf` | Common inputs; `overrides` is a typed object with one optional block per metric |
-| `main.tf` | Two `azurerm_monitor_metric_alert` resources per metric, `<metric>_warn` and `<metric>_crit`, each with `count` on `var.enabled && local.resolved.<metric>.enabled` |
+| `main.tf` | Two `azurerm_monitor_metric_alert` resources per metric, `<metric>_warn` and `<metric>_crit` (critical-only metrics have just `<metric>_crit`), each with `count` on `var.enabled && local.resolved.<metric>.enabled` |
 | `outputs.tf` | `alert_ids`, `alert_names`, `profile`, `resolved_thresholds` |
 | `versions.tf` | `required_providers` |
 | `examples/` | `standard/` and `critical-with-overrides/` |
