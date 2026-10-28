@@ -2,7 +2,7 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_linux_virtual_machine" "example" {
+data "azurerm_virtual_machine" "example" {
   name                = "example-vm"
   resource_group_name = "rg-example"
 }
@@ -20,7 +20,7 @@ data "azurerm_monitor_action_group" "warning" {
 module "vm_alerts" {
   source = "../../"
 
-  resource_id         = data.azurerm_linux_virtual_machine.example.id
+  resource_id         = data.azurerm_virtual_machine.example.id
   resource_name       = "dev-vm-01"
   resource_group_name = "rg-monitoring-dev"
   profile             = "standard"

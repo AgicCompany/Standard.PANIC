@@ -2,7 +2,7 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_linux_virtual_machine" "critical" {
+data "azurerm_virtual_machine" "critical" {
   name                = "prod-db-vm"
   resource_group_name = "rg-production"
 }
@@ -20,7 +20,7 @@ data "azurerm_monitor_action_group" "warning" {
 module "vm_alerts" {
   source = "../../"
 
-  resource_id         = data.azurerm_linux_virtual_machine.critical.id
+  resource_id         = data.azurerm_virtual_machine.critical.id
   resource_name       = "prod-db-01"
   resource_group_name = "rg-monitoring-prod"
   profile             = "critical"
