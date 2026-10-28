@@ -48,7 +48,7 @@ def fmt(v):
 def load_module(path):
     locals_ = {}
     for name in ("profiles.tf", "defaults.tf"):
-        with open(os.path.join(path, name)) as fh:
+        with open(os.path.join(path, name), encoding="utf-8") as fh:
             for block in hcl2.load(fh).get("locals", []):
                 locals_.update(block)
 
@@ -62,7 +62,7 @@ def load_module(path):
         return expr
 
     alerts = {}
-    with open(os.path.join(path, "main.tf")) as fh:
+    with open(os.path.join(path, "main.tf"), encoding="utf-8") as fh:
         resources = hcl2.load(fh).get("resource", [])
     for res in resources:
         for rtype, instances in res.items():
@@ -122,7 +122,7 @@ def render(module, locals_, alerts):
 
 
 def main():
-    modules = sorted(os.path.basename(p.rstrip("/")) for p in glob.glob("modules/*/"))
+    modules = sorted(os.path.basename(p.rstrip("/\\")) for p in glob.glob("modules/*/"))
     modules = [m for m in modules if m != "base"]
     missing = [m for m in modules if m not in TITLES]
     if missing:
@@ -130,9 +130,9 @@ def main():
 
     sections = [render(m, *load_module(f"modules/{m}")) for m in sorted(modules, key=lambda m: TITLES[m].lower())]
 
-    with open(DOC) as fh:
+    with open(DOC, encoding="utf-8") as fh:
         head = fh.read().split(MARKER)[0]
-    with open(DOC, "w") as fh:
+    with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(head + MARKER + "\n\n" + "\n".join(sections))
     print(f"wrote {len(sections)} module tables to {DOC}")
 
