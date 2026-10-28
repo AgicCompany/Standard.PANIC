@@ -25,7 +25,16 @@ Always pin to a full tag. Never use:
 
 ## Current versions
 
-Every module is at `v1.0.0`, except `vm`, `storage`, `appservice` and `postgresql`, which are at `v1.0.1`. `v1.0.1` fixes partial overrides that silently disabled a metric; see [Concepts](concepts.md#overrides). To list tags:
+Every module is at `v1.0.0`, except:
+
+| Module | Version | Change |
+|--------|---------|--------|
+| `appservice`, `postgresql`, `storage` | `v1.0.1` | Partial overrides no longer silently disable a metric; see [Concepts](concepts.md#overrides) |
+| `vm` | `v1.1.0` | `v1.0.1` fix, plus the memory alert uses `Available Memory Percentage` |
+| `sqlmi` | `v2.0.0` | Storage alert off by default: it is a raw MB metric |
+| `disk` | `v2.0.0` | All alerts off by default: managed disks only expose raw rate metrics |
+
+To list tags:
 
 ```bash
 git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
