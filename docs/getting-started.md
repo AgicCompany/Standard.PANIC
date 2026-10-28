@@ -1,30 +1,30 @@
 ---
 title: Getting started
-date: 2026-09-28
-status: draft
-version: 0.1
+date: 2026-10-28
+status: active
+version: 1.0
 ---
 
 # Getting started
 
-This guide takes you from an empty subscription to your first working alerts.
+In this tutorial you create everything from scratch and end with seven alert rules on one virtual machine. It takes four steps: state storage, action groups, an alert root, and the deployment.
 
-If you already have remote state storage and action groups, skip to [step 3](#3-deploy-alerts).
+To cover many resources at once, the [subscription template](subscription-template.md) is the better tool, but work through this page first.
 
-## What you need
+## Before you start
 
-- Terraform 1.3 or later.
-- The `azurerm` provider. Modules accept `>= 3.0`; the subscription template needs `~> 4.0`.
-- Azure permissions:
+You need:
+
+- Terraform 1.3 or later, and the Azure CLI logged in (`az login`) to the subscription you want to use.
+- An existing Linux or Windows VM in that subscription. Note its name and resource group.
+- These Azure roles:
 
   | Scope | Role |
   |-------|------|
+  | Subscription (to create the resource groups below) | Contributor |
   | Resource group that holds the alerts | Monitoring Contributor |
-  | Resources you monitor | Monitoring Reader |
-  | Action groups | Reader |
+  | The VM | Monitoring Reader |
   | State storage account | Storage Blob Data Contributor |
-
-- For VM guest metrics (memory, disk free space): Azure Monitor Agent and a data collection rule on each VM. These alerts are off by default.
 
 ## 1. Create remote state storage
 
@@ -32,64 +32,139 @@ If you already have remote state storage and action groups, skip to [step 3](#3-
 
 ```bash
 cd bootstrap
-cp terraform.tfvars.example terraform.tfvars   # set subscription_id, names, location
+cp terraform.tfvars.example terraform.tfvars   # set subscription_id; keep the other defaults
 terraform init
 terraform apply
-terraform output backend_config                # backend block to reuse below
 ```
+
+Type `yes` when asked. You should see:
+
+```text
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
+
+Then print the backend settings:
+
+```bash
+terraform output -raw backend_config
+```
+
+You should see a `terraform { backend "azurerm" { ... } }` block with your storage account name. Keep it open; you use it in the next two steps.
 
 ## 2. Create action groups
 
-`prerequisites/` creates the monitoring resource group, a Log Analytics workspace, and two email action groups: one for critical alerts, one for warnings.
+`prerequisites/` creates the monitoring resource group `rg-monitoring-dev`, a Log Analytics workspace, and two email action groups: `ag-dev-critical` and `ag-dev-warning`.
 
-The `backend "azurerm"` block in `prerequisites/main.tf` points at the maintainers' dev storage account. Replace it with the values from step 1 before you run `init`.
+Its `backend "azurerm"` block in `prerequisites/main.tf` points at the maintainers' storage account. Replace `resource_group_name` and `storage_account_name` in that block with the values from step 1, and keep `key = "monitoring/prerequisites.tfstate"`.
 
 ```bash
-cd prerequisites
-cp terraform.tfvars.example terraform.tfvars   # set names and email receivers
+cd ../prerequisites
+cp terraform.tfvars.example terraform.tfvars   # set subscription_id and your email addresses
 terraform init
 terraform apply
+```
+
+You should see:
+
+```text
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
+
+Then print the action group IDs:
+
+```bash
 terraform output action_group_ids
 ```
 
-You can skip this step if your organization already has action groups. The modules only need their resource IDs.
+You should see a map with a `critical` and a `warning` ID, each ending in `/actionGroups/ag-dev-critical` or `/actionGroups/ag-dev-warning`.
 
-## 3. Deploy alerts
+## 3. Write the alert root
 
-Create a Terraform root for your alerts and call one module per monitored resource:
+Create a new folder next to `prerequisites/`, for example `my-first-alerts/`, with one file, `main.tf`. Replace the values in `<...>` with your own: the backend values from step 1, your subscription ID, and your VM.
 
 ```hcl
-module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.1"
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
 
-  resource_id         = azurerm_storage_account.data.id
-  resource_name       = "stproddata01"
-  resource_group_name = "rg-monitoring-prod"
+  backend "azurerm" {
+    resource_group_name  = "<state resource group from step 1>"
+    storage_account_name = "<state storage account from step 1>"
+    container_name       = "tfstate"
+    key                  = "monitoring/my-first-alerts.tfstate"
+  }
+}
+
+provider "azurerm" {
+  features {}
+  subscription_id = "<subscription id>"
+}
+
+data "azurerm_virtual_machine" "app" {
+  name                = "<vm name>"
+  resource_group_name = "<vm resource group>"
+}
+
+data "azurerm_monitor_action_group" "critical" {
+  name                = "ag-dev-critical"
+  resource_group_name = "rg-monitoring-dev"
+}
+
+data "azurerm_monitor_action_group" "warning" {
+  name                = "ag-dev-warning"
+  resource_group_name = "rg-monitoring-dev"
+}
+
+module "vm_alerts" {
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.1.0"
+
+  resource_id         = data.azurerm_virtual_machine.app.id
+  resource_name       = data.azurerm_virtual_machine.app.name
+  resource_group_name = "rg-monitoring-dev"
   profile             = "standard"
 
   action_group_ids = {
-    critical = "/subscriptions/.../actionGroups/ag-prod-critical"
-    warning  = "/subscriptions/.../actionGroups/ag-prod-warning"
+    critical = data.azurerm_monitor_action_group.critical.id
+    warning  = data.azurerm_monitor_action_group.warning.id
   }
+}
+
+output "alert_names" {
+  value = module.vm_alerts.alert_names
 }
 ```
 
+## 4. Deploy the alerts
+
 ```bash
+cd ../my-first-alerts
 terraform init
 terraform plan
+```
+
+`init` downloads the `vm` module at tag `vm/v1.1.0`. The plan should end with:
+
+```text
+Plan: 7 to add, 0 to change, 0 to destroy.
+```
+
+The seven alert rules are a warning and a critical alert for CPU, OS disk IOPS and data disk IOPS, plus a critical-only availability alert. Memory and disk free space are off in the `standard` profile.
+
+```bash
 terraform apply
 ```
 
-Check the result in the Azure portal under **Monitor > Alerts > Alert rules**, filtered by your monitoring resource group.
+Type `yes`. You should see `Apply complete! Resources: 7 added` and the `alert_names` output, with names such as `<vm name>-cpu-warn` and `<vm name>-availability-crit`. Unused metrics show as `null`.
 
-For working roots that read action groups from remote state, see `deployments/dev-storage-alerts/` and `deployments/appgateway-alerts/`. They use local module paths and hardcoded dev backends, so copy the pattern, not the files.
-
-## Many resources at once
-
-To cover a whole subscription from one `tfvars` file, use the [subscription template](subscription-template.md) instead of writing module blocks by hand.
+Open the Azure portal, go to **Monitor > Alerts > Alert rules**, and filter on resource group `rg-monitoring-dev`. The seven rules are listed there.
 
 ## Next steps
 
-- [Concepts](concepts.md): how profiles, overrides and naming work.
+- [Concepts](concepts.md): how profiles, overrides and naming work, for example to turn on the memory alert.
 - [Thresholds](thresholds.md): what each module alerts on.
+- [Subscription template](subscription-template.md): monitor a whole subscription from one `tfvars` file.
 - [Versioning](versioning.md): how to pin and upgrade modules.
