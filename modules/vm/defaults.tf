@@ -9,7 +9,6 @@ locals {
 
   # Metric definitions for Virtual Machines
   # Platform metrics are from Microsoft.Compute/virtualMachines namespace
-  # Guest metrics require Azure Monitor Agent and Data Collection Rules
   metrics = {
     cpu = {
       namespace   = "Microsoft.Compute/virtualMachines"
@@ -19,13 +18,11 @@ locals {
       description = "VM CPU utilization percentage"
     }
     memory = {
-      # Guest metric - requires Azure Monitor Agent
-      # Uses Available MBytes Memory from guest OS
       namespace   = "Microsoft.Compute/virtualMachines"
-      name        = "Available Memory Bytes"
+      name        = "Available Memory Percentage"
       aggregation = "Average"
       operator    = "LessThan"
-      description = "VM available memory percentage (requires AMA)"
+      description = "VM available memory percentage"
     }
     os_disk_iops = {
       namespace   = "Microsoft.Compute/virtualMachines"
@@ -42,7 +39,8 @@ locals {
       description = "Data disk IOPS consumed percentage"
     }
     disk_free = {
-      # Guest metric - requires Azure Monitor Agent
+      # Not a Microsoft.Compute/virtualMachines platform metric: enabling this
+      # alert fails until it is moved to the guest metric namespace (see README)
       namespace   = "Microsoft.Compute/virtualMachines"
       name        = "Logical Disk Free Space Percentage"
       aggregation = "Average"
@@ -100,6 +98,6 @@ locals {
   # Common tags
   common_tags = merge(var.tags, {
     managed-by     = "terraform"
-    module-version = "1.0.1"
+    module-version = "1.1.0"
   })
 }

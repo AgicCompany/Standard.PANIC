@@ -65,4 +65,8 @@ run "override_can_enable_metric" {
     condition     = length(azurerm_monitor_metric_alert.memory_warn) == 1 && length(azurerm_monitor_metric_alert.memory_crit) == 1
     error_message = "enabled = true must create alerts for a metric that is off by default"
   }
+  assert {
+    condition     = one(azurerm_monitor_metric_alert.memory_warn[0].criteria).metric_name == "Available Memory Percentage"
+    error_message = "memory alert must use the Available Memory Percentage platform metric"
+  }
 }

@@ -26,13 +26,15 @@ This module creates a comprehensive set of metric alerts for Azure Virtual Machi
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit | Default |
 |--------|-------------|---------------|---------------|---------------|---------------|---------|
 | CPU % | CPU utilization | > 85 | > 95 | > 75 | > 90 | Enabled |
-| Available Memory % | Available memory* | < 15 | < 10 | < 20 | < 15 | Disabled |
+| Available Memory % | Available memory (platform metric) | < 15 | < 10 | < 20 | < 15 | Disabled |
 | OS Disk IOPS % | OS disk IOPS consumed | > 85 | > 95 | > 75 | > 90 | Enabled |
 | Data Disk IOPS % | Data disk IOPS consumed | > 85 | > 95 | > 75 | > 90 | Enabled |
-| Disk Free % | Logical disk free space* | < 15 | < 10 | < 20 | < 15 | Disabled |
+| Disk Free % | Logical disk free space* (not supported yet) | < 15 | < 10 | < 20 | < 15 | Disabled |
 | VM Availability | VM availability status | - | < 1 | - | < 1 | Enabled |
 
-*Memory and Disk Free metrics require Azure Monitor Agent (AMA) with Data Collection Rules configured. These are disabled by default.
+Memory and Disk Free are disabled by default. Memory uses the `Available Memory Percentage` platform metric and needs no agent.
+
+*Disk Free is not supported yet: `Logical Disk Free Space Percentage` is not a `Microsoft.Compute/virtualMachines` platform metric, so enabling it fails. It is only available as a guest metric (Azure Monitor Agent), which this module does not handle yet.
 
 ## Inputs
 
@@ -97,33 +99,20 @@ module "vm_alerts" {
       warning_threshold  = 70
       critical_threshold = 85
     }
-    # Enable guest metrics if AMA is configured
     memory = {
       enabled = true
-    }
-    disk_free = {
-      enabled            = true
-      warning_threshold  = 25
-      critical_threshold = 15
     }
   }
 }
 ```
 
-### Enabling Guest Metrics
+### Enabling the Memory Alert
 
-To use memory and disk free percentage alerts, you need:
-
-1. Azure Monitor Agent installed on the VM
-2. Data Collection Rule configured to collect guest metrics
-3. Enable the metrics via overrides:
+The memory alert is a platform metric and needs no agent. Enable it via overrides:
 
 ```hcl
 overrides = {
   memory = {
-    enabled = true
-  }
-  disk_free = {
     enabled = true
   }
 }
