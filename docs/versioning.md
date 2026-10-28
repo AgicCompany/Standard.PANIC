@@ -12,7 +12,7 @@ Each module has its own version. Tags use the form `<module>/v<semver>`, for exa
 ## Pinning a module
 
 ```hcl
-source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.0.1"
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.1.0"
 #         └─ repository                                        └─ folder  └─ tag
 ```
 
