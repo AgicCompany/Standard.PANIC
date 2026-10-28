@@ -24,7 +24,7 @@ Terraform module for Azure SQL Managed Instance monitoring alerts using the PANI
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
 | CPU % | Average CPU utilization | > 80% | > 95% | > 70% | > 90% |
-| Storage | Storage space used (MB) | Override required | Override required | Override required | Override required |
+| Storage | Storage space used (MB, raw value - see note) | > 80 | > 90 | > 70 | > 85 |
 | IO Requests | IO operations count | > 80% | > 95% | > 70% | > 90% |
 | IO Bytes | IO throughput (bytes read) | > 80% | > 95% | > 70% | > 90% |
 
@@ -120,7 +120,7 @@ module "sqlmi_alerts" {
 
 ## Notes
 
-- **Storage thresholds**: SQL MI reports storage in MB, not percentage. Calculate thresholds based on your reserved storage size.
+- **Storage thresholds**: SQL MI reports storage in MB, not percentage. Calculate thresholds based on your reserved storage size. The default thresholds (80/90 standard, 70/85 critical) are compared to raw MB, so always override them.
 - **IO metrics**: Thresholds depend on your SQL MI tier and vCore count. Adjust based on documented limits.
 - **CPU**: vCore-based, monitor closely for Business Critical tier workloads.
 
