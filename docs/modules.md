@@ -73,3 +73,9 @@ Each resource module folder has a README with its inputs, and two runnable examp
 
 - `examples/standard/`: the module with default settings.
 - `examples/critical-with-overrides/`: the `critical` profile with some overrides.
+
+## See also
+
+- [Thresholds](thresholds.md): every metric and default per module.
+- [Concepts](concepts.md): how profiles and overrides work.
+- [Subscription template](subscription-template.md): use all modules from one root.

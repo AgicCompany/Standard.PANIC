@@ -126,3 +126,9 @@ Worth fixing when you touch these modules:
 - User guides live in `docs/`. Keep one topic per page and link instead of repeating.
 - Design records live in `docs/specs/YYYY-MM-DD-<slug>.md` with `title`, `date`, `status`, `version` frontmatter. Superseded specs stay for history; mark them `status: superseded`.
 - `docs/notes/` and `docs/superpowers/` are gitignored scratch space.
+
+## See also
+
+- [Concepts](concepts.md): the design that modules follow.
+- [Versioning](versioning.md): semver rules for releases.
+- [Documentation index](README.md): every page in `docs/`.

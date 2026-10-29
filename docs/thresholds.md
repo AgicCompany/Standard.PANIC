@@ -9,7 +9,7 @@ version: 0.1
 
 Every metric in every module, with its default thresholds for both profiles.
 
-This page is generated from each module's `profiles.tf`, `defaults.tf` and `main.tf`. If it disagrees with the code, the code wins. See [Contributing](contributing.md#regenerating-thresholdsmd).
+This page is generated from each module's `profiles.tf`, `defaults.tf` and `main.tf`. If it disagrees with the code, the code wins. See [Contributing](contributing.md#regenerating-thresholdsmd). For how overrides use these keys, see [Concepts](concepts.md#overrides).
 
 How to read the tables:
 
