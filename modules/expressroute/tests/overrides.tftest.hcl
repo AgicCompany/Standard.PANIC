@@ -1,0 +1,69 @@
+# Partial overrides must keep profile values for every field not overridden.
+
+mock_provider "azurerm" {}
+
+variables {
+  resource_id         = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Test/resources/res-test"
+  resource_name       = "res-test"
+  resource_group_name = "rg-test"
+  action_group_ids = {
+    critical = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/microsoft.insights/actionGroups/ag-critical"
+    warning  = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/microsoft.insights/actionGroups/ag-warning"
+  }
+}
+
+run "partial_override_keeps_profile_defaults" {
+  command = plan
+
+  variables {
+    overrides = {
+      bgp_availability = { warning_threshold = 100.9 }
+    }
+  }
+
+  assert {
+    condition     = length(azurerm_monitor_metric_alert.bgp_availability_warn) == 1 && length(azurerm_monitor_metric_alert.bgp_availability_crit) == 1
+    error_message = "bgp_availability alerts must be created after a partial override"
+  }
+
+  assert {
+    condition     = output.resolved_thresholds.bgp_availability.warning_threshold == 100.9
+    error_message = "bgp_availability warning_threshold override not applied"
+  }
+
+  assert {
+    condition     = output.resolved_thresholds.bgp_availability.critical_threshold == 99 && output.resolved_thresholds.bgp_availability.window_minutes == 1
+    error_message = "bgp_availability fields not overridden must keep the standard profile values"
+  }
+}
+
+run "override_can_disable_metric" {
+  command = plan
+
+  variables {
+    overrides = {
+      bgp_availability = { enabled = false }
+    }
+  }
+
+  assert {
+    condition     = length(azurerm_monitor_metric_alert.bgp_availability_warn) == 0 && length(azurerm_monitor_metric_alert.bgp_availability_crit) == 0
+    error_message = "enabled = false must remove the bgp_availability alerts"
+  }
+}
+
+run "critical_profile_values" {
+  command = plan
+
+  variables {
+    profile = "critical"
+    overrides = {
+      bgp_availability = { enabled = true }
+    }
+  }
+
+  assert {
+    condition     = output.resolved_thresholds.bgp_availability.warning_threshold == 99.95 && output.resolved_thresholds.bgp_availability.critical_threshold == 99.5
+    error_message = "the critical profile must supply the bgp_availability thresholds"
+  }
+}
