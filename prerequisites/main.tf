@@ -8,12 +8,9 @@ terraform {
     }
   }
 
-  # Uncomment after bootstrap is applied and update with your values
+  # Storage settings come from backend.hcl: terraform init -backend-config=backend.hcl
   backend "azurerm" {
-    resource_group_name  = "rg-panic-terraform-state"
-    storage_account_name = "stpanicdevtfstateezdbi9"
-    container_name       = "tfstate"
-    key                  = "monitoring/prerequisites.tfstate"
+    key = "monitoring/prerequisites.tfstate"
   }
 }
 

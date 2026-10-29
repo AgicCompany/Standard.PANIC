@@ -13,10 +13,7 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "rg-panic-terraform-state"
-    storage_account_name = "stpanicdevtfstateezdbi9"
-    container_name       = "tfstate"
-    key                  = "monitoring/test-resources.tfstate"
+    key = "monitoring/test-resources.tfstate"
   }
 }
 

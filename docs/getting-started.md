@@ -55,12 +55,13 @@ You should see a `terraform { backend "azurerm" { ... } }` block with your stora
 
 `prerequisites/` creates the monitoring resource group `rg-monitoring-dev`, a Log Analytics workspace, and two email action groups: `ag-dev-critical` and `ag-dev-warning`.
 
-Its `backend "azurerm"` block in `prerequisites/main.tf` points at the maintainers' storage account. Replace `resource_group_name` and `storage_account_name` in that block with the values from step 1, and keep `key = "monitoring/prerequisites.tfstate"`.
+Its `backend "azurerm"` block only sets the state `key`. The storage settings come from a `backend.hcl` file that you create from `backend.hcl.example`, using the values from step 1.
 
 ```bash
 cd ../prerequisites
 cp terraform.tfvars.example terraform.tfvars   # set subscription_id and your email addresses
-terraform init
+cp backend.hcl.example backend.hcl             # set the storage account values from step 1
+terraform init -backend-config=backend.hcl
 terraform apply
 ```
 
