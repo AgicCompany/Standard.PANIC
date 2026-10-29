@@ -20,8 +20,8 @@ locals {
         window_minutes     = 5
       }
       memory = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of limit
+        enabled            = false # Bytes: enable with raw byte thresholds via overrides
+        warning_threshold  = 80    # Placeholder only; override before enabling
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -53,8 +53,8 @@ locals {
         window_minutes     = 5
       }
       memory = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # Bytes: enable with raw byte thresholds via overrides
+        warning_threshold  = 70    # Placeholder only; override before enabling
         critical_threshold = 90
         window_minutes     = 5
       }

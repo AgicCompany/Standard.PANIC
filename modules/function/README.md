@@ -27,7 +27,7 @@ Terraform module for Azure Functions monitoring alerts using the PANIC framework
 | HTTP 5xx | Server errors | > 5 | > 20 | > 1 | > 10 |
 | HTTP 4xx | Client errors (disabled) | > 50 | > 200 | > 25 | > 100 |
 | Response Time | Avg response time | > 5s | > 10s | > 2s | > 5s |
-| Memory | Memory working set | > 80% | > 95% | > 70% | > 90% |
+| Memory | Memory working set in bytes (disabled) | Override required | Override required | Override required | Override required |
 | Execution Count | Function runs (disabled) | > 10000 | > 50000 | > 10000 | > 50000 |
 
 ## Usage
@@ -67,9 +67,10 @@ module "function_alerts" {
 
   overrides = {
     memory = {
-      # Premium plan with 3.5GB memory limit
-      warning_threshold  = 2867000000  # ~2.67GB (80%)
-      critical_threshold = 3328000000  # ~3.1GB (90%)
+      # Example raw byte thresholds; size these for your workload.
+      enabled            = true
+      warning_threshold  = 2147483648 # 2 GiB
+      critical_threshold = 3221225472 # 3 GiB
     }
     response_time = {
       warning_threshold  = 1
@@ -135,10 +136,14 @@ module "function_alerts" {
 
 ## Notes
 
-- **Memory thresholds**: Default profile values are percentages. Override with actual byte values based on your plan's memory limit.
+- **Memory thresholds**: Disabled by default in both profiles. `MemoryWorkingSet` is bytes, not percent; enable it with `enabled = true` and raw byte thresholds in `overrides.memory`. Profile thresholds are placeholders, not recommended byte limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-web-sites-metrics).
 - **HTTP 4xx**: Disabled by default as these often represent expected client errors (auth failures, not found, etc.).
 - **Execution count**: Useful for detecting unexpected spikes or drops in function invocations.
 - **Consumption plan**: Memory metrics may be less meaningful on consumption plans due to dynamic scaling.
+
+## Migration (next major release, unreleased)
+
+Memory alerts are now disabled by default because `MemoryWorkingSet` has no percentage equivalent on `Microsoft.Web/sites`. Upgrading removes existing memory alerts unless you explicitly set `overrides.memory.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Memory Limits by Plan
 

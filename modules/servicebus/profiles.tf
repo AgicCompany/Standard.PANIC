@@ -26,8 +26,8 @@ locals {
         window_minutes     = 5
       }
       size = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of quota
+        enabled            = false # Bytes: enable with raw byte thresholds via overrides
+        warning_threshold  = 80    # Placeholder only; override before enabling
         critical_threshold = 90
         window_minutes     = 15
       }
@@ -59,8 +59,8 @@ locals {
         window_minutes     = 5
       }
       size = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # Bytes: enable with raw byte thresholds via overrides
+        warning_threshold  = 70    # Placeholder only; override before enabling
         critical_threshold = 85
         window_minutes     = 15
       }

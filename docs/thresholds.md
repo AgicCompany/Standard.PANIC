@@ -1,8 +1,8 @@
 ---
 title: Thresholds
-date: 2026-09-28
+date: 2026-10-29
 status: active
-version: 0.1
+version: 0.2
 ---
 
 # Thresholds
@@ -19,6 +19,7 @@ How to read the tables:
 - **Window**: evaluation window in minutes. Alerts evaluate every minute.
 - **warn / crit**: warning (severity 2) and critical (severity 1) thresholds. `-` means the metric has no warning alert.
 - Thresholds use the Azure metric's own unit: percent, milliseconds, bytes, or a count per window.
+- Disabled raw-unit metrics may retain placeholder thresholds, not recommended limits. Set both thresholds in the metric's unit and explicitly enable the metric before using it; see its module README.
 
 <!-- GENERATED: tables below are written by scripts/gen-thresholds.py -->
 
@@ -90,8 +91,8 @@ Namespace: `Microsoft.App/containerApps`
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
-| `cpu` | `cpu` | UsageNanoCores | Average | > | 5 | 70 / 90 | 60 / 80 |
-| `memory` | `memory` | WorkingSetBytes | Average | > | 5 | 70 / 90 | 60 / 80 |
+| `cpu` | `cpu` | CpuPercentage | Average | > | 5 | 70 / 90 | 60 / 80 |
+| `memory` | `memory` | MemoryPercentage | Average | > | 5 | 70 / 90 | 60 / 80 |
 | `restarts` | `restarts` | RestartCount | Maximum | > | 15 | 3 / 10 | 1 / 5 |
 | `replicas` (off) | `replicas` | Replicas | Average | < | 5 | 2 / 1 | 3 / 2 |
 | `requests` (off) | `requests` | Requests | Total | > | 5 | 10000 / 50000 | 10000 / 50000 |
@@ -142,7 +143,7 @@ Namespace: `Microsoft.Web/sites`
 | `http_5xx` | `http5xx` | Http5xx | Total | > | 5 | 5 / 20 | 1 / 10 |
 | `http_4xx` (off) | `http4xx` | Http4xx | Total | > | 5 | 50 / 200 | 25 / 100 |
 | `response_time` | `responsetime` | AverageResponseTime | Average | > | 5 | 5 / 10 | 2 / 5 |
-| `memory` | `memory` | MemoryWorkingSet | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `memory` (off) | `memory` | MemoryWorkingSet | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `execution_count` (off) | `executions` | FunctionExecutionCount | Total | > | 5 | 10000 / 50000 | 10000 / 50000 |
 
 ### Key Vault (`keyvault`)
@@ -229,7 +230,7 @@ Namespace: `Microsoft.ServiceBus/namespaces`
 | `deadlettered_messages` | `deadletter` | DeadletteredMessages | Average | > | 5 | 10 / 100 | 1 / 50 |
 | `throttled_requests` | `throttled` | ThrottledRequests | Total | > | 5 | 5 / 20 | 1 / 10 |
 | `server_errors` | `servererrors` | ServerErrors | Total | > | 5 | 5 / 20 | 1 / 10 |
-| `size` | `size` | Size | Average | > | 15 | 80 / 90 | 70 / 85 |
+| `size` (off) | `size` | Size | Average | > | 15 | 80 / 90 | 70 / 85 |
 
 ### SQL Managed Instance (`sqlmi`)
 
@@ -251,7 +252,7 @@ Namespace: `Microsoft.Storage/storageAccounts`
 | `availability` | `availability` | Availability | Average | < | 5 | 99.9 / 99 | 99.95 / 99.5 |
 | `latency` | `latency` | SuccessE2ELatency | Average | > | 5 | 500 / 1000 | 250 / 500 |
 | `throttling` | `throttling` | Transactions | Total | > | 5 | 10 / 100 | 5 / 50 |
-| `used_capacity` | `capacity` | UsedCapacity | Average | > | 60 | 80 / 90 | 70 / 85 |
+| `used_capacity` (off) | `capacity` | UsedCapacity | Average | > | 60 | 80 / 90 | 70 / 85 |
 
 ### Virtual Machine (`vm`)
 
