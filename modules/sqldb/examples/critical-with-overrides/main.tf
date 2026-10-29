@@ -2,9 +2,14 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_mssql_database" "critical" {
-  name                = "prod-sqldb-app"
+data "azurerm_mssql_server" "critical" {
+  name                = "prod-sqlserver"
   resource_group_name = "rg-production"
+}
+
+data "azurerm_mssql_database" "critical" {
+  name      = "prod-sqldb-app"
+  server_id = data.azurerm_mssql_server.critical.id
 }
 
 data "azurerm_monitor_action_group" "critical" {

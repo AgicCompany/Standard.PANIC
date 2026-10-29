@@ -40,14 +40,12 @@ jobs:
       - name: Terraform format check
         run: terraform fmt -check -recursive
 
-      - name: Terraform validate (roots + modules)
+      - name: Terraform validate (roots, modules, examples, template)
         run: |
           set -euo pipefail
           mkdir -p "$TF_PLUGIN_CACHE_DIR"
           mapfile -t dirs < <(find . -type f -name '*.tf' \
             -not -path '*/.terraform/*' \
-            -not -path '*/examples/*' \
-            -not -path '*/templates/*' \
             -exec dirname {} \; | sort -u)
           echo "Discovered ${#dirs[@]} directories to validate."
           failed=()
@@ -68,3 +66,29 @@ jobs:
             exit 1
           fi
           echo "All ${#dirs[@]} directories passed validate."
+
+      - name: Terraform test
+        run: |
+          set -euo pipefail
+          mapfile -t dirs < <(find . -type f -name '*.tftest.hcl' \
+            -not -path '*/.terraform/*' \
+            -exec dirname {} \; | sed 's|/tests$||' | sort -u)
+          echo "Discovered ${#dirs[@]} directories with tests."
+          failed=()
+          for d in "${dirs[@]}"; do
+            echo "::group::test ${d}"
+            if terraform -chdir="${d}" init -backend=false -input=false -no-color \
+               && terraform -chdir="${d}" test -no-color; then
+              echo "PASS: ${d}"
+            else
+              echo "FAIL: ${d}"
+              failed+=("${d}")
+            fi
+            echo "::endgroup::"
+          done
+          echo "----------------------------------------"
+          if [ "${#failed[@]}" -gt 0 ]; then
+            echo "Tests FAILED for ${#failed[@]} dir(s): ${failed[*]}"
+            exit 1
+          fi
+          echo "All ${#dirs[@]} directories passed tests."
