@@ -1,11 +1,12 @@
 module "vm_alerts" {
-  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.2.0"
+  source   = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.0"
   for_each = var.enable_vm_alerts ? var.vms : {}
 
   resource_id         = each.value.resource_id
   resource_name       = each.key
   resource_group_name = var.resource_group_name
   profile             = coalesce(each.value.profile, var.default_profile)
+  os_type             = coalesce(each.value.os_type, "linux")
   action_group_ids    = var.action_group_ids
   overrides           = each.value.overrides
 
