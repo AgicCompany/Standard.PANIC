@@ -145,6 +145,8 @@ All inventory variables default to `{}`.
 }
 ```
 
+`vms` entries also accept `os_type = optional(string)`: `"linux"` (default) or `"windows"`. It only selects the guest metric used by the `disk_free` alert, which is off by default. For a Windows VM with `disk_free` enabled you must set `os_type = "windows"`, otherwise the Linux metric is used and the alert gets no data. `disk_free` also needs Azure Monitor Agent guest metrics on the VM; see the [`vm` module README](../../modules/vm/README.md#monitored-metrics) for the prerequisites.
+
 ## Examples
 
 ### Single Resource Type
