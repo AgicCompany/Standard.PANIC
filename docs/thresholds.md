@@ -256,7 +256,7 @@ Namespace: `Microsoft.Storage/storageAccounts`
 
 ### Virtual Machine (`vm`)
 
-Namespace: `Microsoft.Compute/virtualMachines`
+Namespace: `Azure.VM.Linux.GuestMetrics`, `Azure.VM.Windows.GuestMetrics`, `Microsoft.Compute/virtualMachines`
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
@@ -264,7 +264,7 @@ Namespace: `Microsoft.Compute/virtualMachines`
 | `memory` (off) | `memory` | Available Memory Percentage | Average | < | 5 | 15 / 10 | 20 / 15 |
 | `os_disk_iops` | `osdiskiops` | OS Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
 | `data_disk_iops` | `datadiskiops` | Data Disk IOPS Consumed Percentage | Average | > | 5 | 85 / 95 | 75 / 90 |
-| `disk_free` (off) | `diskfree` | Logical Disk Free Space Percentage | Average | < | 15 | 15 / 10 | 20 / 15 |
+| `disk_free` (off) | `diskfree` | `disk/free_percent` or `\LogicalDisk(_Total)\% Free Space` | Average | < | 15 | 15 / 10 | 20 / 15 |
 | `availability` | `availability` | VmAvailabilityMetric | Average | < | 1 | - / 1 | - / 1 |
 
 ### Virtual Machine Scale Set (`vmss`)
