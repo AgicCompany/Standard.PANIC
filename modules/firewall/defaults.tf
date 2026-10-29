@@ -53,4 +53,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.latency.window_minutes, null), local.selected_profile.latency.window_minutes)
     }
   }
+
+  common_tags = merge(var.tags, {
+    managed-by = "terraform"
+  })
 }

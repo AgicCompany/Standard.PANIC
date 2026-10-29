@@ -52,4 +52,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.used_snat_ports.window_minutes, null), local.selected_profile.used_snat_ports.window_minutes)
     }
   }
+
+  common_tags = merge(var.tags, {
+    managed-by = "terraform"
+  })
 }

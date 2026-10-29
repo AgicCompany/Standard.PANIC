@@ -23,10 +23,9 @@ resource "azurerm_monitor_metric_alert" "unhealthy_hosts_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -54,10 +53,9 @@ resource "azurerm_monitor_metric_alert" "unhealthy_hosts_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -92,10 +90,9 @@ resource "azurerm_monitor_metric_alert" "backend_5xx_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -129,10 +126,9 @@ resource "azurerm_monitor_metric_alert" "backend_5xx_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -161,10 +157,9 @@ resource "azurerm_monitor_metric_alert" "cpu_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -192,10 +187,9 @@ resource "azurerm_monitor_metric_alert" "cpu_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -224,10 +218,9 @@ resource "azurerm_monitor_metric_alert" "capacity_units_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -255,10 +248,9 @@ resource "azurerm_monitor_metric_alert" "capacity_units_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -287,10 +279,9 @@ resource "azurerm_monitor_metric_alert" "failed_requests_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -318,10 +309,9 @@ resource "azurerm_monitor_metric_alert" "failed_requests_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -356,10 +346,9 @@ resource "azurerm_monitor_metric_alert" "response_5xx_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -393,9 +382,8 @@ resource "azurerm_monitor_metric_alert" "response_5xx_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }

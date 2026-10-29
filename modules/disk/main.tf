@@ -23,10 +23,9 @@ resource "azurerm_monitor_metric_alert" "iops_consumed_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -54,10 +53,9 @@ resource "azurerm_monitor_metric_alert" "iops_consumed_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -86,10 +84,9 @@ resource "azurerm_monitor_metric_alert" "bandwidth_consumed_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -117,10 +114,9 @@ resource "azurerm_monitor_metric_alert" "bandwidth_consumed_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -149,10 +145,9 @@ resource "azurerm_monitor_metric_alert" "queue_depth_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -180,10 +175,9 @@ resource "azurerm_monitor_metric_alert" "queue_depth_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -212,10 +206,9 @@ resource "azurerm_monitor_metric_alert" "burst_bps_credits_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -243,10 +236,9 @@ resource "azurerm_monitor_metric_alert" "burst_bps_credits_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -275,10 +267,9 @@ resource "azurerm_monitor_metric_alert" "burst_io_credits_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -306,9 +297,8 @@ resource "azurerm_monitor_metric_alert" "burst_io_credits_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }

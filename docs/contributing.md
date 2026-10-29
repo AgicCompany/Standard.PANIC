@@ -58,6 +58,8 @@ Every resource module has the same files:
 | `versions.tf` | `required_providers` |
 | `examples/` | `standard/` and `critical-with-overrides/` |
 
+Alert tags: `local.common_tags` in `defaults.tf` is `merge(var.tags, { managed-by = "terraform" })`, and every alert uses it. Some modules (`appgateway`, `disk`, `expressroute`, `firewall`, `lb`, `vpngw`) add `profile` and `severity` on each alert with `merge(local.common_tags, {...})`. Don't add a `module-version` tag; it needs a manual bump on every release.
+
 There are two styles in the codebase:
 
 | | Original modules (`vm`, `storage`, `appservice`, `postgresql`) | The other 18 |
@@ -107,8 +109,7 @@ Run it after any change to thresholds, windows, enabled flags, metric names or a
    git push origin vm/v1.1.0
    ```
 
-3. If the module sets a `module-version` tag in `local.common_tags` (only `vm`, `storage`, `appservice` and `postgresql` do), bump it in the same change, before tagging.
-4. Bump the `?ref=` in `templates/panic-subscription-template/<name>.tf`.
+3. Bump the `?ref=` in `templates/panic-subscription-template/<name>.tf`.
 
 Use semver as described in [Versioning](versioning.md#upgrading). Changing an alert's name suffix is a major change, because Azure deletes and recreates the rule.
 
@@ -117,7 +118,6 @@ Use semver as described in [Versioning](versioning.md#upgrading). Changing an al
 Worth fixing when you touch these modules:
 
 - `vm` `memory` alerts on "Available Memory Bytes" with percent thresholds (15/10). Enabling it as-is gives wrong alerts. `disk_free` needs checking too: guest metrics may not be published under `Microsoft.Compute/virtualMachines`.
-- Tags differ: all modules set `managed-by = terraform`; 4 add `module-version`; `appgateway`, `disk`, `expressroute`, `firewall`, `lb`, `vpngw` add `profile` and `severity`.
 - The `vm` examples use a data source (`azurerm_linux_virtual_machine`) that the azurerm provider doesn't have, so they fail `validate`.
 
 ## Docs

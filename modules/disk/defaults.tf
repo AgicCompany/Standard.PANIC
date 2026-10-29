@@ -72,4 +72,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.burst_io_credits.window_minutes, null), local.selected_profile.burst_io_credits.window_minutes)
     }
   }
+
+  common_tags = merge(var.tags, {
+    managed-by = "terraform"
+  })
 }

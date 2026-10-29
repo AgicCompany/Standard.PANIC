@@ -23,10 +23,9 @@ resource "azurerm_monitor_metric_alert" "health_probe_status_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -55,10 +54,9 @@ resource "azurerm_monitor_metric_alert" "data_path_availability_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -86,10 +84,9 @@ resource "azurerm_monitor_metric_alert" "data_path_availability_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -118,10 +115,9 @@ resource "azurerm_monitor_metric_alert" "snat_connection_count_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -149,10 +145,9 @@ resource "azurerm_monitor_metric_alert" "snat_connection_count_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }
 
@@ -181,10 +176,9 @@ resource "azurerm_monitor_metric_alert" "used_snat_ports_warn" {
     action_group_id = var.action_group_ids.warning
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "warning"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "warning"
   })
 }
 
@@ -212,9 +206,8 @@ resource "azurerm_monitor_metric_alert" "used_snat_ports_crit" {
     action_group_id = var.action_group_ids.critical
   }
 
-  tags = merge(var.tags, {
-    managed-by = "terraform"
-    profile    = var.profile
-    severity   = "critical"
+  tags = merge(local.common_tags, {
+    profile  = var.profile
+    severity = "critical"
   })
 }

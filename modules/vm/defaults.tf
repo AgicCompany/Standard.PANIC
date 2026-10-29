@@ -97,7 +97,6 @@ locals {
 
   # Common tags
   common_tags = merge(var.tags, {
-    managed-by     = "terraform"
-    module-version = "1.1.0"
+    managed-by = "terraform"
   })
 }
