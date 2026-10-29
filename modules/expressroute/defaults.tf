@@ -75,4 +75,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.dropped_packets_out.window_minutes, null), local.selected_profile.dropped_packets_out.window_minutes)
     }
   }
+
+  common_tags = merge(var.tags, {
+    managed-by = "terraform"
+  })
 }

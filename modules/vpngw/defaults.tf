@@ -63,4 +63,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.tunnel_drop_count.window_minutes, null), local.selected_profile.tunnel_drop_count.window_minutes)
     }
   }
+
+  common_tags = merge(var.tags, {
+    managed-by = "terraform"
+  })
 }
