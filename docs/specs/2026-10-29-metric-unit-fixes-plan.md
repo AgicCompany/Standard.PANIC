@@ -2,7 +2,7 @@
 title: Metric unit fixes plan (issues #17, #18, #21)
 date: 2026-10-29
 status: draft
-version: 0.3
+version: 0.4
 author_model: claude-sonnet-5.5
 ---
 
@@ -29,7 +29,7 @@ The issues are partly stale. Earlier work already disabled some of the bad alert
 
 ## Open questions (need Azure Monitor doc checks before coding)
 
-Do not code from memory. For each metric, read Microsoft Learn "supported metrics" for the namespace and record unit and name in the PR.
+Done in the section above; do not code from memory for anything new. For each metric, read Microsoft Learn "supported metrics" for the namespace and record unit and name in the PR.
 
 1. `Microsoft.App/containerApps`: is there a percentage CPU/memory metric? If yes, switch to it. If not, disable cpu/memory by default.
 2. `Microsoft.Web/sites` (function): percentage memory metric, or only bytes?
@@ -38,6 +38,25 @@ Do not code from memory. For each metric, read Microsoft Learn "supported metric
 5. Azure Firewall: `Throughput` unit (bits/s). Any percent metric? `SNATPortUtilization` is already a percent.
 6. Redis `connectedclients`, MySQL `active_connections`, SQL MI `io_requests`/`io_bytes_read`: raw only? Any percentage metric?
 7. Load balancer `UsedSnatPorts` / `SnatConnectionCount`: raw counts per backend; no percent.
+
+## Metric verification (Microsoft Learn, checked 2026-10-29)
+
+Source pages: `https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/<microsoft-...-metrics>` for each namespace.
+
+| Module | Result | Action |
+|---|---|---|
+| containerapp | `CpuPercentage`, `MemoryPercentage` exist (Percent, Avg/Max/Min/Total, preview, "percent of limit") | Switch `cpu`, `memory` to them; keep 70/90 and 60/80, Average |
+| function | `Microsoft.Web/sites` has only `MemoryWorkingSet`/`AverageMemoryWorkingSet` (Bytes) | Disable `memory` by default |
+| servicebus | `Size` is Bytes; `NamespaceMemoryUsage` (Percent) is memory, not entity size | Disable `size` by default |
+| storage | `UsedCapacity` Bytes, no percent | Disable `used_capacity` by default |
+| disk | `Microsoft.Compute/disks` lists only 4 Composite metrics (raw rates) plus `DiskPaidBurstIOPS`; no queue depth, no burst credits, no percent | Keep all disabled; give `queue_depth` a non-duplicate name (see Task 1) |
+| vpngw | no tunnel state metric; `TunnelAverageBandwidth`, `P2SBandwidth` are BytesPerSecond, `P2SConnectionCount` Count | Disable `tunnel_bandwidth`; `tunnel_status` disabled and re-pointed (see Task 3) |
+| expressroute | `IngressBandwidthUtilization`, `EgressBandwidthUtilization` exist (Percent, Maximum aggregation, dims PeeringType/DeviceRole, category Circuit Traffic) | Switch `bits_in`, `bits_out` to them with Maximum |
+| firewall | `Throughput` is BitsPerSecond, no percent. Also: latency metric is `FirewallLatencyPng`, defaults use `FirewallLatencyProbe` (invalid name) | Disable `throughput`; fix latency name (extra bug found, in #18 scope) |
+| lb | `SnatConnectionCount`, `UsedSnatPorts` are Count; no percent | Disable both |
+| redis | `connectedclients` Count; `usedmemorypercentage`, `serverLoad`, `cachemissrate` are Percent | Disable `connected_clients` |
+| mysql | `active_connections` Count; no percent | Disable `connections` |
+| sqlmi | `io_requests` Count, `io_bytes_read` Bytes | Disable `io_requests`, `io_bytes` |
 
 ## Decision rule (approved)
 
