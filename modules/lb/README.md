@@ -79,7 +79,7 @@ module "lb_alerts" {
 | Name | Version |
 |------|---------|
 | terraform | >= 1.3 |
-| azurerm | >= 3.0 |
+| azurerm | >= 4.0, < 6.0 |
 
 ## Inputs
 
