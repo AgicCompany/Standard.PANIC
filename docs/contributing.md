@@ -21,7 +21,7 @@ terraform -chdir=modules/vm init -backend=false -input=false
 terraform -chdir=modules/vm validate
 ```
 
-CI validates every folder that contains `.tf` files, except `examples/` folders and `templates/`. CI uses Terraform 1.15.2. If you change a module's inputs, validate its `examples/` folders by hand.
+CI validates every folder that contains `.tf` files, including `examples/` folders and the template. CI uses Terraform 1.15.2.
 
 Some modules have tests in `tests/*.tftest.hcl`. They plan against a mock provider, so they need no Azure login:
 
@@ -30,7 +30,7 @@ terraform -chdir=modules/vm init -backend=false
 terraform -chdir=modules/vm test
 ```
 
-These folders have tests: `modules/appservice`, `modules/disk`, `modules/postgresql`, `modules/sqlmi`, `modules/storage`, `modules/vm`, `modules/vmss` and `templates/panic-subscription-template`. To run all of them:
+CI runs the tests in every folder that has a `tests/*.tftest.hcl` file. To run all of them locally:
 
 ```bash
 failed=0
@@ -40,7 +40,7 @@ done
 test "$failed" -eq 0
 ```
 
-CI doesn't run them yet, so run them when you touch a module that has them. When you change how a module resolves overrides, add or extend its test.
+When you change how a module resolves overrides, add or extend its test.
 
 PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/), for example `feat(vm): add network alerts` or `docs: fix override example`. The `conventional-pr-title` workflow enforces this. It's synced from the org's `org-github-management` repo, so don't edit it here.
 
