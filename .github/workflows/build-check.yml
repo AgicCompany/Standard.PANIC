@@ -52,7 +52,7 @@ jobs:
               echo "::error file=${file}::${mod} is pinned to ${ref}, latest tag is ${latest:-<none>}"
               stale=1
             fi
-          done < <(grep -HoE 'modules/[a-z]+\?ref=[a-z]+/v[0-9]+\.[0-9]+\.[0-9]+' templates/panic-subscription-template/*.tf \
+          done < <(grep -HoE 'modules/[a-z]+\?ref=[^"]+' templates/panic-subscription-template/*.tf \
             | sed -E 's|^([^:]+):modules/([a-z]+)\?ref=(.*)$|\1 \2 \3|')
           exit "${stale}"
 
