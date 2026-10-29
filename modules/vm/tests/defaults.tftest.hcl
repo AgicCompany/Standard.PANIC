@@ -62,3 +62,16 @@ run "os_type_validation" {
 
   expect_failures = [var.os_type]
 }
+
+run "disk_free_skips_metric_validation" {
+  command = plan
+
+  variables {
+    overrides = { disk_free = { enabled = true } }
+  }
+
+  assert {
+    condition     = one(azurerm_monitor_metric_alert.disk_free_warn[0].criteria).skip_metric_validation && one(azurerm_monitor_metric_alert.disk_free_crit[0].criteria).skip_metric_validation
+    error_message = "guest metrics are unknown to Azure Monitor until published, so validation must be skipped"
+  }
+}

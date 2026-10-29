@@ -250,6 +250,8 @@ resource "azurerm_monitor_metric_alert" "disk_free_warn" {
     aggregation      = local.metrics.disk_free.aggregation
     operator         = local.metrics.disk_free.operator
     threshold        = local.resolved.disk_free.warning_threshold
+    # Guest metrics are not known to Azure Monitor until the agent has published them
+    skip_metric_validation = true
   }
 
   action {
@@ -274,11 +276,12 @@ resource "azurerm_monitor_metric_alert" "disk_free_crit" {
   window_size         = "PT${local.resolved.disk_free.window_minutes}M"
 
   criteria {
-    metric_namespace = local.metrics.disk_free.namespace
-    metric_name      = local.metrics.disk_free.name
-    aggregation      = local.metrics.disk_free.aggregation
-    operator         = local.metrics.disk_free.operator
-    threshold        = local.resolved.disk_free.critical_threshold
+    metric_namespace       = local.metrics.disk_free.namespace
+    metric_name            = local.metrics.disk_free.name
+    aggregation            = local.metrics.disk_free.aggregation
+    operator               = local.metrics.disk_free.operator
+    threshold              = local.resolved.disk_free.critical_threshold
+    skip_metric_validation = true
   }
 
   action {
