@@ -1,8 +1,8 @@
 ---
 title: Metric unit fixes plan (issues #17, #18, #21)
 date: 2026-10-29
-status: draft
-version: 0.4
+status: implemented
+version: 0.5
 author_model: claude-sonnet-5.5
 ---
 

@@ -36,7 +36,7 @@ All metrics are evaluated across the whole scale set (no per-instance split).
 
 ```hcl
 module "vmss_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vmss?ref=vmss/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vmss?ref=vmss/v1.1.0"
 
   resource_id         = azurerm_linux_virtual_machine_scale_set.web.id
   resource_name       = "web-vmss"
@@ -53,7 +53,7 @@ module "vmss_alerts" {
 
 ```hcl
 module "vmss_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vmss?ref=vmss/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vmss?ref=vmss/v1.1.0"
 
   resource_id         = azurerm_linux_virtual_machine_scale_set.batch.id
   resource_name       = "batch-vmss"

@@ -19,7 +19,6 @@ module "cpu_warning_alert" {
   action_group_id     = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-monitoring-dev/providers/microsoft.insights/actionGroups/ag-dev-warning"
 
   tags = {
-    managed-by     = "terraform"
-    module-version = "1.0.0"
+    managed-by = "terraform"
   }
 }
