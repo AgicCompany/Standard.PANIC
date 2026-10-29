@@ -1,4 +1,4 @@
-# Health Probe Status Alert (critical only - binary health check)
+# Health Probe Status Alert (critical only - health percentage)
 resource "azurerm_monitor_metric_alert" "health_probe_status_crit" {
   count = local.resolved.health_probe_status.enabled && var.enabled ? 1 : 0
 
@@ -16,7 +16,7 @@ resource "azurerm_monitor_metric_alert" "health_probe_status_crit" {
     metric_name      = local.metrics.health_probe_status.name
     aggregation      = local.metrics.health_probe_status.aggregation
     operator         = "LessThan"
-    threshold        = local.resolved.health_probe_status.critical_threshold * 100 # Convert to percentage
+    threshold        = local.resolved.health_probe_status.critical_threshold
   }
 
   action {

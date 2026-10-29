@@ -24,7 +24,7 @@ Terraform module for Azure Firewall monitoring alerts using the PANIC framework.
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
 | Health State | Firewall health % | < 99% | < 95% | < 99.5% | < 99% |
-| Throughput | Throughput (bps) | > 80% | > 95% | > 70% | > 90% |
+| Throughput | Throughput in bits/sec (disabled) | Override required | Override required | Override required | Override required |
 | SNAT Port Utilization | SNAT port usage % | > 80% | > 95% | > 70% | > 90% |
 | Latency | Latency probe (ms) | > 20ms | > 50ms | > 10ms | > 30ms |
 
@@ -34,7 +34,7 @@ Terraform module for Azure Firewall monitoring alerts using the PANIC framework.
 
 ```hcl
 module "firewall_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall/v2.0.0"
 
   resource_id         = azurerm_firewall.main.id
   resource_name       = "hub-firewall"
@@ -51,7 +51,7 @@ module "firewall_alerts" {
 
 ```hcl
 module "firewall_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/firewall?ref=firewall/v2.0.0"
 
   resource_id         = azurerm_firewall.main.id
   resource_name       = "prod-firewall"
@@ -65,9 +65,10 @@ module "firewall_alerts" {
 
   overrides = {
     throughput = {
-      # For Premium SKU with 30 Gbps limit
-      warning_threshold  = 24000000000  # 24 Gbps (80%)
-      critical_threshold = 28500000000  # 28.5 Gbps (95%)
+      # Example raw bits/sec thresholds; size these for your workload.
+      enabled            = true
+      warning_threshold  = 1000000000 # 1 Gbps
+      critical_threshold = 2000000000 # 2 Gbps
     }
     latency = {
       warning_threshold  = 5
@@ -108,10 +109,14 @@ module "firewall_alerts" {
 
 ## Notes
 
-- **Throughput thresholds** should be set based on your Azure Firewall SKU limits (Standard: 30 Gbps, Premium: 100 Gbps).
+- **Throughput thresholds**: Disabled by default in both profiles. `Throughput` is BitsPerSecond, not percent; enable it with `enabled = true` and raw bits/sec thresholds via `overrides.throughput`. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-azurefirewalls-metrics).
 - **SNAT port utilization** is critical for outbound connectivity. High utilization can cause connection failures.
-- **Latency probe** measures the firewall's internal latency. High values may indicate resource constraints.
+- **Latency probe** uses `FirewallLatencyPng` with Average aggregation and thresholds in milliseconds. High values may indicate resource constraints.
 - For **rule hit counts** and **data processed** metrics, consider using Azure Monitor workbooks for visibility.
+
+## Migration (next major release, unreleased)
+
+Throughput alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.throughput.enabled = true` and both thresholds in raw bits/sec. A threshold-only override no longer enables them. Latency alerts now use the valid `FirewallLatencyPng` metric instead of `FirewallLatencyProbe`; thresholds remain in milliseconds. Health and SNAT utilization alerts are unchanged. Existing source pins still select the old behavior until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## License
 

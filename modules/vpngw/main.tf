@@ -1,4 +1,4 @@
-# Tunnel Status Alert (critical only - tunnel down detection)
+# Tunnel Status Alert (critical only - no inbound packets, not tunnel state)
 resource "azurerm_monitor_metric_alert" "tunnel_status_crit" {
   count = local.resolved.tunnel_status.enabled && var.enabled ? 1 : 0
 

@@ -14,14 +14,14 @@ locals {
         window_minutes     = 15
       }
       io_requests = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of IOPS limit
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 80    # Placeholder count, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
       io_bytes = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of throughput limit
+        enabled            = false # enable with raw byte thresholds via overrides
+        warning_threshold  = 80    # Placeholder bytes, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -41,14 +41,14 @@ locals {
         window_minutes     = 15
       }
       io_requests = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 70    # Placeholder count, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }
       io_bytes = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw byte thresholds via overrides
+        warning_threshold  = 70    # Placeholder bytes, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }

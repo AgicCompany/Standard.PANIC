@@ -17,12 +17,12 @@ run "alert_tags" {
   command = plan
 
   assert {
-    condition     = azurerm_monitor_metric_alert.tunnel_bandwidth_warn[0].tags == tomap({ owner = "team-a", managed-by = "terraform", profile = "standard", severity = "warning" })
+    condition     = azurerm_monitor_metric_alert.tunnel_drop_count_warn[0].tags == tomap({ owner = "team-a", managed-by = "terraform", profile = "standard", severity = "warning" })
     error_message = "warning alert must carry the user tags plus managed-by, profile and severity"
   }
 
   assert {
-    condition     = azurerm_monitor_metric_alert.tunnel_bandwidth_crit[0].tags == tomap({ owner = "team-a", managed-by = "terraform", profile = "standard", severity = "critical" })
+    condition     = azurerm_monitor_metric_alert.tunnel_drop_count_crit[0].tags == tomap({ owner = "team-a", managed-by = "terraform", profile = "standard", severity = "critical" })
     error_message = "critical alert must carry the user tags plus managed-by, profile and severity"
   }
 }

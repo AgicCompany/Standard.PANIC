@@ -25,8 +25,8 @@ Terraform module for Azure SQL Managed Instance monitoring alerts using the PANI
 |--------|-------------|---------------|---------------|---------------|---------------|
 | CPU % | Average CPU utilization | > 80% | > 95% | > 70% | > 90% |
 | Storage | Storage space used in MB (disabled) | Override required | Override required | Override required | Override required |
-| IO Requests | IO operations count | > 80% | > 95% | > 70% | > 90% |
-| IO Bytes | IO throughput (bytes read) | > 80% | > 95% | > 70% | > 90% |
+| IO Requests | IO operations count (disabled) | Override required | Override required | Override required | Override required |
+| IO Bytes | Bytes read (disabled) | Override required | Override required | Override required | Override required |
 
 ## Usage
 
@@ -34,7 +34,7 @@ Terraform module for Azure SQL Managed Instance monitoring alerts using the PANI
 
 ```hcl
 module "sqlmi_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v2.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v3.0.0"
 
   resource_id         = azurerm_mssql_managed_instance.main.id
   resource_name       = "prod-sqlmi"
@@ -61,7 +61,7 @@ module "sqlmi_alerts" {
 
 ```hcl
 module "sqlmi_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v2.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/sqlmi?ref=sqlmi/v3.0.0"
 
   resource_id         = azurerm_mssql_managed_instance.main.id
   resource_name       = "critical-sqlmi"
@@ -123,8 +123,12 @@ module "sqlmi_alerts" {
 ## Notes
 
 - **Storage thresholds**: SQL MI reports storage in MB, not percentage. Azure Monitor has no percentage storage metric for SQL MI, so the storage alert is disabled by default. Enable it with `enabled = true` and thresholds in MB calculated from your reserved storage.
-- **IO metrics**: Thresholds depend on your SQL MI tier and vCore count. Adjust based on documented limits.
+- **IO metrics**: Disabled by default in both profiles. `io_requests` is Count and `io_bytes_read` is Bytes, not percent; enable each with `enabled = true` and both raw-unit thresholds via overrides. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-sql-managedinstances-metrics).
 - **CPU**: vCore-based, monitor closely for Business Critical tier workloads.
+
+## Migration (next major release, unreleased)
+
+IO request and IO byte alerts are now disabled by default. Upgrading removes them unless you explicitly enable them and set both thresholds in Count (`overrides.io_requests`) or Bytes (`overrides.io_bytes`). A threshold-only override no longer enables them. Storage remains disabled; CPU alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Storage Calculation
 

@@ -30,11 +30,11 @@ module "vpngw_alerts" {
     warning  = data.azurerm_monitor_action_group.warning.id
   }
 
-  # Sensitive tunnel status thresholds — any tunnel drop is an immediate concern
+  # Optional no-inbound-packets alert; this also fires on healthy idle tunnels
   overrides = {
     tunnel_status = {
-      warning_threshold  = 1
-      critical_threshold = 0
+      enabled            = true
+      critical_threshold = 1 # Packet count, not tunnel state
     }
   }
 

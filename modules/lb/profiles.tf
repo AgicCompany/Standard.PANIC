@@ -3,7 +3,7 @@ locals {
     standard = {
       health_probe_status = {
         enabled            = true
-        critical_threshold = 1 # Alert when health probe status drops below 100%
+        critical_threshold = 100 # Percent: alert when health probe status drops below 100%
         window_minutes     = 1
       }
       data_path_availability = {
@@ -13,14 +13,14 @@ locals {
         window_minutes     = 1
       }
       snat_connection_count = {
-        enabled            = true
-        warning_threshold  = 80
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 80    # Placeholder count, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
       used_snat_ports = {
-        enabled            = true
-        warning_threshold  = 80
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 80    # Placeholder count, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -29,7 +29,7 @@ locals {
     critical = {
       health_probe_status = {
         enabled            = true
-        critical_threshold = 1
+        critical_threshold = 100 # Percent
         window_minutes     = 1
       }
       data_path_availability = {
@@ -39,14 +39,14 @@ locals {
         window_minutes     = 1
       }
       snat_connection_count = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 70    # Placeholder count, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }
       used_snat_ports = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 70    # Placeholder count, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }

@@ -14,8 +14,8 @@ locals {
         window_minutes     = 5
       }
       connected_clients = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of max clients
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 80    # Placeholder count, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -47,8 +47,8 @@ locals {
         window_minutes     = 5
       }
       connected_clients = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 70    # Placeholder count, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }

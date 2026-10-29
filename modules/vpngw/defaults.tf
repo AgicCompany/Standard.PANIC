@@ -3,9 +3,9 @@ locals {
 
   metrics = {
     tunnel_status = {
-      name        = "TunnelAverageBandwidth"
-      aggregation = "Average"
-      description = "VPN tunnel connection status"
+      name        = "TunnelIngressPackets"
+      aggregation = "Total"
+      description = "Inbound tunnel packets (no tunnel state metric exists; alert fires when no packets arrive)"
     }
     tunnel_bandwidth = {
       name        = "TunnelAverageBandwidth"
