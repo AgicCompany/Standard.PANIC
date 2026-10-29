@@ -25,14 +25,13 @@ Always pin to a full tag. Never use:
 
 ## Current versions
 
-Every module is at `v1.0.0`, except:
+Modules are versioned independently. Some modules ahead of `v1.0.0`:
 
 | Module | Version | Change |
 |--------|---------|--------|
 | `appservice`, `postgresql`, `storage` | `v1.0.1` | Partial overrides no longer silently disable a metric; see [Concepts](concepts.md#overrides) |
 | `vm` | `v1.1.0` | `v1.0.1` fix, plus the memory alert uses `Available Memory Percentage` |
-| `sqlmi` | `v2.0.0` | Storage alert off by default: it is a raw MB metric |
-| `disk` | `v2.0.0` | All alerts off by default: managed disks only expose raw rate metrics |
+| `disk` | `v2.2.0` | All alerts off by default: managed disks only expose raw rate metrics; `queue_depth` no longer duplicates the read IOPS metric |
 
 To list tags:
 
@@ -40,23 +39,23 @@ To list tags:
 git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
 ```
 
-## Pending major releases (unreleased)
+## Major releases for metric unit fixes
 
-These changes require major releases. No new tags or template source refs are included in this change.
+These releases change defaults. Read the migration notes before you bump a `?ref=`.
 
-| Module | Change | Migration |
-|--------|--------|-----------|
-| `expressroute` | Bandwidth alerts use link utilization percentages with Maximum aggregation | Convert raw bits/sec overrides to percentages; see [migration notes](../modules/expressroute/README.md#migration-next-major-release-unreleased) |
-| `firewall` | Throughput alerts disabled by default; latency metric name corrected | Explicitly enable throughput with raw bits/sec thresholds; see [migration notes](../modules/firewall/README.md#migration-next-major-release-unreleased) |
-| `lb` | SNAT alerts disabled by default; health probe overrides use percent directly | Enable SNAT with raw counts and convert health probe overrides from 0-1 to percent; see [migration notes](../modules/lb/README.md#migration-next-major-release-unreleased) |
-| `mysql` | Active connection alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/mysql/README.md#migration-next-major-release-unreleased) |
-| `redis` | Connected client alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/redis/README.md#migration-next-major-release-unreleased) |
-| `sqlmi` | IO request and byte alerts disabled by default | Explicitly enable with raw count/byte thresholds; see [migration notes](../modules/sqlmi/README.md#migration-next-major-release-unreleased) |
-| `vpngw` | Tunnel bandwidth and status alerts disabled; status uses inbound packets, not bandwidth | Set raw Bytes/sec thresholds; opt in to idle-tunnel packet alerts only if wanted; see [migration notes](../modules/vpngw/README.md#migration-next-major-release-unreleased) |
-| `containerapp` | CPU and memory use preview percentage-of-limit metrics instead of nanocores/bytes | Convert raw-unit overrides to percentages; see [migration notes](../modules/containerapp/README.md#migration-next-major-release-unreleased) |
-| `function` | Memory alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/function/README.md#migration-next-major-release-unreleased) |
-| `servicebus` | Size alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/servicebus/README.md#migration-next-major-release-unreleased) |
-| `storage` | Used capacity alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/storage/README.md#migration-next-major-release-unreleased) |
+| Module | Version | Change | Migration |
+|--------|---------|--------|-----------|
+| `expressroute` | `v2.0.0` | Bandwidth alerts use link utilization percentages with Maximum aggregation | Convert raw bits/sec overrides to percentages; see [migration notes](../modules/expressroute/README.md#migration-v200) |
+| `firewall` | `v2.0.0` | Throughput alerts disabled by default; latency metric name corrected | Explicitly enable throughput with raw bits/sec thresholds; see [migration notes](../modules/firewall/README.md#migration-v200) |
+| `lb` | `v2.0.0` | SNAT alerts disabled by default; health probe overrides use percent directly | Enable SNAT with raw counts and convert health probe overrides from 0-1 to percent; see [migration notes](../modules/lb/README.md#migration-v200) |
+| `mysql` | `v2.0.0` | Active connection alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/mysql/README.md#migration-v200) |
+| `redis` | `v2.0.0` | Connected client alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/redis/README.md#migration-v200) |
+| `sqlmi` | `v3.0.0` | IO request and byte alerts disabled by default | Explicitly enable with raw count/byte thresholds; see [migration notes](../modules/sqlmi/README.md#migration-v300) |
+| `vpngw` | `v2.0.0` | Tunnel bandwidth and status alerts disabled; status uses inbound packets, not bandwidth | Set raw Bytes/sec thresholds; opt in to idle-tunnel packet alerts only if wanted; see [migration notes](../modules/vpngw/README.md#migration-v200) |
+| `containerapp` | `v2.0.0` | CPU and memory use preview percentage-of-limit metrics instead of nanocores/bytes | Convert raw-unit overrides to percentages; see [migration notes](../modules/containerapp/README.md#migration-v200) |
+| `function` | `v2.0.0` | Memory alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/function/README.md#migration-v200) |
+| `servicebus` | `v2.0.0` | Size alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/servicebus/README.md#migration-v200) |
+| `storage` | `v2.0.0` | Used capacity alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/storage/README.md#migration-v200) |
 
 ## Upgrading
 

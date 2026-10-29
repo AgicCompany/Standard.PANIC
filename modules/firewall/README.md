@@ -114,9 +114,9 @@ module "firewall_alerts" {
 - **Latency probe** uses `FirewallLatencyPng` with Average aggregation and thresholds in milliseconds. High values may indicate resource constraints.
 - For **rule hit counts** and **data processed** metrics, consider using Azure Monitor workbooks for visibility.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Throughput alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.throughput.enabled = true` and both thresholds in raw bits/sec. A threshold-only override no longer enables them. Latency alerts now use the valid `FirewallLatencyPng` metric instead of `FirewallLatencyProbe`; thresholds remain in milliseconds. Health and SNAT utilization alerts are unchanged. Existing source pins still select the old behavior until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Throughput alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.throughput.enabled = true` and both thresholds in raw bits/sec. A threshold-only override no longer enables them. Latency alerts now use the valid `FirewallLatencyPng` metric instead of `FirewallLatencyProbe`; thresholds remain in milliseconds. Health and SNAT utilization alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## License
 

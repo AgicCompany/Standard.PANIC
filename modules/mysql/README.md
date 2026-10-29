@@ -143,9 +143,9 @@ module "mysql_replica_alerts" {
 - **Storage auto-grow**: If enabled, storage alerts may be less critical but still useful for cost monitoring.
 - **IO consumption**: High IO can indicate query performance issues or undersized storage tier.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Active connection alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connections.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Active connection alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connections.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Max Connections by SKU
 

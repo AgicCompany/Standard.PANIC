@@ -111,11 +111,11 @@ module "lb_alerts" {
 - **SNAT metrics** are disabled by default in both profiles. `SnatConnectionCount` and `UsedSnatPorts` are Count, not percent; enable them with `enabled = true` and raw count thresholds via overrides. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-loadbalancers-metrics).
 - For Standard Load Balancer, all metrics are available. Basic Load Balancer has limited metrics.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
 SNAT connection and used-port alerts are now disabled by default. Upgrading removes these alerts unless you explicitly enable them and set both thresholds in raw counts. A threshold-only override no longer enables them.
 
-Overrides of `health_probe_status.critical_threshold` used the 0-1 scale before; now use percent (e.g. `100` instead of `1`, or `50` instead of `0.5`). The default planned threshold stays at 100 percent, but overrides are no longer multiplied by 100. Existing source pins still select the old behavior until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Overrides of `health_probe_status.critical_threshold` used the 0-1 scale before; now use percent (e.g. `100` instead of `1`, or `50` instead of `0.5`). The default planned threshold stays at 100 percent, but overrides are no longer multiplied by 100. Review `terraform plan` when upgrading.
 
 ## License
 

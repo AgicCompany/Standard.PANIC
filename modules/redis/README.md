@@ -147,9 +147,9 @@ module "redis_alerts" {
 - **Cache Miss Rate**: Disabled by default. Expected rate varies by workload.
 - **Evicted Keys**: Any evictions indicate memory pressure.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Connected client alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connected_clients.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Connected client alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connected_clients.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Redis Tier Limits
 
