@@ -2,9 +2,14 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_mssql_database" "example" {
-  name                = "example-sqldb"
+data "azurerm_mssql_server" "example" {
+  name                = "example-sqlserver"
   resource_group_name = "rg-example"
+}
+
+data "azurerm_mssql_database" "example" {
+  name      = "example-sqldb"
+  server_id = data.azurerm_mssql_server.example.id
 }
 
 data "azurerm_monitor_action_group" "critical" {
