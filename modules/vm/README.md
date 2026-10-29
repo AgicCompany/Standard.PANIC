@@ -18,7 +18,7 @@ This module creates a comprehensive set of metric alerts for Azure Virtual Machi
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.0 |
+| terraform | >= 1.3 |
 | azurerm | >= 3.0 |
 
 ## Monitored Metrics

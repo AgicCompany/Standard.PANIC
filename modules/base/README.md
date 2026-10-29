@@ -18,7 +18,7 @@ This module creates a single Azure Monitor metric alert rule. It provides a stan
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.0 |
+| terraform | >= 1.3 |
 | azurerm | >= 3.0 |
 
 ## Inputs

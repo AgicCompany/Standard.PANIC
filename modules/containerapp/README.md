@@ -109,7 +109,7 @@ module "containerapp_alerts" {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.0 |
+| terraform | >= 1.3 |
 | azurerm | >= 3.0 |
 
 ## Inputs
