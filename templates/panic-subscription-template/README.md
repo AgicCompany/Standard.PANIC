@@ -35,7 +35,7 @@ This template provides a standardized method for deploying Azure Monitor metric 
 ### Version Requirements
 
 - Terraform >= 1.3.0
-- AzureRM Provider ~> 4.0
+- AzureRM Provider >= 4.0, < 6.0
 
 ## Quick Start
 
