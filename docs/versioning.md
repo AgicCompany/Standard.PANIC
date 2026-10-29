@@ -26,11 +26,14 @@ Always pin to a full tag. Never use:
 ## Current versions
 
 Modules are versioned independently, so the numbers do not line up across
-modules. Two ways to see what is current, instead of a list kept by hand here:
+modules. Rather than a list kept by hand here:
 
-- `templates/panic-subscription-template/*.tf`: every `?ref=` there is that
-  module's highest tag, and CI fails the PR if it is not.
-- `git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git`
+- `git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git` is
+  the complete set of released tags.
+- `templates/panic-subscription-template/*.tf` is a CI-checked snapshot of the
+  22 resource-module refs: CI fails a PR whose `?ref=` is not that module's
+  highest tag. It does not cover `base`, and it lags between a module release
+  and the follow-up PR that bumps the ref.
 
 Every module is now past `v1.0.0`. Two repo-wide changes moved most of them:
 alert tags were standardized on `merge(var.tags, { managed-by = "terraform" })`

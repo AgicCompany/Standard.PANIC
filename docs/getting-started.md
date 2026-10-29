@@ -147,7 +147,7 @@ terraform init
 terraform plan
 ```
 
-`init` downloads the `vm` module at tag `vm/v1.1.0`. The plan should end with:
+`init` downloads the `vm` module at the tag pinned in `source`. The plan should end with:
 
 ```text
 Plan: 7 to add, 0 to change, 0 to destroy.
