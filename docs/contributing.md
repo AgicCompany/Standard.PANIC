@@ -118,7 +118,6 @@ Worth fixing when you touch these modules:
 
 - `vm` `memory` alerts on "Available Memory Bytes" with percent thresholds (15/10). Enabling it as-is gives wrong alerts. `disk_free` needs checking too: guest metrics may not be published under `Microsoft.Compute/virtualMachines`.
 - Tags differ: all modules set `managed-by = terraform`; 4 add `module-version`; `appgateway`, `disk`, `expressroute`, `firewall`, `lb`, `vpngw` add `profile` and `severity`.
-- Most modules declare `terraform >= 1.0`, but `optional()` in `overrides` needs 1.3.
 - The `vm` examples use a data source (`azurerm_linux_virtual_machine`) that the azurerm provider doesn't have, so they fail `validate`.
 
 ## Docs
