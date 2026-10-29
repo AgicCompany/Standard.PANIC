@@ -2,13 +2,13 @@
 title: Metric unit fixes plan (issues #17, #18, #21)
 date: 2026-10-29
 status: draft
-version: 0.2
+version: 0.3
 author_model: claude-sonnet-5.5
 ---
 
 # Metric unit fixes plan
 
-Covers #17, #18 and #21 (children of umbrella #13). Three independent branches, one PR each. Order: #17 (smallest), #21, #18.
+Covers #17, #18 and #21 (children of umbrella #13). Three independent branches, one module PR each, plus one follow-up template-ref PR per task. Order: #17 (smallest), #21, #18.
 
 ## Findings (verified in the repo at 38222af)
 
@@ -31,7 +31,7 @@ The issues are partly stale. Earlier work already disabled some of the bad alert
 
 Do not code from memory. For each metric, read Microsoft Learn "supported metrics" for the namespace and record unit and name in the PR.
 
-1. `Microsoft.App/containerApps`: is there a percentage CPU/memory metric? If yes, switch to it. If not, disable cpu/memory by default or use realistic raw defaults.
+1. `Microsoft.App/containerApps`: is there a percentage CPU/memory metric? If yes, switch to it. If not, disable cpu/memory by default.
 2. `Microsoft.Web/sites` (function): percentage memory metric, or only bytes?
 3. `Microsoft.Compute/disks`: which metrics exist (e.g. IOPS/bandwidth consumed percentage at disk level)? Does queue depth exist? If not, remove `queue_depth`, `burst_*`.
 4. `Microsoft.Network/virtualNetworkGateways`: is there a tunnel status metric (e.g. `TunnelIngressBytes`, `TunnelPeakPackets`, or a gateway/tunnel state metric)? Pick the right one or remove `tunnel_status`.
@@ -39,36 +39,44 @@ Do not code from memory. For each metric, read Microsoft Learn "supported metric
 6. Redis `connectedclients`, MySQL `active_connections`, SQL MI `io_requests`/`io_bytes_read`: raw only? Any percentage metric?
 7. Load balancer `UsedSnatPorts` / `SnatConnectionCount`: raw counts per backend; no percent.
 
-## Decision rule (propose, needs approval)
+## Decision rule (approved)
 
-For a raw metric with no percentage alternative, use one of:
+1. Percentage metric where Microsoft Learn lists one **and** it measures the intended condition (record URL, metric name, unit, aggregation, applicability limits in the PR).
+2. Otherwise `enabled = false` by default. Keep a placeholder threshold with the unit in the comment; users enable it and set raw-unit thresholds via `overrides`. No guessed raw defaults.
+3. Unsupported metric names (no valid metric exists): keep the variable (approved), keep it disabled, comment says "not available on <namespace>". Same pattern disk uses today. The name must still not duplicate another metric. Enabling it via override will fail at apply for an invalid name; document that in the README. For vpngw `tunnel_status`: use a real tunnel state metric if question 4 finds one, else disable and document.
 
-- **A. Disable by default** (`enabled = false`), keep a sane placeholder, document "set thresholds in raw units via overrides". Matches what disk, sqlmi `storage`, and vpngw `p2s_*` already do.
-- **B. Realistic raw default** only when a universal value exists (e.g. DropCount style counts).
+## Release policy
 
-Default: A for every metric that depends on SKU size (bandwidth, memory, capacity, connections). Change the profile comment to state the unit. This is a default-behavior change (alerts removed on upgrade), so each module is a **minor** bump per the earlier decision; call it out in the PR.
+`docs/versioning.md` says changed defaults are **major**. Therefore:
+
+- **Major bump** for modules where an enabled default becomes disabled or the metric/threshold changes: containerapp, function, servicebus, storage, expressroute, firewall, vpngw, lb, redis, mysql, sqlmi.
+- **Minor bump** for disk only (approved): all alerts already disabled, only a name/comment fix, no behavior change.
+- **lb** also changes the scale of `health_probe_status.critical_threshold` (1 -> 100): major, and the README needs a migration note ("if you overrode this field, divide by 100 -> use percent").
+- Add migration notes to each module README and add a short entry to `docs/versioning.md` if it lists per-module notes. Update the policy table text if a major for "alerts disabled by default" needs clarifying (it already matches the `disk v2.0.0` precedent).
 
 ## Task 1: disk (#17) - branch `fix/disk-metrics`
 
 - Per question 3: fix the `queue_depth` name (or point it at a real metric if one exists). Keep `queue_depth` and `burst_*` as disabled variables; do not remove them. Minor bump (`disk/v2.2.0` or next).
-- Fix `iops_consumed` / `bandwidth_consumed` thresholds to raw-unit placeholders, or switch to a percent metric if one exists.
+- Switch to a percent metric if one exists; otherwise keep disabled with a placeholder threshold and unit in the comment.
 - Update `modules/disk/README.md`, `docs/modules.md` count, run `python3 scripts/gen-thresholds.py`.
-- Test: extend `modules/disk/tests/` so no two metrics share a `name`.
+- Test: extend `modules/disk/tests/` so no two metrics share a `name`; every metric stays disabled by default in both profiles.
 
 ## Task 2: containerapp, function, storage, servicebus (#21) - branch `fix/byte-metrics`
 
 - containerapp `cpu`, `memory`; function `memory`; servicebus `size`; storage `used_capacity`: apply the decision rule (percent metric if question 1/2 finds one, otherwise disable by default).
 - Update 4 READMEs, regenerate `docs/thresholds.md`.
-- Test per module: assert the default-enabled metrics do not use a byte/nanocore metric (check `local.metrics.*.name` or `enabled` in the plan output).
-- Release 4 module tags, then bump 4 template `?ref=`.
+- Tests per module, both profiles: default-enabled metrics are only percent/count-safe ones (assert `local.metrics.*.name` and enabled flags via `output.resolved_thresholds`); a replacement percent metric has correct unit thresholds; explicit `enabled = true` plus raw thresholds creates alerts with the raw value. Fix existing tests that assume disabled metrics are created after a threshold-only override (e.g. `containerapp/tests/overrides.tftest.hcl` `partial_override_keeps_profile_defaults` expects cpu alerts).
+- Update `docs/modules.md` enabled counts. Check `examples/*` for overrides that assume the alert is enabled.
+- Release 4 module tags (major), then bump 4 template `?ref=` in a follow-up PR.
 
 ## Task 3: network and db (#18) - branch `fix/network-db-metrics`
 
 - `lb`: store `100` in `profiles.tf` (both profiles), remove `* 100` in `main.tf:19`. Check `tests/overrides.tftest.hcl` for `health_probe_status` expectations. Breaking for anyone who overrode this field with the old scale, so note it in the PR.
 - `vpngw`: fix `tunnel_status` metric (question 4) in addition to the issue scope. Disable `tunnel_bandwidth` by default.
 - `expressroute`, `firewall`, `lb` (snat), `redis`, `mysql`, `sqlmi`: apply the decision rule.
-- Update 7 READMEs, regenerate `docs/thresholds.md`.
-- Release 7 module tags, then bump 7 template `?ref=`.
+- Update 7 READMEs, `docs/modules.md` counts, regenerate `docs/thresholds.md`.
+- Tests: lb default `health_probe_status` threshold is `100` in the planned alert, and an override (e.g. 50) is passed through unscaled; changed default enablement and any replacement metric asserted per module; fix existing tests that assume old defaults.
+- Release 7 module tags (major), then bump 7 template `?ref=` in a follow-up PR.
 
 ## Verification (every task)
 
@@ -76,10 +84,12 @@ Default: A for every metric that depends on SKU size (bandwidth, memory, capacit
 - For each touched module and its `examples/*`: `terraform -chdir=<dir> init -backend=false && terraform -chdir=<dir> validate`
 - `terraform -chdir=modules/<m> test` for each touched module (all have tests/).
 - `python3 scripts/gen-thresholds.py` and `git diff --exit-code docs/thresholds.md` (CI checks drift).
-- Tag order: merge PR, tag modules, then bump template `?ref=` (CI fails other PRs until the template matches the highest tag). Template bump needs the user's OK to push, like everything else.
+- Tag order: PR 1 per task (module code + docs) merges, then tag the modules, then a **follow-up PR** bumps the template `?ref=` (disk included). CI fails other PRs between tagging and the bump, so keep the gap short. After the bump run `init -backend=false && validate` and `terraform test` on the template dir (CI does). Pushes and PRs need the user's OK.
 - No `apply` or `az` calls needed. Doc checks use Microsoft Learn only.
 
 ## Decisions (approved 2026-10-29)
+
+Note: the plan review (round 1) returned REVISE; v0.3 addresses its blockers. Release policy below needs your confirmation.
 
 1. **Standard fix:** switch to a percentage metric where Azure Monitor has one (verified on Microsoft Learn). Otherwise disable by default (rule A) and document raw-unit overrides. No guessed raw defaults, because the right value depends on SKU size.
 2. **disk:** keep `queue_depth` and `burst_*` as disabled variables, fix the duplicate name and comments. Minor bump, no `overrides` type change.
