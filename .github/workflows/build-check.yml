@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
@@ -39,6 +41,28 @@ jobs:
 
       - name: Terraform format check
         run: terraform fmt -check -recursive
+
+      - name: Template module refs match the latest tags
+        run: |
+          set -euo pipefail
+          stale=0
+          while read -r file mod ref; do
+            latest=$(git tag -l "${mod}/v*" | sort -V | tail -1)
+            if [ "${ref}" != "${latest}" ]; then
+              echo "::error file=${file}::${mod} is pinned to ${ref}, latest tag is ${latest:-<none>}"
+              stale=1
+            fi
+          done < <(grep -HoE 'modules/[a-z]+\?ref=[^"]+' templates/panic-subscription-template/*.tf \
+            | sed -E 's|^([^:]+):modules/([a-z]+)\?ref=(.*)$|\1 \2 \3|')
+          exit "${stale}"
+
+      - name: docs/thresholds.md is up to date
+        run: |
+          set -euo pipefail
+          pip install --quiet python-hcl2
+          python3 scripts/gen-thresholds.py
+          git diff --exit-code docs/thresholds.md \
+            || { echo "::error file=docs/thresholds.md::Out of date. Run python3 scripts/gen-thresholds.py and commit the result."; exit 1; }
 
       - name: Terraform validate (roots, modules, examples, template)
         run: |

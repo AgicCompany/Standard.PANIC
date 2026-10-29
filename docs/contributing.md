@@ -23,6 +23,8 @@ terraform -chdir=modules/vm validate
 
 CI validates every folder that contains `.tf` files, including `examples/` folders and the template. CI uses Terraform 1.15.2.
 
+CI also fails if `docs/thresholds.md` differs from the output of `python3 scripts/gen-thresholds.py`, or if a `?ref=` in the template is not the highest `<module>/v*` tag. After you push a new module tag, bump its `?ref=` in the template before other PRs can pass.
+
 Some modules have tests in `tests/*.tftest.hcl`. They plan against a mock provider, so they need no Azure login:
 
 ```bash
