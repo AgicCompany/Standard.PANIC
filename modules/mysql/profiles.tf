@@ -26,8 +26,8 @@ locals {
         window_minutes     = 5
       }
       connections = {
-        enabled            = true
-        warning_threshold  = 80 # percentage of max connections
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 80    # Placeholder count, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -71,8 +71,8 @@ locals {
         window_minutes     = 5
       }
       connections = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw count thresholds via overrides
+        warning_threshold  = 70    # Placeholder count, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }

@@ -28,7 +28,7 @@ Terraform module for Azure MySQL Flexible Server monitoring alerts using the PAN
 | Memory % | Memory utilization | > 80% | > 95% | > 70% | > 90% |
 | Storage % | Storage utilization | > 80% | > 90% | > 70% | > 85% |
 | IO % | IO consumption | > 80% | > 95% | > 70% | > 90% |
-| Active Connections | Connection count | > 80 | > 95 | > 70 | > 90 |
+| Active Connections | Connection count (disabled) | Override required | Override required | Override required | Override required |
 | Aborted Connections | Failed connections | > 10 | > 50 | > 5 | > 25 |
 | Replication Lag | Lag in seconds (disabled) | > 30s | > 60s | > 15s | > 30s |
 
@@ -70,6 +70,7 @@ module "mysql_alerts" {
   overrides = {
     connections = {
       # Based on max_connections for your SKU
+      enabled            = true
       warning_threshold  = 400  # 80% of 500 max
       critical_threshold = 475  # 95% of 500 max
     }
@@ -137,10 +138,14 @@ module "mysql_replica_alerts" {
 
 ## Notes
 
-- **Connection thresholds**: Default thresholds are percentages. Override with actual connection counts based on your SKU's max_connections.
+- **Connection thresholds**: Disabled by default in both profiles. `active_connections` is Count, not percent; enable it with `enabled = true` and raw count thresholds via `overrides.connections`. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-dbformysql-flexibleservers-metrics).
 - **Replication lag**: Disabled by default. Enable only for read replicas.
 - **Storage auto-grow**: If enabled, storage alerts may be less critical but still useful for cost monitoring.
 - **IO consumption**: High IO can indicate query performance issues or undersized storage tier.
+
+## Migration (next major release, unreleased)
+
+Active connection alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connections.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Max Connections by SKU
 

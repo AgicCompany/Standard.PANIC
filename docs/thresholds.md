@@ -66,9 +66,9 @@ Namespace: `Microsoft.Network/azureFirewalls`
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
 | `health_state` | `health` | FirewallHealth | Average | < | 1 | 99 / 95 | 99.5 / 99 |
-| `throughput` | `throughput` | Throughput | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `throughput` (off) | `throughput` | Throughput | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `snat_port_utilization` | `snat-util` | SNATPortUtilization | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `latency` | `latency` | FirewallLatencyProbe | Average | > | 5 | 20 / 50 | 10 / 30 |
+| `latency` | `latency` | FirewallLatencyPng | Average | > | 5 | 20 / 50 | 10 / 30 |
 
 ### Azure SQL Database (`sqldb`)
 
@@ -128,10 +128,10 @@ Namespace: `Microsoft.Network/expressRouteCircuits`
 |---|---|---|---|---|---|---|---|
 | `bgp_availability` | `bgp-avail` | BgpAvailability | Average | < | 1 | 99.9 / 99 | 99.95 / 99.5 |
 | `arp_availability` | `arp-avail` | ArpAvailability | Average | < | 1 | 99.9 / 99 | 99.95 / 99.5 |
-| `bits_in` | `bits-in` | BitsInPerSecond | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `bits_out` | `bits-out` | BitsOutPerSecond | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `dropped_packets_in` | `drops-in` | DroppedInBitsPerSecond | Average | > | 5 | 10 / 100 | 5 / 50 |
-| `dropped_packets_out` | `drops-out` | DroppedOutBitsPerSecond | Average | > | 5 | 10 / 100 | 5 / 50 |
+| `bits_in` | `bits-in` | IngressBandwidthUtilization | Maximum | > | 5 | 80 / 95 | 70 / 90 |
+| `bits_out` | `bits-out` | EgressBandwidthUtilization | Maximum | > | 5 | 80 / 95 | 70 / 90 |
+| `dropped_packets_in` | `drops-in` | QosDropBitsInPerSecond | Average | > | 5 | 10 / 100 | 5 / 50 |
+| `dropped_packets_out` | `drops-out` | QosDropBitsOutPerSecond | Average | > | 5 | 10 / 100 | 5 / 50 |
 
 ### Function App (`function`)
 
@@ -162,10 +162,10 @@ Namespace: `Microsoft.Network/loadBalancers`
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
-| `health_probe_status` | `health-probe` | DipAvailability | Average | < | 1 | - / 1 | - / 1 |
+| `health_probe_status` | `health-probe` | DipAvailability | Average | < | 1 | - / 100 | - / 100 |
 | `data_path_availability` | `data-path` | VipAvailability | Average | < | 1 | 99.9 / 99 | 99.95 / 99.5 |
-| `snat_connection_count` | `snat-conn` | SnatConnectionCount | Total | > | 5 | 80 / 95 | 70 / 90 |
-| `used_snat_ports` | `snat-ports` | UsedSnatPorts | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `snat_connection_count` (off) | `snat-conn` | SnatConnectionCount | Total | > | 5 | 80 / 95 | 70 / 90 |
+| `used_snat_ports` (off) | `snat-ports` | UsedSnatPorts | Average | > | 5 | 80 / 95 | 70 / 90 |
 
 ### Managed Disk (`disk`)
 
@@ -189,7 +189,7 @@ Namespace: `Microsoft.DBforMySQL/flexibleServers`
 | `memory` | `memory` | memory_percent | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `storage` | `storage` | storage_percent | Average | > | 15 | 80 / 90 | 70 / 85 |
 | `io` | `io` | io_consumption_percent | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `connections` | `connections` | active_connections | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `connections` (off) | `connections` | active_connections | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `aborted_connections` | `abortedconn` | aborted_connections | Total | > | 5 | 10 / 50 | 5 / 25 |
 | `replication_lag` (off) | `repllag` | replication_lag | Maximum | > | 5 | 30 / 60 | 15 / 30 |
 
@@ -215,7 +215,7 @@ Namespace: `Microsoft.Cache/redis`
 |---|---|---|---|---|---|---|---|
 | `server_load` | `serverload` | serverLoad | Average | > | 5 | 70 / 90 | 60 / 80 |
 | `memory` | `memory` | usedmemorypercentage | Average | > | 5 | 70 / 90 | 60 / 80 |
-| `connected_clients` | `clients` | connectedclients | Maximum | > | 5 | 80 / 95 | 70 / 90 |
+| `connected_clients` (off) | `clients` | connectedclients | Maximum | > | 5 | 80 / 95 | 70 / 90 |
 | `cache_miss_rate` (off) | `cachemiss` | cachemissrate | Average | > | 5 | 50 / 80 | 30 / 60 |
 | `evicted_keys` | `evictedkeys` | evictedkeys | Total | > | 5 | 100 / 1000 | 10 / 100 |
 
@@ -239,8 +239,8 @@ Namespace: `Microsoft.Sql/managedInstances`
 |---|---|---|---|---|---|---|---|
 | `cpu` | `cpu` | avg_cpu_percent | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `storage` (off) | `storage` | storage_space_used_mb | Average | > | 15 | 80 / 90 | 70 / 85 |
-| `io_requests` | `iops` | io_requests | Average | > | 5 | 80 / 95 | 70 / 90 |
-| `io_bytes` | `iothroughput` | io_bytes_read | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `io_requests` (off) | `iops` | io_requests | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `io_bytes` (off) | `iothroughput` | io_bytes_read | Average | > | 5 | 80 / 95 | 70 / 90 |
 
 ### Storage Account (`storage`)
 
@@ -284,8 +284,8 @@ Namespace: `Microsoft.Network/virtualNetworkGateways`
 
 | Override key | Alert suffix | Azure metric | Agg | Op | Window (min) | Standard warn / crit | Critical warn / crit |
 |---|---|---|---|---|---|---|---|
-| `tunnel_status` | `tunnel-status` | TunnelAverageBandwidth | Average | < | 1 | - / 1 | - / 1 |
-| `tunnel_bandwidth` | `tunnel-bw` | TunnelAverageBandwidth | Average | > | 5 | 80 / 95 | 70 / 90 |
+| `tunnel_status` (off) | `tunnel-status` | TunnelIngressPackets | Total | < | 1 | - / 1 | - / 1 |
+| `tunnel_bandwidth` (off) | `tunnel-bw` | TunnelAverageBandwidth | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `p2s_bandwidth` (off) | `p2s-bw` | P2SBandwidth | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `p2s_connection_count` (off) | `p2s-conn` | P2SConnectionCount | Total | > | 5 | 80 / 95 | 70 / 90 |
 | `tunnel_drop_count` | `tunnel-drops` | TunnelDropCount | Total | > | 5 | 5 / 20 | 2 / 10 |

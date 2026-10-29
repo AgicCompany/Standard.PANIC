@@ -18,7 +18,7 @@ locals {
       description = "SNAT port utilization percentage"
     }
     latency = {
-      name        = "FirewallLatencyProbe"
+      name        = "FirewallLatencyPng"
       aggregation = "Average"
       description = "Firewall latency probe in milliseconds"
     }

@@ -8,8 +8,8 @@ locals {
         window_minutes     = 1
       }
       throughput = {
-        enabled            = true
-        warning_threshold  = 80 # % of SKU limit
+        enabled            = false # enable with raw bits/sec thresholds via overrides
+        warning_threshold  = 80    # Placeholder bits/sec, not a recommended limit
         critical_threshold = 95
         window_minutes     = 5
       }
@@ -35,8 +35,8 @@ locals {
         window_minutes     = 1
       }
       throughput = {
-        enabled            = true
-        warning_threshold  = 70
+        enabled            = false # enable with raw bits/sec thresholds via overrides
+        warning_threshold  = 70    # Placeholder bits/sec, not a recommended limit
         critical_threshold = 90
         window_minutes     = 5
       }

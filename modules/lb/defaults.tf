@@ -20,7 +20,7 @@ locals {
     used_snat_ports = {
       name        = "UsedSnatPorts"
       aggregation = "Average"
-      description = "Used SNAT ports percentage"
+      description = "Used SNAT ports count"
     }
   }
 

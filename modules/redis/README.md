@@ -27,7 +27,7 @@ Terraform module for Azure Cache for Redis monitoring alerts using the PANIC fra
 |--------|-------------|---------------|---------------|---------------|---------------|
 | Server Load | CPU load % | > 70% | > 90% | > 60% | > 80% |
 | Memory | Used memory % | > 70% | > 90% | > 60% | > 80% |
-| Connected Clients | Client count | > 80% | > 95% | > 70% | > 90% |
+| Connected Clients | Client count (disabled) | Override required | Override required | Override required | Override required |
 | Cache Miss Rate | Miss % (disabled) | > 50% | > 80% | > 30% | > 60% |
 | Evicted Keys | Eviction count | > 100 | > 1000 | > 10 | > 100 |
 
@@ -73,6 +73,7 @@ module "redis_alerts" {
     }
     connected_clients = {
       # Premium P1 has 7,500 max clients
+      enabled            = true
       warning_threshold  = 5250  # 70%
       critical_threshold = 6750  # 90%
     }
@@ -142,9 +143,13 @@ module "redis_alerts" {
 
 - **Server Load**: High load indicates CPU saturation. Consider scaling up or optimizing queries.
 - **Memory**: When memory fills, Redis evicts keys (if configured) or rejects writes.
-- **Connected Clients**: Override with actual counts based on your tier's max connections.
+- **Connected Clients**: Disabled by default in both profiles. `connectedclients` is Count, not percent; enable it with `enabled = true` and raw count thresholds via `overrides.connected_clients`. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-cache-redis-metrics).
 - **Cache Miss Rate**: Disabled by default. Expected rate varies by workload.
 - **Evicted Keys**: Any evictions indicate memory pressure.
+
+## Migration (next major release, unreleased)
+
+Connected client alerts are now disabled by default. Upgrading removes them unless you explicitly set `overrides.connected_clients.enabled = true` and both thresholds in raw counts. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Redis Tier Limits
 

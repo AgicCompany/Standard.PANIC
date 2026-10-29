@@ -22,8 +22,8 @@ run "partial_override_keeps_profile_defaults" {
   }
 
   assert {
-    condition     = length(azurerm_monitor_metric_alert.tunnel_bandwidth_warn) == 1 && length(azurerm_monitor_metric_alert.tunnel_bandwidth_crit) == 1
-    error_message = "tunnel_bandwidth alerts must be created after a partial override"
+    condition     = length(azurerm_monitor_metric_alert.tunnel_bandwidth_warn) == 0 && length(azurerm_monitor_metric_alert.tunnel_bandwidth_crit) == 0
+    error_message = "a threshold-only override must not enable tunnel_bandwidth alerts"
   }
 
   assert {

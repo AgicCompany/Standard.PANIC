@@ -25,8 +25,8 @@ Terraform module for Azure ExpressRoute Circuit monitoring alerts using the PANI
 |--------|-------------|---------------|---------------|---------------|---------------|
 | BGP Availability | BGP session availability % | < 99.9% | < 99% | < 99.95% | < 99.5% |
 | ARP Availability | ARP availability % | < 99.9% | < 99% | < 99.95% | < 99.5% |
-| Bits In | Ingress bandwidth (bps) | > 80% | > 95% | > 70% | > 90% |
-| Bits Out | Egress bandwidth (bps) | > 80% | > 95% | > 70% | > 90% |
+| Bits In | Ingress link bandwidth utilization % (Maximum) | > 80% | > 95% | > 70% | > 90% |
+| Bits Out | Egress link bandwidth utilization % (Maximum) | > 80% | > 95% | > 70% | > 90% |
 | Dropped Packets In | Ingress drops/sec | > 10 | > 100 | > 5 | > 50 |
 | Dropped Packets Out | Egress drops/sec | > 10 | > 100 | > 5 | > 50 |
 
@@ -67,13 +67,13 @@ module "expressroute_alerts" {
 
   overrides = {
     bits_in = {
-      # For 1 Gbps circuit: 800 Mbps warning, 950 Mbps critical
-      warning_threshold  = 800000000
-      critical_threshold = 950000000
+      # Percent of link bandwidth, not bits per second
+      warning_threshold  = 80
+      critical_threshold = 95
     }
     bits_out = {
-      warning_threshold  = 800000000
-      critical_threshold = 950000000
+      warning_threshold  = 80
+      critical_threshold = 95
     }
   }
 }
@@ -110,9 +110,13 @@ module "expressroute_alerts" {
 
 ## Notes
 
-- **Bandwidth thresholds** should be set based on your circuit bandwidth (e.g., 50 Mbps, 100 Mbps, 1 Gbps, 10 Gbps).
+- **Bandwidth thresholds** are percentages of link bandwidth. `bits_in` uses `IngressBandwidthUtilization` and `bits_out` uses `EgressBandwidthUtilization`, both with Maximum aggregation. These circuit traffic metrics expose `PeeringType` and `DeviceRole` dimensions; this module adds no dimension filters. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-expressroutecircuits-metrics).
 - **BGP/ARP availability** are critical indicators of circuit health. Values below 100% indicate connectivity issues.
 - For **Global Reach** monitoring, create additional alerts targeting the GlobalReachBitsInPerSecond/GlobalReachBitsOutPerSecond metrics.
+
+## Migration (next major release, unreleased)
+
+`bits_in` and `bits_out` now use link bandwidth utilization percentage metrics instead of `BitsInPerSecond` and `BitsOutPerSecond`, and aggregation changes from Average to Maximum. Both remain enabled with standard 80/95 and critical 70/90 percent thresholds. Convert any raw bits/sec overrides to percentages before upgrading. Existing source pins still select the old metrics until you upgrade to the new major tag after release; review `terraform plan` when upgrading. Other metrics are unchanged.
 
 ## License
 

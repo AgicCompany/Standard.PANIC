@@ -15,7 +15,7 @@ locals {
       }
       bits_in = {
         enabled            = true
-        warning_threshold  = 80 # % of circuit bandwidth
+        warning_threshold  = 80 # Percent of link bandwidth
         critical_threshold = 95
         window_minutes     = 5
       }

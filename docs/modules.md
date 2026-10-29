@@ -1,8 +1,8 @@
 ---
 title: Modules
-date: 2026-09-28
+date: 2026-10-29
 status: active
-version: 0.1
+version: 0.2
 ---
 
 # Modules
@@ -26,7 +26,7 @@ See [Versioning](versioning.md) for how to pick the version.
 | AKS | [`aks`](../modules/aks/) | `Microsoft.ContainerService/managedClusters` | 4 of 5 | [thresholds](thresholds.md#aks-aks) |
 | App Service | [`appservice`](../modules/appservice/) | `Microsoft.Web/sites` | 3 of 5 | [thresholds](thresholds.md#app-service-appservice) |
 | Application Gateway | [`appgateway`](../modules/appgateway/) | `Microsoft.Network/applicationGateways` | 5 of 6 | [thresholds](thresholds.md#application-gateway-appgateway) |
-| Azure Firewall | [`firewall`](../modules/firewall/) | `Microsoft.Network/azureFirewalls` | 4 of 4 | [thresholds](thresholds.md#azure-firewall-firewall) |
+| Azure Firewall | [`firewall`](../modules/firewall/) | `Microsoft.Network/azureFirewalls` | 3 of 4 | [thresholds](thresholds.md#azure-firewall-firewall) |
 | Azure SQL Database | [`sqldb`](../modules/sqldb/) | `Microsoft.Sql/servers/databases` | 7 of 7 | [thresholds](thresholds.md#azure-sql-database-sqldb) |
 | Container App | [`containerapp`](../modules/containerapp/) | `Microsoft.App/containerApps` | 3 of 5 | [thresholds](thresholds.md#container-app-containerapp) |
 | Cosmos DB | [`cosmosdb`](../modules/cosmosdb/) | `Microsoft.DocumentDB/databaseAccounts` | 4 of 5 | [thresholds](thresholds.md#cosmos-db-cosmosdb) |
@@ -34,17 +34,17 @@ See [Versioning](versioning.md) for how to pick the version.
 | ExpressRoute Circuit | [`expressroute`](../modules/expressroute/) | `Microsoft.Network/expressRouteCircuits` | 6 of 6 | [thresholds](thresholds.md#expressroute-circuit-expressroute) |
 | Function App | [`function`](../modules/function/) | `Microsoft.Web/sites` | 3 of 5 | [thresholds](thresholds.md#function-app-function) |
 | Key Vault | [`keyvault`](../modules/keyvault/) | `Microsoft.KeyVault/vaults` | 3 of 4 | [thresholds](thresholds.md#key-vault-keyvault) |
-| Load Balancer | [`lb`](../modules/lb/) | `Microsoft.Network/loadBalancers` | 4 of 4 | [thresholds](thresholds.md#load-balancer-lb) |
+| Load Balancer | [`lb`](../modules/lb/) | `Microsoft.Network/loadBalancers` | 2 of 4 | [thresholds](thresholds.md#load-balancer-lb) |
 | Managed Disk | [`disk`](../modules/disk/) | `Microsoft.Compute/disks` | 0 of 5 | [thresholds](thresholds.md#managed-disk-disk) |
-| MySQL Flexible Server | [`mysql`](../modules/mysql/) | `Microsoft.DBforMySQL/flexibleServers` | 6 of 7 | [thresholds](thresholds.md#mysql-flexible-server-mysql) |
+| MySQL Flexible Server | [`mysql`](../modules/mysql/) | `Microsoft.DBforMySQL/flexibleServers` | 5 of 7 | [thresholds](thresholds.md#mysql-flexible-server-mysql) |
 | PostgreSQL Flexible Server | [`postgresql`](../modules/postgresql/) | `Microsoft.DBforPostgreSQL/flexibleServers` | 6 of 7 | [thresholds](thresholds.md#postgresql-flexible-server-postgresql) |
-| Redis Cache | [`redis`](../modules/redis/) | `Microsoft.Cache/redis` | 4 of 5 | [thresholds](thresholds.md#redis-cache-redis) |
+| Redis Cache | [`redis`](../modules/redis/) | `Microsoft.Cache/redis` | 3 of 5 | [thresholds](thresholds.md#redis-cache-redis) |
 | Service Bus Namespace | [`servicebus`](../modules/servicebus/) | `Microsoft.ServiceBus/namespaces` | 5 of 5 | [thresholds](thresholds.md#service-bus-namespace-servicebus) |
-| SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 3 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
+| SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 1 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
 | Storage Account | [`storage`](../modules/storage/) | `Microsoft.Storage/storageAccounts` | 4 of 4 | [thresholds](thresholds.md#storage-account-storage) |
 | Virtual Machine | [`vm`](../modules/vm/) | `Microsoft.Compute/virtualMachines` | 4 of 6 | [thresholds](thresholds.md#virtual-machine-vm) |
 | Virtual Machine Scale Set | [`vmss`](../modules/vmss/) | `Microsoft.Compute/virtualMachineScaleSets` | 5 of 5 | [thresholds](thresholds.md#virtual-machine-scale-set-vmss) |
-| VPN Gateway | [`vpngw`](../modules/vpngw/) | `Microsoft.Network/virtualNetworkGateways` | 3 of 5 | [thresholds](thresholds.md#vpn-gateway-vpngw) |
+| VPN Gateway | [`vpngw`](../modules/vpngw/) | `Microsoft.Network/virtualNetworkGateways` | 1 of 5 | [thresholds](thresholds.md#vpn-gateway-vpngw) |
 
 ## Base module
 

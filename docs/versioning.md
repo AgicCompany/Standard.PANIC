@@ -1,8 +1,8 @@
 ---
 title: Versioning
-date: 2026-09-28
+date: 2026-10-29
 status: active
-version: 0.1
+version: 0.2
 ---
 
 # Versioning
@@ -39,6 +39,20 @@ To list tags:
 ```bash
 git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
 ```
+
+## Pending major releases (unreleased)
+
+These changes require major releases. No new tags or template source refs are included in this change.
+
+| Module | Change | Migration |
+|--------|--------|-----------|
+| `expressroute` | Bandwidth alerts use link utilization percentages with Maximum aggregation | Convert raw bits/sec overrides to percentages; see [migration notes](../modules/expressroute/README.md#migration-next-major-release-unreleased) |
+| `firewall` | Throughput alerts disabled by default; latency metric name corrected | Explicitly enable throughput with raw bits/sec thresholds; see [migration notes](../modules/firewall/README.md#migration-next-major-release-unreleased) |
+| `lb` | SNAT alerts disabled by default; health probe overrides use percent directly | Enable SNAT with raw counts and convert health probe overrides from 0-1 to percent; see [migration notes](../modules/lb/README.md#migration-next-major-release-unreleased) |
+| `mysql` | Active connection alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/mysql/README.md#migration-next-major-release-unreleased) |
+| `redis` | Connected client alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/redis/README.md#migration-next-major-release-unreleased) |
+| `sqlmi` | IO request and byte alerts disabled by default | Explicitly enable with raw count/byte thresholds; see [migration notes](../modules/sqlmi/README.md#migration-next-major-release-unreleased) |
+| `vpngw` | Tunnel bandwidth and status alerts disabled; status uses inbound packets, not bandwidth | Set raw Bytes/sec thresholds; opt in to idle-tunnel packet alerts only if wanted; see [migration notes](../modules/vpngw/README.md#migration-next-major-release-unreleased) |
 
 ## Upgrading
 

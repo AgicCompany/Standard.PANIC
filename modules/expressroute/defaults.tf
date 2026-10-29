@@ -13,22 +13,22 @@ locals {
       description = "ARP availability percentage"
     }
     bits_in = {
-      name        = "BitsInPerSecond"
-      aggregation = "Average"
-      description = "Bits ingressing Azure per second"
+      name        = "IngressBandwidthUtilization"
+      aggregation = "Maximum"
+      description = "Ingress link bandwidth utilization percentage"
     }
     bits_out = {
-      name        = "BitsOutPerSecond"
-      aggregation = "Average"
-      description = "Bits egressing Azure per second"
+      name        = "EgressBandwidthUtilization"
+      aggregation = "Maximum"
+      description = "Egress link bandwidth utilization percentage"
     }
     dropped_packets_in = {
-      name        = "DroppedInBitsPerSecond"
+      name        = "QosDropBitsInPerSecond"
       aggregation = "Average"
       description = "Ingress bits dropped per second"
     }
     dropped_packets_out = {
-      name        = "DroppedOutBitsPerSecond"
+      name        = "QosDropBitsOutPerSecond"
       aggregation = "Average"
       description = "Egress bits dropped per second"
     }

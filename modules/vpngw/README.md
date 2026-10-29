@@ -22,13 +22,13 @@ Terraform module for Azure VPN Gateway monitoring alerts using the PANIC framewo
 
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
-| Tunnel Status | VPN tunnel connectivity | - | < 1 | - | < 1 |
-| Tunnel Bandwidth | Tunnel bandwidth usage | > 80% | > 95% | > 70% | > 90% |
-| P2S Bandwidth | Point-to-site bandwidth | > 80% | > 95% | > 70% | > 90% |
-| P2S Connection Count | P2S client connections | > 80% | > 95% | > 70% | > 90% |
+| Tunnel Status | Inbound packet count, not tunnel state (disabled) | - | < 1 packet (opt-in) | - | < 1 packet (opt-in) |
+| Tunnel Bandwidth | Tunnel bandwidth in Bytes/sec (disabled) | Override required | Override required | Override required | Override required |
+| P2S Bandwidth | Point-to-site bandwidth in Bytes/sec (disabled) | Override required | Override required | Override required | Override required |
+| P2S Connection Count | P2S client count (disabled) | Override required | Override required | Override required | Override required |
 | Tunnel Drop Count | Dropped packets per tunnel | > 5 | > 20 | > 2 | > 10 |
 
-**Note:** P2S metrics are disabled by default and should only be enabled for Point-to-Site VPN configurations.
+**Note:** Only Tunnel Drop Count is enabled by default. Enable P2S metrics only for Point-to-Site VPN configurations, with raw-unit thresholds.
 
 ## Usage
 
@@ -67,7 +67,10 @@ module "vpngw_alerts" {
 
   overrides = {
     p2s_bandwidth = {
-      enabled = true  # Enable P2S monitoring
+      # Example raw Bytes/sec thresholds; size these for your workload.
+      enabled            = true
+      warning_threshold  = 1048576
+      critical_threshold = 2097152
     }
     p2s_connection_count = {
       enabled            = true
@@ -112,9 +115,13 @@ module "vpngw_alerts" {
 
 ## Notes
 
-- **Tunnel Status** uses bandwidth as a proxy for tunnel health. A value of 0 indicates the tunnel is down.
-- **P2S metrics** are disabled by default. Enable them only for gateways configured with Point-to-Site VPN.
-- **Bandwidth thresholds** should be adjusted based on your gateway SKU limits.
+- **Tunnel Status** is disabled because no tunnel state metric exists on `Microsoft.Network/virtualNetworkGateways`. It uses `TunnelIngressPackets` (Count, Total) with `LessThan 1`; enabling it alerts when no inbound packets arrive, including on healthy idle tunnels. It does not detect tunnel state.
+- **P2S metrics** stay disabled by default. `P2SBandwidth` uses Bytes/sec and `P2SConnectionCount` uses Count. Enable them only for Point-to-Site VPN, with both thresholds in raw units.
+- **Tunnel bandwidth** is disabled by default in both profiles. `TunnelAverageBandwidth` uses Bytes/sec, not percent; enable it with `enabled = true` and raw Bytes/sec thresholds in `overrides.tunnel_bandwidth`. Profile bandwidth and P2S thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-virtualnetworkgateways-metrics).
+
+## Migration (next major release, unreleased)
+
+Tunnel status and tunnel bandwidth alerts are now disabled by default. Upgrading removes them unless you explicitly enable them. A threshold-only override no longer enables them. For bandwidth, set both thresholds in Bytes/sec. For `tunnel_status`, the metric changes from `TunnelAverageBandwidth` to `TunnelIngressPackets`, aggregation changes to Total, and the threshold remains `LessThan 1` packet: enable only if idle-tunnel alerts are wanted, not as a tunnel-state check. P2S metrics stay disabled and need raw Bytes/sec or Count overrides when enabled. Existing source pins still select the old behavior until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## License
 
