@@ -75,3 +75,9 @@ To bring your copy up to date with this repo:
 7. Read the plan before applying. Updates in place are normal. A destroy or a replace means an alert was removed or renamed, so check it against the module's changes before you `terraform apply`.
 
 The template needs Terraform 1.3 or later and `azurerm ~> 4.0`.
+
+## See also
+
+- [Template README](../templates/panic-subscription-template/README.md): full variable and inventory reference.
+- [Versioning](versioning.md): how module tags and upgrades work.
+- [Concepts](concepts.md): profiles and overrides used in the inventory.
