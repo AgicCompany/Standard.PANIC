@@ -30,7 +30,7 @@ Modules are versioned independently. Some modules ahead of `v1.0.0`:
 | Module | Version | Change |
 |--------|---------|--------|
 | `appservice`, `postgresql`, `storage` | `v1.0.1` | Partial overrides no longer silently disable a metric; see [Concepts](concepts.md#overrides) |
-| `vm` | `v1.1.0` | `v1.0.1` fix, plus the memory alert uses `Available Memory Percentage` |
+| `vm` | `v1.3.0` | `v1.1.0`: the memory alert uses `Available Memory Percentage`. `v1.3.0`: new `os_type` input, `disk_free` uses Azure Monitor Agent guest metrics |
 | `disk` | `v2.2.0` | All alerts off by default: managed disks only expose raw rate metrics; `queue_depth` no longer duplicates the read IOPS metric |
 
 To list tags:

@@ -179,6 +179,7 @@ variable "vms" {
   type = map(object({
     resource_id = string
     profile     = optional(string)
+    os_type     = optional(string) # "linux" (default) or "windows"; selects the disk_free guest metric
     overrides = optional(object({
       cpu = optional(object({
         enabled            = optional(bool)

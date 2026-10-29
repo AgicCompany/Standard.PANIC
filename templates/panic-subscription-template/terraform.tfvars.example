@@ -70,6 +70,7 @@ vms = {
   "myorg-dc01" = {
     resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-servers/providers/Microsoft.Compute/virtualMachines/myorg-dc01"
     profile     = "critical"
+    os_type     = "windows" # default "linux"; only used by the disk_free guest metric (off by default)
   }
 
   # Standard VM - inherits default_profile

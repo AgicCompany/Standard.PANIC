@@ -79,7 +79,7 @@ Without these the alert never gets data. The Azure CLI commands `az monitor metr
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.1.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.0"
 
   resource_id         = azurerm_linux_virtual_machine.example.id
   resource_name       = "dev-vm-01"
@@ -97,7 +97,7 @@ module "vm_alerts" {
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.1.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.0"
 
   resource_id         = azurerm_linux_virtual_machine.production.id
   resource_name       = "prod-db-01"
