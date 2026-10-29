@@ -23,9 +23,9 @@ locals {
       description = "Point-to-site connection count"
     }
     tunnel_drop_count = {
-      name        = "TunnelDropCount"
+      name        = "TunnelEgressPacketDropCount"
       aggregation = "Total"
-      description = "Count of dropped tunnel packets"
+      description = "Dropped outbound tunnel packets (TunnelDropCount is not a valid metric; ingress drops are not covered)"
     }
   }
 
