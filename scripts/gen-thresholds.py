@@ -105,7 +105,11 @@ def render(module, locals_, alerts):
             warn = p.get("warning_threshold") if "warning" in a["levels"] else None
             return f"{fmt(warn)} / {fmt(p.get('critical_threshold'))}"
 
-        s_on, c_on = s.get("enabled", True), c.get("enabled", True)
+        # Original modules keep enablement fallbacks in resolved, not profiles.
+        enabled_expr = str(locals_.get("resolved", {}).get(key, {}).get("enabled", ""))
+        fallback = re.search(r",\s*(true|false)\)\}$", enabled_expr)
+        default_on = fallback.group(1) == "true" if fallback else True
+        s_on, c_on = s.get("enabled", default_on), c.get("enabled", default_on)
         label = f"`{key}`"
         if s_on != c_on:
             label += f" (standard {'on' if s_on else 'off'}, critical {'on' if c_on else 'off'})"

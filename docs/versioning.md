@@ -53,6 +53,10 @@ These changes require major releases. No new tags or template source refs are in
 | `redis` | Connected client alerts disabled by default | Explicitly enable with raw count thresholds; see [migration notes](../modules/redis/README.md#migration-next-major-release-unreleased) |
 | `sqlmi` | IO request and byte alerts disabled by default | Explicitly enable with raw count/byte thresholds; see [migration notes](../modules/sqlmi/README.md#migration-next-major-release-unreleased) |
 | `vpngw` | Tunnel bandwidth and status alerts disabled; status uses inbound packets, not bandwidth | Set raw Bytes/sec thresholds; opt in to idle-tunnel packet alerts only if wanted; see [migration notes](../modules/vpngw/README.md#migration-next-major-release-unreleased) |
+| `containerapp` | CPU and memory use preview percentage-of-limit metrics instead of nanocores/bytes | Convert raw-unit overrides to percentages; see [migration notes](../modules/containerapp/README.md#migration-next-major-release-unreleased) |
+| `function` | Memory alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/function/README.md#migration-next-major-release-unreleased) |
+| `servicebus` | Size alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/servicebus/README.md#migration-next-major-release-unreleased) |
+| `storage` | Used capacity alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/storage/README.md#migration-next-major-release-unreleased) |
 
 ## Upgrading
 

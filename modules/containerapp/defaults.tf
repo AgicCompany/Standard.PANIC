@@ -5,16 +5,16 @@ locals {
   # Metric definitions
   metrics = {
     cpu = {
-      name        = "UsageNanoCores"
+      name        = "CpuPercentage"
       aggregation = "Average"
       operator    = "GreaterThan"
-      description = "CPU usage in nanocores"
+      description = "CPU usage as a percentage of limit (preview)"
     }
     memory = {
-      name        = "WorkingSetBytes"
+      name        = "MemoryPercentage"
       aggregation = "Average"
       operator    = "GreaterThan"
-      description = "Memory working set in bytes"
+      description = "Memory usage as a percentage of limit (preview)"
     }
     restarts = {
       name        = "RestartCount"

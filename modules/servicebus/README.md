@@ -29,7 +29,7 @@ Terraform module for Azure Service Bus monitoring alerts using the PANIC framewo
 | Dead-lettered | Failed messages | > 10 | > 100 | > 1 | > 50 |
 | Throttled Requests | Rate limiting | > 5 | > 20 | > 1 | > 10 |
 | Server Errors | 5xx errors | > 5 | > 20 | > 1 | > 10 |
-| Size | Namespace size | > 80% | > 90% | > 70% | > 85% |
+| Size | Size in bytes (disabled) | Override required | Override required | Override required | Override required |
 
 ## Usage
 
@@ -76,9 +76,10 @@ module "servicebus_alerts" {
       critical_threshold = 10
     }
     size = {
-      # 5 GB namespace (Premium)
-      warning_threshold  = 4294967296  # 4 GB (80%)
-      critical_threshold = 4831838208  # 4.5 GB (90%)
+      # Example raw byte thresholds; size these for your workload.
+      enabled            = true
+      warning_threshold  = 4294967296 # 4 GiB
+      critical_threshold = 4831838208 # 4.5 GiB
     }
   }
 }
@@ -146,7 +147,11 @@ module "servicebus_alerts" {
 - **Active Messages**: High counts indicate slow consumers or processing issues.
 - **Dead-lettered Messages**: Any dead letters require investigation - indicates processing failures.
 - **Throttling**: Occurs when throughput exceeds tier limits. Consider upgrading tier or adding partitions.
-- **Size**: Override with actual byte values based on your namespace quota.
+- **Size**: Disabled by default in both profiles. `Size` is bytes, not percent; enable it with `enabled = true` and raw byte thresholds in `overrides.size`. Profile thresholds are placeholders, not recommended byte limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-servicebus-namespaces-metrics).
+
+## Migration (next major release, unreleased)
+
+Size alerts are now disabled by default because `Size` has no percentage equivalent. Upgrading removes existing size alerts unless you explicitly set `overrides.size.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Service Bus Limits by Tier
 

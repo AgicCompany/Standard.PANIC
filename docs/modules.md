@@ -32,16 +32,16 @@ See [Versioning](versioning.md) for how to pick the version.
 | Cosmos DB | [`cosmosdb`](../modules/cosmosdb/) | `Microsoft.DocumentDB/databaseAccounts` | 4 of 5 | [thresholds](thresholds.md#cosmos-db-cosmosdb) |
 | Event Hub Namespace | [`eventhub`](../modules/eventhub/) | `Microsoft.EventHub/namespaces` | 3 of 5 | [thresholds](thresholds.md#event-hub-namespace-eventhub) |
 | ExpressRoute Circuit | [`expressroute`](../modules/expressroute/) | `Microsoft.Network/expressRouteCircuits` | 6 of 6 | [thresholds](thresholds.md#expressroute-circuit-expressroute) |
-| Function App | [`function`](../modules/function/) | `Microsoft.Web/sites` | 3 of 5 | [thresholds](thresholds.md#function-app-function) |
+| Function App | [`function`](../modules/function/) | `Microsoft.Web/sites` | 2 of 5 | [thresholds](thresholds.md#function-app-function) |
 | Key Vault | [`keyvault`](../modules/keyvault/) | `Microsoft.KeyVault/vaults` | 3 of 4 | [thresholds](thresholds.md#key-vault-keyvault) |
 | Load Balancer | [`lb`](../modules/lb/) | `Microsoft.Network/loadBalancers` | 2 of 4 | [thresholds](thresholds.md#load-balancer-lb) |
 | Managed Disk | [`disk`](../modules/disk/) | `Microsoft.Compute/disks` | 0 of 5 | [thresholds](thresholds.md#managed-disk-disk) |
 | MySQL Flexible Server | [`mysql`](../modules/mysql/) | `Microsoft.DBforMySQL/flexibleServers` | 5 of 7 | [thresholds](thresholds.md#mysql-flexible-server-mysql) |
 | PostgreSQL Flexible Server | [`postgresql`](../modules/postgresql/) | `Microsoft.DBforPostgreSQL/flexibleServers` | 6 of 7 | [thresholds](thresholds.md#postgresql-flexible-server-postgresql) |
 | Redis Cache | [`redis`](../modules/redis/) | `Microsoft.Cache/redis` | 3 of 5 | [thresholds](thresholds.md#redis-cache-redis) |
-| Service Bus Namespace | [`servicebus`](../modules/servicebus/) | `Microsoft.ServiceBus/namespaces` | 5 of 5 | [thresholds](thresholds.md#service-bus-namespace-servicebus) |
+| Service Bus Namespace | [`servicebus`](../modules/servicebus/) | `Microsoft.ServiceBus/namespaces` | 4 of 5 | [thresholds](thresholds.md#service-bus-namespace-servicebus) |
 | SQL Managed Instance | [`sqlmi`](../modules/sqlmi/) | `Microsoft.Sql/managedInstances` | 1 of 4 | [thresholds](thresholds.md#sql-managed-instance-sqlmi) |
-| Storage Account | [`storage`](../modules/storage/) | `Microsoft.Storage/storageAccounts` | 4 of 4 | [thresholds](thresholds.md#storage-account-storage) |
+| Storage Account | [`storage`](../modules/storage/) | `Microsoft.Storage/storageAccounts` | 3 of 4 | [thresholds](thresholds.md#storage-account-storage) |
 | Virtual Machine | [`vm`](../modules/vm/) | `Microsoft.Compute/virtualMachines` | 4 of 6 | [thresholds](thresholds.md#virtual-machine-vm) |
 | Virtual Machine Scale Set | [`vmss`](../modules/vmss/) | `Microsoft.Compute/virtualMachineScaleSets` | 5 of 5 | [thresholds](thresholds.md#virtual-machine-scale-set-vmss) |
 | VPN Gateway | [`vpngw`](../modules/vpngw/) | `Microsoft.Network/virtualNetworkGateways` | 1 of 5 | [thresholds](thresholds.md#vpn-gateway-vpngw) |

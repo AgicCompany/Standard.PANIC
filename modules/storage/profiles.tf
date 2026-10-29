@@ -18,7 +18,7 @@ locals {
         window_minutes     = 5
       }
       used_capacity = {
-        warning_threshold  = 80
+        warning_threshold  = 80 # Bytes placeholder; override before enabling
         critical_threshold = 90
         window_minutes     = 60
       }
@@ -40,7 +40,7 @@ locals {
         window_minutes     = 5
       }
       used_capacity = {
-        warning_threshold  = 70
+        warning_threshold  = 70 # Bytes placeholder; override before enabling
         critical_threshold = 85
         window_minutes     = 60
       }

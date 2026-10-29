@@ -40,7 +40,7 @@ locals {
       name        = "UsedCapacity"
       aggregation = "Average"
       operator    = "GreaterThan"
-      description = "Storage account used capacity"
+      description = "Storage account used capacity in bytes"
     }
   }
 
@@ -65,7 +65,8 @@ locals {
       window_minutes     = coalesce(try(var.overrides.throttling.window_minutes, null), local.active_profile.throttling.window_minutes)
     }
     used_capacity = {
-      enabled            = coalesce(try(var.overrides.used_capacity.enabled, null), true)
+      # Bytes: enable with raw byte thresholds via overrides.
+      enabled            = coalesce(try(var.overrides.used_capacity.enabled, null), false)
       warning_threshold  = coalesce(try(var.overrides.used_capacity.warning_threshold, null), local.active_profile.used_capacity.warning_threshold)
       critical_threshold = coalesce(try(var.overrides.used_capacity.critical_threshold, null), local.active_profile.used_capacity.critical_threshold)
       window_minutes     = coalesce(try(var.overrides.used_capacity.window_minutes, null), local.active_profile.used_capacity.window_minutes)
