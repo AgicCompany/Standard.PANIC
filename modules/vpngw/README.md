@@ -26,7 +26,7 @@ Terraform module for Azure VPN Gateway monitoring alerts using the PANIC framewo
 | Tunnel Bandwidth | Tunnel bandwidth in Bytes/sec (disabled) | Override required | Override required | Override required | Override required |
 | P2S Bandwidth | Point-to-site bandwidth in Bytes/sec (disabled) | Override required | Override required | Override required | Override required |
 | P2S Connection Count | P2S client count (disabled) | Override required | Override required | Override required | Override required |
-| Tunnel Drop Count | Dropped packets per tunnel | > 5 | > 20 | > 2 | > 10 |
+| Tunnel Drop Count | Dropped outbound packets (`TunnelEgressPacketDropCount`) | > 5 | > 20 | > 2 | > 10 |
 
 **Note:** Only Tunnel Drop Count is enabled by default. Enable P2S metrics only for Point-to-Site VPN configurations, with raw-unit thresholds.
 
@@ -122,6 +122,10 @@ module "vpngw_alerts" {
 ## Migration (v2.0.0)
 
 Tunnel status and tunnel bandwidth alerts are now disabled by default. Upgrading removes them unless you explicitly enable them. A threshold-only override no longer enables them. For bandwidth, set both thresholds in Bytes/sec. For `tunnel_status`, the metric changes from `TunnelAverageBandwidth` to `TunnelIngressPackets`, aggregation changes to Total, and the threshold remains `LessThan 1` packet: enable only if idle-tunnel alerts are wanted, not as a tunnel-state check. P2S metrics stay disabled and need raw Bytes/sec or Count overrides when enabled. Review `terraform plan` when upgrading.
+
+## Fix (v2.0.1)
+
+`tunnel_drop_count` used `TunnelDropCount`, which is not an Azure Monitor metric, so creating the alert failed. It now uses `TunnelEgressPacketDropCount` (outbound drops only). Inbound drops (`TunnelIngressPacketDropCount`) are not covered.
 
 ## License
 

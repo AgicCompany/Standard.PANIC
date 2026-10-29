@@ -82,3 +82,11 @@ run "threshold_only_stays_disabled" {
     error_message = "threshold-only overrides must not enable tunnel status or bandwidth alerts"
   }
 }
+
+run "tunnel_drop_uses_valid_metric_name" {
+  command = plan
+  assert {
+    condition     = one(azurerm_monitor_metric_alert.tunnel_drop_count_warn[0].criteria).metric_name == "TunnelEgressPacketDropCount"
+    error_message = "tunnel_drop_count must use a metric listed on Microsoft Learn (TunnelDropCount does not exist)"
+  }
+}

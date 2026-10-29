@@ -289,4 +289,4 @@ Namespace: `Microsoft.Network/virtualNetworkGateways`
 | `tunnel_bandwidth` (off) | `tunnel-bw` | TunnelAverageBandwidth | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `p2s_bandwidth` (off) | `p2s-bw` | P2SBandwidth | Average | > | 5 | 80 / 95 | 70 / 90 |
 | `p2s_connection_count` (off) | `p2s-conn` | P2SConnectionCount | Total | > | 5 | 80 / 95 | 70 / 90 |
-| `tunnel_drop_count` | `tunnel-drops` | TunnelDropCount | Total | > | 5 | 5 / 20 | 2 / 10 |
+| `tunnel_drop_count` | `tunnel-drops` | TunnelEgressPacketDropCount | Total | > | 5 | 5 / 20 | 2 / 10 |

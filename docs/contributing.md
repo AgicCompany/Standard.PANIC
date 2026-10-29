@@ -25,7 +25,9 @@ CI validates every folder that contains `.tf` files, including `examples/` folde
 
 CI also fails if `docs/thresholds.md` differs from the output of `python3 scripts/gen-thresholds.py`, or if a `?ref=` in the template is not the highest `<module>/v*` tag. After you push a new module tag, bump its `?ref=` in the template before other PRs can pass.
 
-Some modules have tests in `tests/*.tftest.hcl`. They plan against a mock provider, so they need no Azure login:
+When you add or change a metric, run `python3 scripts/check-metric-names.py` (needs network). It checks every metric name against the REST names on Microsoft Learn; CI does not run it.
+
+Every module has tests in `tests/*.tftest.hcl`. They plan against a mock provider, so they need no Azure login:
 
 ```bash
 terraform -chdir=modules/vm init -backend=false
