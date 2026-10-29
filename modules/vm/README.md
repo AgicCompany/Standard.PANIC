@@ -48,7 +48,7 @@ The alert only works if the VM publishes these metrics (checked on a Linux and a
 - The VM can reach Azure Monitor over the network (outbound access to `*.handler.control.monitor.azure.com` and `<region>.monitoring.azure.com`).
 - The VM identity has the `Monitoring Metrics Publisher` role on the VM.
 
-Without these the alert never gets data. The Azure CLI commands `az monitor metrics list-namespaces` and `list-definitions` may not list guest namespaces even when data flows; query the metrics API with the namespace and metric name instead.
+Azure Monitor does not know guest metrics until the agent has published them, so the module creates the `disk_free` alerts with `skip_metric_validation = true`. A wrong `os_type` or counter name is therefore not caught at apply time: the alert is created but never gets data. Without the prerequisites the alert never gets data either. The Azure CLI commands `az monitor metrics list-namespaces` and `list-definitions` may not list guest namespaces even when data flows; query the metrics API with the namespace and metric name instead.
 
 ## Inputs
 
