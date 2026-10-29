@@ -114,9 +114,9 @@ module "expressroute_alerts" {
 - **BGP/ARP availability** are critical indicators of circuit health. Values below 100% indicate connectivity issues.
 - For **Global Reach** monitoring, create additional alerts targeting the GlobalReachBitsInPerSecond/GlobalReachBitsOutPerSecond metrics.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-`bits_in` and `bits_out` now use link bandwidth utilization percentage metrics instead of `BitsInPerSecond` and `BitsOutPerSecond`, and aggregation changes from Average to Maximum. Both remain enabled with standard 80/95 and critical 70/90 percent thresholds. Convert any raw bits/sec overrides to percentages before upgrading. Existing source pins still select the old metrics until you upgrade to the new major tag after release; review `terraform plan` when upgrading. Other metrics are unchanged.
+`bits_in` and `bits_out` now use link bandwidth utilization percentage metrics instead of `BitsInPerSecond` and `BitsOutPerSecond`, and aggregation changes from Average to Maximum. Both remain enabled with standard 80/95 and critical 70/90 percent thresholds. Convert any raw bits/sec overrides to percentages before upgrading. Review `terraform plan` when upgrading. Other metrics are unchanged.
 
 ## License
 

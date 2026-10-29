@@ -60,7 +60,7 @@ This module creates a comprehensive set of metric alerts for Azure Storage Accou
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.1"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v2.0.0"
 
   resource_id         = azurerm_storage_account.example.id
   resource_name       = "dev-storage-01"
@@ -78,7 +78,7 @@ module "storage_alerts" {
 
 ```hcl
 module "storage_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v1.0.1"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/storage?ref=storage/v2.0.0"
 
   resource_id         = azurerm_storage_account.critical.id
   resource_name       = "prod-critical-storage"
@@ -105,9 +105,9 @@ module "storage_alerts" {
 }
 ```
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Used capacity alerts are now disabled by default because `UsedCapacity` has no percentage equivalent. Upgrading removes existing capacity alerts unless you explicitly set `overrides.used_capacity.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Used capacity alerts are now disabled by default because `UsedCapacity` has no percentage equivalent. Upgrading removes existing capacity alerts unless you explicitly set `overrides.used_capacity.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Alert Naming
 

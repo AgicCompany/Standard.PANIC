@@ -119,9 +119,9 @@ module "vpngw_alerts" {
 - **P2S metrics** stay disabled by default. `P2SBandwidth` uses Bytes/sec and `P2SConnectionCount` uses Count. Enable them only for Point-to-Site VPN, with both thresholds in raw units.
 - **Tunnel bandwidth** is disabled by default in both profiles. `TunnelAverageBandwidth` uses Bytes/sec, not percent; enable it with `enabled = true` and raw Bytes/sec thresholds in `overrides.tunnel_bandwidth`. Profile bandwidth and P2S thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-virtualnetworkgateways-metrics).
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Tunnel status and tunnel bandwidth alerts are now disabled by default. Upgrading removes them unless you explicitly enable them. A threshold-only override no longer enables them. For bandwidth, set both thresholds in Bytes/sec. For `tunnel_status`, the metric changes from `TunnelAverageBandwidth` to `TunnelIngressPackets`, aggregation changes to Total, and the threshold remains `LessThan 1` packet: enable only if idle-tunnel alerts are wanted, not as a tunnel-state check. P2S metrics stay disabled and need raw Bytes/sec or Count overrides when enabled. Existing source pins still select the old behavior until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Tunnel status and tunnel bandwidth alerts are now disabled by default. Upgrading removes them unless you explicitly enable them. A threshold-only override no longer enables them. For bandwidth, set both thresholds in Bytes/sec. For `tunnel_status`, the metric changes from `TunnelAverageBandwidth` to `TunnelIngressPackets`, aggregation changes to Total, and the threshold remains `LessThan 1` packet: enable only if idle-tunnel alerts are wanted, not as a tunnel-state check. P2S metrics stay disabled and need raw Bytes/sec or Count overrides when enabled. Review `terraform plan` when upgrading.
 
 ## License
 

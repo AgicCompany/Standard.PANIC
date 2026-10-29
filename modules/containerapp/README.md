@@ -36,7 +36,7 @@ Terraform module for Azure Container Apps monitoring alerts using the PANIC fram
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v2.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "app-containerapp"
@@ -53,7 +53,7 @@ module "containerapp_alerts" {
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v2.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "prod-containerapp"
@@ -84,7 +84,7 @@ module "containerapp_alerts" {
 
 ```hcl
 module "containerapp_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/containerapp?ref=containerapp/v2.0.0"
 
   resource_id         = azurerm_container_app.main.id
   resource_name       = "memory-intensive-app"
@@ -140,11 +140,9 @@ module "containerapp_alerts" {
 - **Restarts**: Frequent restarts indicate application issues (crashes, OOM, health check failures).
 - **Replicas**: Disabled by default. Enable based on your minimum replica requirements.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
 CPU changes from `UsageNanoCores` to `CpuPercentage`; memory changes from `WorkingSetBytes` to `MemoryPercentage`. Both remain enabled, with standard thresholds of 70/90 and critical thresholds of 60/80. Convert any existing nanocore or byte overrides to percentages of the configured limit before upgrading. For example, 350,000,000 nanocores on a 0.5 vCPU limit becomes `70`, not `350000000`. If you cannot use preview metrics, disable `cpu` and `memory` via overrides.
-
-The percentage examples above describe the unreleased change. Their source pins still reference the existing release; update the pins to the new major tag once it is published, then review `terraform plan`.
 
 ## License
 

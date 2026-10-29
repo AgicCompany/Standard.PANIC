@@ -37,7 +37,7 @@ Terraform module for Azure Service Bus monitoring alerts using the PANIC framewo
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v2.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "app-servicebus"
@@ -54,7 +54,7 @@ module "servicebus_alerts" {
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v2.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "prod-servicebus"
@@ -89,7 +89,7 @@ module "servicebus_alerts" {
 
 ```hcl
 module "servicebus_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/servicebus?ref=servicebus/v2.0.0"
 
   resource_id         = azurerm_servicebus_namespace.main.id
   resource_name       = "highvol-servicebus"
@@ -149,9 +149,9 @@ module "servicebus_alerts" {
 - **Throttling**: Occurs when throughput exceeds tier limits. Consider upgrading tier or adding partitions.
 - **Size**: Disabled by default in both profiles. `Size` is bytes, not percent; enable it with `enabled = true` and raw byte thresholds in `overrides.size`. Profile thresholds are placeholders, not recommended byte limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-servicebus-namespaces-metrics).
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Size alerts are now disabled by default because `Size` has no percentage equivalent. Upgrading removes existing size alerts unless you explicitly set `overrides.size.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Size alerts are now disabled by default because `Size` has no percentage equivalent. Upgrading removes existing size alerts unless you explicitly set `overrides.size.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Service Bus Limits by Tier
 

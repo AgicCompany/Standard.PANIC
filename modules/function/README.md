@@ -36,7 +36,7 @@ Terraform module for Azure Functions monitoring alerts using the PANIC framework
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v2.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "app-functions"
@@ -53,7 +53,7 @@ module "function_alerts" {
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v2.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "prod-functions"
@@ -84,7 +84,7 @@ module "function_alerts" {
 
 ```hcl
 module "function_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/function?ref=function/v2.0.0"
 
   resource_id         = azurerm_linux_function_app.main.id
   resource_name       = "api-functions"
@@ -141,9 +141,9 @@ module "function_alerts" {
 - **Execution count**: Useful for detecting unexpected spikes or drops in function invocations.
 - **Consumption plan**: Memory metrics may be less meaningful on consumption plans due to dynamic scaling.
 
-## Migration (next major release, unreleased)
+## Migration (v2.0.0)
 
-Memory alerts are now disabled by default because `MemoryWorkingSet` has no percentage equivalent on `Microsoft.Web/sites`. Upgrading removes existing memory alerts unless you explicitly set `overrides.memory.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+Memory alerts are now disabled by default because `MemoryWorkingSet` has no percentage equivalent on `Microsoft.Web/sites`. Upgrading removes existing memory alerts unless you explicitly set `overrides.memory.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Memory Limits by Plan
 

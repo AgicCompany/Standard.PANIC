@@ -126,9 +126,9 @@ module "sqlmi_alerts" {
 - **IO metrics**: Disabled by default in both profiles. `io_requests` is Count and `io_bytes_read` is Bytes, not percent; enable each with `enabled = true` and both raw-unit thresholds via overrides. Profile thresholds are placeholders, not recommended limits. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-sql-managedinstances-metrics).
 - **CPU**: vCore-based, monitor closely for Business Critical tier workloads.
 
-## Migration (next major release, unreleased)
+## Migration (v3.0.0)
 
-IO request and IO byte alerts are now disabled by default. Upgrading removes them unless you explicitly enable them and set both thresholds in Count (`overrides.io_requests`) or Bytes (`overrides.io_bytes`). A threshold-only override no longer enables them. Storage remains disabled; CPU alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
+IO request and IO byte alerts are now disabled by default. Upgrading removes them unless you explicitly enable them and set both thresholds in Count (`overrides.io_requests`) or Bytes (`overrides.io_bytes`). A threshold-only override no longer enables them. Storage remains disabled; CPU alerts are unchanged. Review `terraform plan` when upgrading.
 
 ## Storage Calculation
 
