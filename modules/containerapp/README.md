@@ -24,8 +24,8 @@ Terraform module for Azure Container Apps monitoring alerts using the PANIC fram
 
 | Metric | Description | Standard Warn | Standard Crit | Critical Warn | Critical Crit |
 |--------|-------------|---------------|---------------|---------------|---------------|
-| CPU | CPU usage (nanocores) | > 70% | > 90% | > 60% | > 80% |
-| Memory | Memory working set | > 70% | > 90% | > 60% | > 80% |
+| CPU | CPU percentage of limit (preview) | > 70% | > 90% | > 60% | > 80% |
+| Memory | Memory percentage of limit (preview) | > 70% | > 90% | > 60% | > 80% |
 | Restarts | Container restarts | > 3 | > 10 | > 1 | > 5 |
 | Replicas | Replica count (disabled) | < 2 | < 1 | < 3 | < 2 |
 | Requests | Total requests (disabled) | > 10k | > 50k | > 10k | > 50k |
@@ -72,9 +72,9 @@ module "containerapp_alerts" {
       critical_threshold = 2  # Critical if fewer than 2 replicas
     }
     cpu = {
-      # 0.5 vCPU = 500,000,000 nanocores
-      warning_threshold  = 350000000  # 70% of 0.5 vCPU
-      critical_threshold = 450000000  # 90% of 0.5 vCPU
+      # Percentage of the configured CPU limit
+      warning_threshold  = 70
+      critical_threshold = 90
     }
   }
 }
@@ -97,9 +97,9 @@ module "containerapp_alerts" {
 
   overrides = {
     memory = {
-      # 1Gi = 1073741824 bytes
-      warning_threshold  = 751619276   # 70% of 1Gi
-      critical_threshold = 966367641   # 90% of 1Gi
+      # Percentage of the configured memory limit
+      warning_threshold  = 75
+      critical_threshold = 95
     }
   }
 }
@@ -136,21 +136,15 @@ module "containerapp_alerts" {
 
 ## Notes
 
-- **CPU thresholds**: Default profile values are percentages. Override with nanocores based on your container's CPU allocation.
-- **Memory thresholds**: Override with actual byte values based on your container's memory limits.
+- **CPU and memory thresholds**: `CpuPercentage` and `MemoryPercentage` are preview metrics, measured as percentages of the configured limits with `Average` aggregation. Use percentage thresholds, not nanocores or bytes. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-app-containerapps-metrics).
 - **Restarts**: Frequent restarts indicate application issues (crashes, OOM, health check failures).
 - **Replicas**: Disabled by default. Enable based on your minimum replica requirements.
 
-## Resource Calculations
+## Migration (next major release, unreleased)
 
-| Resource | Unit | 50% | 70% | 90% |
-|----------|------|-----|-----|-----|
-| 0.25 vCPU | nanocores | 125M | 175M | 225M |
-| 0.5 vCPU | nanocores | 250M | 350M | 450M |
-| 1 vCPU | nanocores | 500M | 700M | 900M |
-| 0.5 Gi | bytes | 268M | 375M | 483M |
-| 1 Gi | bytes | 537M | 751M | 966M |
-| 2 Gi | bytes | 1073M | 1503M | 1932M |
+CPU changes from `UsageNanoCores` to `CpuPercentage`; memory changes from `WorkingSetBytes` to `MemoryPercentage`. Both remain enabled, with standard thresholds of 70/90 and critical thresholds of 60/80. Convert any existing nanocore or byte overrides to percentages of the configured limit before upgrading. For example, 350,000,000 nanocores on a 0.5 vCPU limit becomes `70`, not `350000000`. If you cannot use preview metrics, disable `cpu` and `memory` via overrides.
+
+The percentage examples above describe the unreleased change. Their source pins still reference the existing release; update the pins to the new major tag once it is published, then review `terraform plan`.
 
 ## License
 

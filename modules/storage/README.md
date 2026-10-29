@@ -28,7 +28,9 @@ This module creates a comprehensive set of metric alerts for Azure Storage Accou
 | Availability | Storage account availability % | < 99.9% | < 99% | < 99.95% | < 99.5% |
 | E2E Latency | End-to-end latency (ms) | > 500ms | > 1000ms | > 250ms | > 500ms |
 | Throttling | Throttled transaction count | > 10 | > 100 | > 5 | > 50 |
-| Used Capacity | Storage capacity utilization | > 80% | > 90% | > 70% | > 85% |
+| Used Capacity | Used capacity in bytes (disabled) | Override required | Override required | Override required | Override required |
+
+`UsedCapacity` is bytes, not percent. It is disabled by default in both profiles; profile thresholds are placeholders, not recommended byte limits. Enable it with `enabled = true` and raw byte thresholds in `overrides.used_capacity`. See [supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-storage-storageaccounts-metrics).
 
 ## Inputs
 
@@ -94,11 +96,18 @@ module "storage_alerts" {
       critical_threshold = 250
     }
     used_capacity = {
-      enabled = false  # Disable capacity alerts
+      # Example raw byte thresholds; size these for your workload.
+      enabled            = true
+      warning_threshold  = 1099511627776 # 1 TiB
+      critical_threshold = 1649267441664 # 1.5 TiB
     }
   }
 }
 ```
+
+## Migration (next major release, unreleased)
+
+Used capacity alerts are now disabled by default because `UsedCapacity` has no percentage equivalent. Upgrading removes existing capacity alerts unless you explicitly set `overrides.used_capacity.enabled = true`. If you relied on these alerts, also set both thresholds in bytes, as in the example above. A threshold-only override no longer enables them. Other alerts are unchanged. Existing source pins still select the old defaults until you upgrade to the new major tag after release; review `terraform plan` when upgrading.
 
 ## Alert Naming
 

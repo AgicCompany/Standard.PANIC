@@ -1,8 +1,8 @@
 ---
 title: Versioning
-date: 2026-09-28
+date: 2026-10-29
 status: active
-version: 0.1
+version: 0.2
 ---
 
 # Versioning
@@ -39,6 +39,17 @@ To list tags:
 ```bash
 git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
 ```
+
+## Pending major releases (unreleased)
+
+These changes require major releases. No new tags or template source refs are included in this change.
+
+| Module | Change | Migration |
+|--------|--------|-----------|
+| `containerapp` | CPU and memory use preview percentage-of-limit metrics instead of nanocores/bytes | Convert raw-unit overrides to percentages; see [migration notes](../modules/containerapp/README.md#migration-next-major-release-unreleased) |
+| `function` | Memory alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/function/README.md#migration-next-major-release-unreleased) |
+| `servicebus` | Size alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/servicebus/README.md#migration-next-major-release-unreleased) |
+| `storage` | Used capacity alerts disabled by default | Explicitly enable with raw byte thresholds; see [migration notes](../modules/storage/README.md#migration-next-major-release-unreleased) |
 
 ## Upgrading
 
