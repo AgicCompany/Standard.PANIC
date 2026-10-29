@@ -57,3 +57,19 @@ run "iops_enabled_with_raw_thresholds" {
     error_message = "iops_consumed raw thresholds not applied"
   }
 }
+
+run "queue_depth_does_not_duplicate_another_metric" {
+  command = plan
+
+  variables {
+    overrides = {
+      iops_consumed = { enabled = true }
+      queue_depth   = { enabled = true }
+    }
+  }
+
+  assert {
+    condition     = azurerm_monitor_metric_alert.queue_depth_warn[0].criteria[0].metric_name != azurerm_monitor_metric_alert.iops_consumed_warn[0].criteria[0].metric_name
+    error_message = "queue_depth must not use the same metric as iops_consumed"
+  }
+}

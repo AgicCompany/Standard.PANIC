@@ -17,11 +17,12 @@ locals {
       # metrics (Data Disk Bandwidth Consumed Percentage)
     }
     queue_depth = {
-      name        = "Composite Disk Read Operations/sec"
+      name        = "DiskQueueDepth"
       aggregation = "Average"
       description = "Disk I/O queue depth (saturation indicator)"
-      # Microsoft.Compute/disks has no queue depth metric; this duplicates
-      # iops_consumed and is disabled. Queue depth exists only at VM level.
+      # Not a Microsoft.Compute/disks metric: enabling fails. Queue depth exists
+      # only at VM level. The name is deliberately invalid so it can never
+      # silently duplicate another alert.
     }
     burst_bps_credits = {
       name        = "BurstBPSCreditsPercent"

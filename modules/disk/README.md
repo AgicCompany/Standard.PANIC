@@ -29,7 +29,7 @@ Terraform module for Azure Managed Disk monitoring alerts using the PANIC framew
 **All alerts are disabled by default.** `Microsoft.Compute/disks` only exposes raw rate metrics (read/write operations per second, read/write bytes per second) and `DiskPaidBurstIOPS`. It has no percentage, queue depth, or burst credit metrics ([supported metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-compute-disks-metrics)).
 
 - `iops_consumed` and `bandwidth_consumed` work if you enable them with raw thresholds sized to the disk's limits (operations/sec and bytes/sec).
-- `queue_depth`, `burst_bps_credits` and `burst_io_credits` do not work: queue depth would alert on read operations/sec, and the burst metrics do not exist on disks. Do not enable them.
+- `queue_depth`, `burst_bps_credits` and `burst_io_credits` do not work: none of these metrics exist on disks, so enabling them makes the apply fail. Do not enable them.
 - For percentage-based disk monitoring (IOPS, bandwidth, queue depth, burst credits), use the VM-level `OS Disk ...` / `Data Disk ...` metrics. The [`vm`](../vm/) module covers `OS Disk IOPS Consumed Percentage` and `Data Disk IOPS Consumed Percentage`.
 
 ## Usage
