@@ -33,13 +33,15 @@ for f in sorted(glob.glob("modules/*/defaults.tf")):
         ns=re.search(r'namespace\s*=\s*"([^"]+)"',body)
         if not n: continue
         nsv=(ns.group(1) if ns else (mt.group(1) if mt else None))
-        if not nsv: print(m,key,"NO NAMESPACE");continue
+        if not nsv:
+            print(m,key,"NO NAMESPACE"); bad.append((m,key)); continue
         slug,d=rest_names(nsv)
         name=n.group(1)
-        if d is None: print(f"{m}:{key}: {name} -- page not found {slug}")
+        if d is None:
+            print(f"{m}:{key}: {name} -- page not found {slug}"); bad.append((m,key))
         elif name not in d:
             if (m,key) not in KNOWN: bad.append((m,key))
             alt=[r for r,disp in d.items() if disp.lower()==name.lower() or r.lower()==name.lower()]
             print(f"{m}:{key}: {name} NOT A REST NAME ({nsv})"+(f" -> maybe {alt}" if alt else ""))
-print(f"{len(bad)} unexpected mismatch(es)")
+print(f"{len(bad)} unexpected mismatch(es) or failed lookup(s)")
 sys.exit(1 if bad else 0)
