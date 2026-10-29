@@ -2,7 +2,7 @@
 title: Versioning
 date: 2026-10-29
 status: active
-version: 0.2
+version: 0.3
 ---
 
 # Versioning
@@ -12,7 +12,7 @@ Each module has its own version. Tags use the form `<module>/v<semver>`, for exa
 ## Pinning a module
 
 ```hcl
-source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.2.0"
+source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.1"
 #         └─ repository                                        └─ folder  └─ tag
 ```
 
@@ -25,19 +25,25 @@ Always pin to a full tag. Never use:
 
 ## Current versions
 
-Modules are versioned independently. Some modules ahead of `v1.0.0`:
+Modules are versioned independently, so the numbers do not line up across
+modules. Two ways to see what is current, instead of a list kept by hand here:
+
+- `templates/panic-subscription-template/*.tf`: every `?ref=` there is that
+  module's highest tag, and CI fails the PR if it is not.
+- `git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git`
+
+Every module is now past `v1.0.0`. Two repo-wide changes moved most of them:
+alert tags were standardized on `merge(var.tags, { managed-by = "terraform" })`
+(a minor release per module), and the metric unit fixes below changed defaults
+(a major release per module).
+
+Module changes worth reading before an upgrade:
 
 | Module | Version | Change |
 |--------|---------|--------|
 | `appservice`, `postgresql`, `storage` | `v1.0.1` | Partial overrides no longer silently disable a metric; see [Concepts](concepts.md#overrides) |
 | `vm` | `v1.3.1` | `v1.1.0`: the memory alert uses `Available Memory Percentage`. `v1.3.0`: new `os_type` input, `disk_free` uses Azure Monitor Agent guest metrics. `v1.3.1`: `disk_free` alerts can be created for guest metrics |
 | `disk` | `v2.2.0` | All alerts off by default: managed disks only expose raw rate metrics; `queue_depth` no longer duplicates the read IOPS metric |
-
-To list tags:
-
-```bash
-git ls-remote --tags https://github.com/AgicCompany/Standard.PANIC.git
-```
 
 ## Major releases for metric unit fixes
 

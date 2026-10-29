@@ -1,8 +1,8 @@
 ---
 title: Version and tag hygiene plan (issues #23, #22, #20)
 date: 2026-10-29
-status: active
-version: 0.2
+status: implemented
+version: 0.3
 ---
 
 # Version and tag hygiene plan

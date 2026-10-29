@@ -16,7 +16,7 @@ You point a module at an Azure resource and choose a profile: `standard` or `cri
 
 ```hcl
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.1.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.1"
 
   resource_id         = azurerm_linux_virtual_machine.app.id
   resource_name       = "myapp-vm01"

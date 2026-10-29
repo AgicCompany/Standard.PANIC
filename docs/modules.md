@@ -52,7 +52,7 @@ See [Versioning](versioning.md) for how to pick the version.
 
 ```hcl
 module "custom_alert" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/base?ref=base/v1.0.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/base?ref=base/v1.1.0"
 
   name                = "myapp-vm01-network-in-warn"
   resource_group_name = "rg-monitoring-prod"

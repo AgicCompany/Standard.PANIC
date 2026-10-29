@@ -121,7 +121,7 @@ data "azurerm_monitor_action_group" "warning" {
 }
 
 module "vm_alerts" {
-  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.2.0"
+  source = "git::https://github.com/AgicCompany/Standard.PANIC.git//modules/vm?ref=vm/v1.3.1"
 
   resource_id         = data.azurerm_virtual_machine.app.id
   resource_name       = data.azurerm_virtual_machine.app.name
