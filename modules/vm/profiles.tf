@@ -1,7 +1,7 @@
 locals {
   # Profile definitions based on implementation guide
   # Note: Memory and Disk Free % use LessThan operator (lower values = worse)
-  # memory and disk_free are disabled by default (disk_free is not supported yet, see README)
+  # memory and disk_free are disabled by default (disk_free needs Azure Monitor Agent guest metrics, see README)
   profiles = {
     standard = {
       cpu = {
@@ -29,7 +29,7 @@ locals {
         window_minutes     = 5
       }
       disk_free = {
-        enabled            = false # Not supported yet, see README
+        enabled            = false # Needs Azure Monitor Agent guest metrics, see README
         warning_threshold  = 15    # Alert when < 15% free
         critical_threshold = 10    # Alert when < 10% free
         window_minutes     = 15
@@ -66,7 +66,7 @@ locals {
         window_minutes     = 5
       }
       disk_free = {
-        enabled            = false # Not supported yet, see README
+        enabled            = false # Needs Azure Monitor Agent guest metrics, see README
         warning_threshold  = 20    # Alert when < 20% free
         critical_threshold = 15    # Alert when < 15% free
         window_minutes     = 15

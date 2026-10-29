@@ -56,7 +56,10 @@ def load_module(path):
         expr = clean(expr)
         m = re.fullmatch(r"\$\{local\.metrics\.(\w+)\.(\w+)\}", expr)
         if m:
-            return clean(locals_["metrics"][m.group(1)][m.group(2)])
+            return resolve(locals_["metrics"][m.group(1)][m.group(2)])
+        m = re.fullmatch(r"\$\{local\.guest_metrics\[var\.os_type\]\.(\w+)\}", expr)
+        if m:
+            return " or ".join("`" + clean(v[m.group(1)]).replace("\\\\", "\\") + "`" for v in locals_["guest_metrics"].values())
         if expr == "${local.metric_namespace}":
             return clean(locals_["metric_namespace"])
         return expr
@@ -89,7 +92,7 @@ def load_module(path):
 
 def render(module, locals_, alerts):
     std, crit = locals_["profiles"]["standard"], locals_["profiles"]["critical"]
-    namespaces = sorted({a["namespace"] for a in alerts.values()})
+    namespaces = sorted({n.strip("`") for a in alerts.values() for n in a["namespace"].split(" or ")})
     lines = [
         f"### {TITLES[module]} (`{module}`)",
         "",

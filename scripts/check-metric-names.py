@@ -2,7 +2,7 @@
 """Check every metric name in modules/*/defaults.tf against the REST API names on Microsoft Learn.
 
 Run from the repo root: python3 scripts/check-metric-names.py
-Needs network access. Known intentional mismatches (disk burst/queue metrics, vm disk_free) are listed below.
+Needs network access. Known intentional mismatches (disk burst/queue metrics) are listed below.
 """
 import sys
 import re,glob,urllib.request,os
@@ -22,7 +22,7 @@ def rest_names(ns):
         cache[slug]=(slug,None)
     return cache[slug]
 bad=[]
-KNOWN={('disk','queue_depth'),('disk','burst_bps_credits'),('disk','burst_io_credits'),('vm','disk_free')}
+KNOWN={('disk','queue_depth'),('disk','burst_bps_credits'),('disk','burst_io_credits')}
 for f in sorted(glob.glob("modules/*/defaults.tf")):
     m=f.split('/')[1]
     s=open(f).read()

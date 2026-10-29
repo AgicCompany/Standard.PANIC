@@ -32,6 +32,17 @@ variable "profile" {
   }
 }
 
+variable "os_type" {
+  description = "Guest operating system of the VM. Selects the Azure Monitor Agent guest metric used by disk_free"
+  type        = string
+  default     = "linux"
+
+  validation {
+    condition     = contains(["linux", "windows"], var.os_type)
+    error_message = "os_type must be either 'linux' or 'windows'."
+  }
+}
+
 variable "overrides" {
   description = "Optional overrides for specific metrics"
   type = object({

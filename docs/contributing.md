@@ -117,13 +117,6 @@ Run it after any change to thresholds, windows, enabled flags, metric names or a
 
 Use semver as described in [Versioning](versioning.md#upgrading). Changing an alert's name suffix is a major change, because Azure deletes and recreates the rule.
 
-## Known inconsistencies
-
-Worth fixing when you touch these modules:
-
-- `vm` `memory` alerts on "Available Memory Bytes" with percent thresholds (15/10). Enabling it as-is gives wrong alerts. `disk_free` needs checking too: guest metrics may not be published under `Microsoft.Compute/virtualMachines`.
-- The `vm` examples use a data source (`azurerm_linux_virtual_machine`) that the azurerm provider doesn't have, so they fail `validate`.
-
 ## Docs
 
 - User guides live in `docs/`. Keep one topic per page and link instead of repeating.

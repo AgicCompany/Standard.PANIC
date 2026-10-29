@@ -7,6 +7,19 @@ locals {
     severity_critical = 1
   }
 
+  # Guest metric namespace and free-space metric name per OS. The Windows name is
+  # the performance counter configured in the data collection rule.
+  guest_metrics = {
+    linux = {
+      namespace = "Azure.VM.Linux.GuestMetrics"
+      disk_free = "disk/free_percent"
+    }
+    windows = {
+      namespace = "Azure.VM.Windows.GuestMetrics"
+      disk_free = "\\LogicalDisk(_Total)\\% Free Space"
+    }
+  }
+
   # Metric definitions for Virtual Machines
   # Platform metrics are from Microsoft.Compute/virtualMachines namespace
   metrics = {
@@ -39,13 +52,13 @@ locals {
       description = "Data disk IOPS consumed percentage"
     }
     disk_free = {
-      # Not a Microsoft.Compute/virtualMachines platform metric: enabling this
-      # alert fails until it is moved to the guest metric namespace (see README)
-      namespace   = "Microsoft.Compute/virtualMachines"
-      name        = "Logical Disk Free Space Percentage"
+      # Guest metric published by Azure Monitor Agent through a data collection
+      # rule with an Azure Monitor Metrics destination (see README)
+      namespace   = local.guest_metrics[var.os_type].namespace
+      name        = local.guest_metrics[var.os_type].disk_free
       aggregation = "Average"
       operator    = "LessThan"
-      description = "Logical disk free space percentage (requires AMA)"
+      description = "Logical disk free space percentage (requires Azure Monitor Agent)"
     }
     availability = {
       namespace   = "Microsoft.Compute/virtualMachines"

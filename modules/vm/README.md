@@ -29,12 +29,26 @@ This module creates a comprehensive set of metric alerts for Azure Virtual Machi
 | Available Memory % | Available memory (platform metric) | < 15 | < 10 | < 20 | < 15 | Disabled |
 | OS Disk IOPS % | OS disk IOPS consumed | > 85 | > 95 | > 75 | > 90 | Enabled |
 | Data Disk IOPS % | Data disk IOPS consumed | > 85 | > 95 | > 75 | > 90 | Enabled |
-| Disk Free % | Logical disk free space* (not supported yet) | < 15 | < 10 | < 20 | < 15 | Disabled |
+| Disk Free % | Logical disk free space (guest metric, needs Azure Monitor Agent) | < 15 | < 10 | < 20 | < 15 | Disabled |
 | VM Availability | VM availability status | - | < 1 | - | < 1 | Enabled |
 
 Memory and Disk Free are disabled by default. Memory uses the `Available Memory Percentage` platform metric and needs no agent.
 
-*Disk Free is not supported yet: `Logical Disk Free Space Percentage` is not a `Microsoft.Compute/virtualMachines` platform metric, so enabling it fails. It is only available as a guest metric (Azure Monitor Agent), which this module does not handle yet.
+Disk Free uses a guest metric from Azure Monitor Agent, selected by `os_type`:
+
+| `os_type` | Namespace | Metric |
+|-----------|-----------|--------|
+| `linux` (default) | `Azure.VM.Linux.GuestMetrics` | `disk/free_percent` |
+| `windows` | `Azure.VM.Windows.GuestMetrics` | `\LogicalDisk(_Total)\% Free Space` |
+
+The alert only works if the VM publishes these metrics (checked on a Linux and a Windows VM in a lab subscription):
+
+- The Azure Monitor Agent extension is installed and the VM has a managed identity.
+- A data collection rule with an **Azure Monitor Metrics** destination (stream `Microsoft-InsightsMetrics`) is associated with the VM and collects the free-space counter: `Logical Disk(*)\% Free Space` on Linux, `\LogicalDisk(_Total)\% Free Space` on Windows. On Windows the metric name is the counter you configure, so use that exact counter.
+- The VM can reach Azure Monitor over the network (outbound access to `*.handler.control.monitor.azure.com` and `<region>.monitoring.azure.com`).
+- The VM identity has the `Monitoring Metrics Publisher` role on the VM.
+
+Without these the alert never gets data. The Azure CLI commands `az monitor metrics list-namespaces` and `list-definitions` may not list guest namespaces even when data flows; query the metrics API with the namespace and metric name instead.
 
 ## Inputs
 
@@ -45,6 +59,7 @@ Memory and Disk Free are disabled by default. Memory uses the `Available Memory 
 | resource_group_name | Resource group for alerts | `string` | n/a | yes |
 | action_group_ids | Map with critical/warning action group IDs | `object` | n/a | yes |
 | profile | Alert profile (standard or critical) | `string` | `"standard"` | no |
+| os_type | Guest OS (`linux` or `windows`), selects the `disk_free` guest metric | `string` | `"linux"` | no |
 | overrides | Metric-specific threshold overrides | `object` | `{}` | no |
 | enabled | Enable/disable all alerts | `bool` | `true` | no |
 | tags | Additional tags | `map(string)` | `{}` | no |
@@ -113,6 +128,20 @@ The memory alert is a platform metric and needs no agent. Enable it via override
 ```hcl
 overrides = {
   memory = {
+    enabled = true
+  }
+}
+```
+
+### Enabling the Disk Free Alert
+
+Set `os_type` to match the VM, then enable the alert (see the prerequisites above):
+
+```hcl
+os_type = "windows"
+
+overrides = {
+  disk_free = {
     enabled = true
   }
 }
